@@ -1,0 +1,30 @@
+import 'package:itcity_online_store/api/models/models.dart';
+
+abstract class CartEvent {}
+
+class FetchTaxDetails extends CartEvent {
+ final String taxPercentage;
+  FetchTaxDetails(this.taxPercentage);
+}
+
+class AddProductToCart extends CartEvent {
+ final  Cart cartInfo;
+  AddProductToCart(this.cartInfo);
+}
+
+class RemoveAllProductFromCartEvent extends CartEvent {
+  final String userid;
+  RemoveAllProductFromCartEvent(this.userid);
+}
+
+class RemoveProductFromCartEvent extends CartEvent {
+  final String cartdata;
+  final String userId;
+  final String productId;
+  RemoveProductFromCartEvent(this.cartdata,this.userId,this.productId);
+}
+
+class FetchCartDetailsEvent extends CartEvent {
+  final String userId;
+  FetchCartDetailsEvent(this.userId);
+}
