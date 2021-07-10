@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:itcity_online_store/blocs/blocs.dart';
+import 'package:itcity_online_store/blocs/cart/cart_bloc.dart';
+import 'package:itcity_online_store/components/product_rating_review.dart';
 import 'package:itcity_online_store/screens/product_details_page.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DealsCard extends StatefulWidget {
   DealOfTheDay deal;
@@ -46,7 +51,7 @@ class _DealsCardState extends State<DealsCard> {
       },
       child: Container(
         constraints: BoxConstraints(
-            minHeight: 300),
+            minHeight: MediaQuery.of(context).size.width * .35),
         // width: MediaQuery.of(context).size.width * .49,
         // height:MediaQuery.of(context).size.height *.20,
 
@@ -58,8 +63,8 @@ class _DealsCardState extends State<DealsCard> {
             children: [
 
               Container(
-                height: 170.0,
-                width: 80.0,
+                height: 160.0,
+                width: 110.0,
                 margin: EdgeInsets.all(20),
                 padding: EdgeInsets.all(15),
                 decoration: BoxDecoration(
@@ -91,7 +96,7 @@ class _DealsCardState extends State<DealsCard> {
                               style: (TextStyle(
                                 // fontFamily: 'YanoneKaffeesatz',
 
-                                fontSize: 19,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w600,
                               )))),
                       SizedBox(
@@ -111,7 +116,7 @@ class _DealsCardState extends State<DealsCard> {
                                           widget.deal.productPrice.toString(),
                                       style: (TextStyle(
                                       //  fontFamily: 'RobotoSlab',
-                                        fontSize: 15,
+                                        fontSize: 14,
                                         decoration: TextDecoration.lineThrough,
                                         color: Colors.deepOrangeAccent,
                                         fontWeight: FontWeight.w800,
@@ -127,7 +132,7 @@ class _DealsCardState extends State<DealsCard> {
                                               .toString(),
                                       style: (TextStyle(
                                        // fontFamily: 'RobotoSlab',
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         color: Colors.deepOrangeAccent,
                                         fontWeight: FontWeight.w800,
                                       )))),
@@ -142,7 +147,31 @@ class _DealsCardState extends State<DealsCard> {
                                 Icons.shopping_cart_outlined,
                                 size: 30,
                               ),
-                              onPressed: null)
+                              onPressed: () async {
+                                SharedPreferences prefs = await SharedPreferences.getInstance();
+                                if (prefs.containsKey("customerId")){
+                                  Cart cart = Cart();
+                                  cart.cartData = widget.deal == null
+                                      ? ''
+                                      : widget.deal.productId.toString();
+                                  cart.userId = prefs.getString('customerId');
+                                  cart.productCount = 1;
+                                  cart.productPrice =
+                                  widget.deal.productPrice != null
+                                      ? widget.deal.productPrice
+                                      : 0.0;
+                                  BlocProvider.of<CartBloc>(context).add(AddProductToCart(cart));
+                                  print('customer id');
+                                }else{
+                                  print('no customer id');
+                                  showDialog<void>(
+                                    context: context,
+                                    builder:(BuildContext context) => LoginDialog(),
+                                  );
+
+                                }
+
+                              })
                         ],
                       ),
                     ],

@@ -13,6 +13,7 @@ import 'package:itcity_online_store/resources/values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login_page.dart';
+import 'login_page_new.dart';
 
 class WishlistPage extends StatefulWidget {
   @override
@@ -23,7 +24,7 @@ class _WishlistPageState extends State<WishlistPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:AppColors.LOGO_ORANGE,
+      backgroundColor:AppColors.WHITE,
       appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text(
@@ -32,16 +33,17 @@ class _WishlistPageState extends State<WishlistPage> {
           ),
           centerTitle: true,
           elevation: 0.0,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.orange, Colors.deepOrangeAccent])),
-          )),
+          // flexibleSpace: Container(
+          //   decoration: BoxDecoration(
+          //       gradient: LinearGradient(
+          //           begin: Alignment.topCenter,
+          //           end: Alignment.bottomCenter,
+          //           colors: [Colors.orange, Colors.deepOrangeAccent])),
+          // )
+      ),
       body: Container(
           margin: EdgeInsets.all(8),
-          decoration: kContainerFullDecoration,
+        //  decoration: kContainerFullDecoration,
           child: Stack(children: [WishlistSection()])),
     );
   }
@@ -179,7 +181,7 @@ class _WishlistSectionState extends State<WishlistSection> {
   }
 
   void navigateLoginPage() {
-    Route route = MaterialPageRoute(builder: (context) => LoginPage());
+    Route route = MaterialPageRoute(builder: (context) => LoginPageNew());
     Navigator.push(context, route).then(onGoBack);
   }
 

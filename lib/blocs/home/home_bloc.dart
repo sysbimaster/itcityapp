@@ -12,6 +12,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   List<DealOfTheDay> dealslist = [];
   List<Product> popularProduct = [];
   List<Product> featuredProduct = [];
+  List<Product> mobileColletions = [];
+  List<Product> computerCollections = [];
+  List<HomeAds> homeadslist = [];
 
   @override
   Stream<HomeState> mapEventToState(
@@ -32,6 +35,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (event is FetchFeaturedProduct) {
       yield* _mapFetchFeaturedProductToState(event, state);
     }
+    if(event is FetchMobileCollections){
+      yield* _mapFetchMobileCollections(event,state);
+    }
+    if(event is FetchComputerCollections){
+      yield* _mapFetchComputerCollections(event,state);
+    }
+    if (event is FetchHomeAds){
+      yield* _mapFetchHomeAdsToState(event, state);
+    }
    
   }
 
@@ -44,6 +56,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } catch (e) {
       print('error in home image Loading >>>>>>.' + e.toString());
       yield HomeImagesErrorState();
+    }
+  }
+  Stream<HomeState> _mapFetchHomeAdsToState(
+      HomeEvent event, HomeState state) async* {
+    yield HomeAdsLoadingState();
+    try {
+      final List<HomeAds> homeadslist = await homeApi.fetchHomeAds();
+      this.homeadslist = homeadslist;
+      print("in ads bloc"+homeadslist.length.toString());
+      yield HomeAdsLoadedState();
+    } catch (e) {
+      print('error in home image Loading >>>>>>.' + e.toString());
+      yield HomeAdsErrorState();
     }
   }
 
@@ -100,5 +125,32 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
+  Stream<HomeState> _mapFetchMobileCollections (HomeEvent event, HomeState state) async*{
+        yield MobileCollectionLoadingState();
+        try {
+          final List<Product> product = await homeApi.fetchMobileCollections();
+          mobileColletions = product;
+          yield MobileCollectionLoadedState(mobileCollections: mobileColletions);
+        }catch (e){
+          print('error in MobileCollection product  >>>>>>>>>' + e.toString());
+      yield MobileCollectionErrorState();
+    }
+
+}
+
+  Stream<HomeState> _mapFetchComputerCollections (HomeEvent event, HomeState state) async*{
+    yield ComputerCollectionLoadingState();
+    try {
+      final List<Product> product = await homeApi.fetchComputerCollections();
+     computerCollections = product;
+     print('computerCollections length in bloc' + computerCollections.length.toString() );
+      yield ComputerCollectionLoadedState(computerCollections: computerCollections);
+    }catch (e){
+      print('error in ComputerCollection product  >>>>>>>>>' + e.toString());
+      yield ComputerCollectionErrorState();
+    }
+
+  }
  
 }
+

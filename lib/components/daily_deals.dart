@@ -10,6 +10,8 @@ import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:itcity_online_store/components/deals_card_new.dart';
+import 'package:itcity_online_store/resources/values.dart';
 
 class DailyDeals extends StatefulWidget {
   @override
@@ -104,23 +106,48 @@ class _DealsListState extends State<DealsList> {
       }
       // print('deals length=>>>>>>>>' + deals.length.toString());
 
-      return GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      return Container(
 
-            crossAxisCount: 2,
-childAspectRatio: .57,
-          ),
-          itemCount: deals == null ? 0 : deals.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: EdgeInsets.only(left: 5,right: 5),
-              child: DealsCard(
-                deal: deals[index],
+        color: AppColors.WHITE,
+        constraints: BoxConstraints(
+          minHeight: MediaQuery.of(context).size.height * .47,
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 2, 10, 10),
+              child: Row(
+
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ListHeader(
+                    headerName: 'Best Deals',
+                    onTap: () {},
+                  ),
+                  OutlinedButton(onPressed: (){}, child: Text('View All',style: TextStyle(fontSize: 16),),style: OutlinedButton.styleFrom(
+                    side: BorderSide(width: 2,color: AppColors.LOGO_ORANGE)
+                  ))
+                ],
               ),
-            );
-          },) ;
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height * .37,
+              
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                  itemCount: deals == null ? 0 : deals.length,
+                  itemBuilder: (BuildContext context,int index){
+                    return DealsCardNew( deal: deals[index],);
+              }),
+            ),
+            SizedBox(
+              height: 10,
+              width: 600,
+            )
+
+          ],
+        ),
+      ) ;
     });
   }
 }

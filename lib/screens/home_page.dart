@@ -11,8 +11,10 @@ import 'package:itcity_online_store/screens/screens.dart';
 
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:itcity_online_store/screens/search_page.dart';
-
+import 'package:connectivity/connectivity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'home_page_new.dart';
 
 //FlutterSecureStorage _flutterSecureStorage = FlutterSecureStorage();
 
@@ -37,12 +39,31 @@ class _HomePageState extends State<HomePage>
    }
 
   }
+  Future<bool> check() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      return true;
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      return true;
+    }
+    return false;
+  }
 
   @override
   void initState() {
     super.initState();
-   readData ();
 
+    check().then((intenet) {
+      if (intenet != null && intenet) {
+        print('internetConnection');
+        readData ();
+      }
+      print(' No internetConnection');
+      showDialog<void>(
+        context: context,
+        builder:(BuildContext context) => NoInternetDialog(),
+      );
+    });
     // final storage = new SecureStorage();
     // storage.read(key: "email").then((value) {
     //   print(value + "Current user email");

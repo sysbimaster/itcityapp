@@ -27,9 +27,11 @@ class SplashScreen extends StatefulWidget {
 
 class SplashScreenState extends State<SplashScreen> {
   bool firstTime;
+  String country;
   void introslides() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     firstTime = (prefs.getBool('initScreen') ?? false);
+    country = prefs.getString('country');
     print("preferance state1 >>>>>>>>>>" + firstTime.toString());
     // Encrypt();
     Future.delayed(Duration(seconds: 5), () {
@@ -39,7 +41,7 @@ class SplashScreenState extends State<SplashScreen> {
       //     MaterialPageRoute(
       //       builder: (context) => IntroSlides(),
       //     ));
-      if (!firstTime) {
+      if (country== null) {
         prefs.setBool('initScreen', true);
         Navigator.popAndPushNamed(context, '/selectCountry');
       } else {

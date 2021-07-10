@@ -125,20 +125,17 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       String tokenValue = await userApi.customerLogin(customer);
       print(tokenValue);
+      this.token = tokenValue;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('email', customer.customerEmail);
-      await prefs.setString('token', token);
+      await prefs.setString('token', this.token);
 
-      print('customer id in login bloc '+ customer.customerId.toString());
-      // final storage = new FlutterSecureStorage();
-      // await storage.write(key: "email", value: customer.customerEmail);
-      // await storage.write(key: "token", value: token);
 
-      token = tokenValue;
-      yield CustomerLoginSuccessState();
 
+        yield CustomerLoginSuccessState();
     } catch (e) {
-      yield CustomerLoginFailedState();
+      print('userbloc'+e.toString());
+        yield CustomerLoginErrorState();
     }
   }
 

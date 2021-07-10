@@ -55,9 +55,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       final bool cartStatus = await cartApi.addProductToCart(cartInfo);
       status = cartStatus;
       print('add product cartbloc worked' + status.toString());
-      this.add(FetchCartDetailsEvent(event.cartInfo.userId));
+    yield AddProductToCartSuccessState();
 
-    } catch (e) {}
+    } catch (e) {
+      yield AddProductToCartErrorState();
+    }
   }
 
   Stream<CartState> _mapRemoveAllProductFromCartToState(

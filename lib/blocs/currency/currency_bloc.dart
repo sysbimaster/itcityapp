@@ -19,6 +19,7 @@ class CurrencyBloc extends Bloc<CurrencyEvent,CurrencyState>{
   }
   }
 
+
  Stream<CurrencyState> changeCurrency(CurrencyChangeEvent event) async* {
     yield CurrencyLoading();
     try {

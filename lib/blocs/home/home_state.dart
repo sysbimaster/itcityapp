@@ -19,6 +19,13 @@ class BrandDetailsLoadedState extends HomeState {}
 class BrandDetailsErrorState extends HomeState {}
 
 class TodaysDealsLoadingState extends HomeState {}
+class HomeAdsLoadingState extends HomeState{
+}
+class HomeAdsLoadedState extends HomeState {}
+class HomeAdsErrorState extends HomeState {}
+
+class ComputerCollectionLoadingState extends HomeState {}
+
 
 class TodaysDealsLoadedState extends HomeState {
   List<DealOfTheDay> deals;
@@ -43,7 +50,21 @@ class FeaturedProductLoadedState extends HomeState {
   FeaturedProductLoadedState({@required this.featured})
       : assert(featured != null);
 }
+class MobileCollectionLoadingState extends HomeState{}
+class ComputerCollectionErrorState extends HomeState{}
 
+class MobileCollectionLoadedState extends HomeState {
+  List<Product> mobileCollections;
+  MobileCollectionLoadedState({@required this.mobileCollections})
+      : assert(mobileCollections != null);
+}
+class ComputerCollectionLoadedState extends HomeState {
+  List<Product> computerCollections;
+  ComputerCollectionLoadedState({@required this.computerCollections})
+      : assert(computerCollections != null);
+}
+
+class MobileCollectionErrorState extends HomeState{}
 class FeaturedProductErrorState extends HomeState {}
 
 class DealProductByProductIdLoadingState extends HomeState {}

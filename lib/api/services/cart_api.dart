@@ -20,6 +20,7 @@ class CartApi {
 
   Future<bool> addProductToCart(Cart cart) async {
     int uid = int.parse(cart.userId);
+    print(cart.userId);
     String cartJson =
         '{"user_id" : $uid, "cart_data" : "${cart.cartData}","prod_count" : ${cart.productCount},"prod_price" : "${cart.productPrice.toString()}"}';
     print(cartJson);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:itcity_online_store/resources/values.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:itcity_online_store/screens/screens.dart';
 import 'package:itcity_online_store/constants.dart';
@@ -13,14 +14,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //FlutterSecureStorage _flutterSecureStorage = FlutterSecureStorage();
 
-class LoginPage extends StatefulWidget {
+class LoginPageNew extends StatefulWidget {
 
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginPageNewState createState() => _LoginPageNewState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageNewState extends State<LoginPageNew> {
   bool _obscureText = true;
 
   final _formKey = GlobalKey<FormState>();
@@ -49,17 +50,29 @@ class _LoginPageState extends State<LoginPage> {
       controller: _email,
       keyboardType: TextInputType.emailAddress,
       obscureText: false,
+     cursorColor: Colors.white,
+     style: TextStyle(color: Colors.white),
       onSaved: (String value) {
         _emailValue = value;
       },
       decoration: InputDecoration(
-          fillColor: Colors.white,
-          filled: true,
+        // focusColor: AppColors.WHITE,
+        //   fillColor: Colors.white,
+        labelStyle: TextStyle(color: AppColors.WHITE),
+          //filled: true,
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           labelText: "Email",
-          prefixIcon: Icon(Icons.person, color: Colors.black),
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+         prefixIcon: Icon(Icons.person, color: Colors.white),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white,
+        )),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+
+        // border:
+          // OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+        ),
       validator: (value) {
         if (value.isEmpty) {
           return 'Please enter your email';
@@ -70,26 +83,37 @@ class _LoginPageState extends State<LoginPage> {
     final passwordField = TextFormField(
       obscureText: _obscureText,
       controller: _password,
+      cursorColor: Colors.white,
+      style: TextStyle(color: Colors.white),
       onSaved: (String value) {
         _passValue = value;
       },
       keyboardType: TextInputType.visiblePassword,
       decoration: InputDecoration(
-          fillColor: Colors.white,
-          filled: true,
+        enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white,
+            )),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+          // fillColor: Colors.white,
+          // filled: true,
+        labelStyle: TextStyle(color: AppColors.WHITE),
           suffixIcon: FlatButton(
               onPressed: _toggle,
               child: new Text(
                 _obscureText ? "Show" : "Hide",
                 style: TextStyle(
-                  color: Colors.deepOrangeAccent,
+                  color: Colors.white,
                 ),
+
               )),
-          prefixIcon: Icon(Icons.lock, color: Colors.black),
+          prefixIcon: Icon(Icons.lock, color: Colors.white),
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           labelText: "Password",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+          // border:
+          // OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
+          ),
       validator: (value) {
         if (value.isEmpty) {
           return 'Please enter your password';
@@ -138,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     return Scaffold(
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: AppColors.LOGO_ORANGE,
         appBar: AppBar(
             leading: IconButton(
               icon: Icon(
@@ -151,123 +175,138 @@ class _LoginPageState extends State<LoginPage> {
               },
             ),
             elevation: 0.0,
-            flexibleSpace: Container(
-              decoration: kAppBarContainerDecoration,
-            )),
+            // flexibleSpace: Container(
+            //   decoration: kAppBarContainerDecoration,
+            // )
+        ),
         body: Container(
-          decoration: kContainerDecoration,
+          color: AppColors.LOGO_ORANGE,
+         // decoration: kContainerDecoration,
           child: new LayoutBuilder(builder:
               (BuildContext context, BoxConstraints viewportConstrains) {
             return SingleChildScrollView(
               child: ConstrainedBox(
                 constraints:
-                    BoxConstraints(minHeight: viewportConstrains.maxHeight),
+                BoxConstraints(minHeight: viewportConstrains.maxHeight),
                 child: Padding(
                     padding: const EdgeInsets.only(
-                        left: 36.0, right: 36, top: 10, bottom: 10),
+                        left: 20.0, right: 20, top: 10, bottom: 10),
                     child: Form(
                       key: _formKey,
-                      child: Center(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                                alignment: Alignment.center,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                              alignment: Alignment.center,
+                              child:Image.asset(
+                                'assets/images/logo_home.png',
+                                width: 250,
+                                height: 100,
+                              )),
+                          SizedBox(
+                            height: 25,
+                          ),
+                          emailField,
+                          SizedBox(height: 10.0),
+                          passwordField,
+                          SizedBox(
+                            height: 20.0,
+                          ),
+
+                          LoginButton(
+                            formKey: _formKey,
+                            email: _email,
+                            password: _password,
+                            mail: _emailValue,
+                            pass: _passValue,
+                          ),
+                          Container(
+                            alignment: Alignment(1.0, 0),
+                            padding: EdgeInsets.only(top: 15.0, left: 20.0),
+                            child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ForgetPasswordPage(),
+                                      ));
+                                },
                                 child: Text(
-                                  'Login',
+                                  'Forgot Password ?',
                                   style: TextStyle(
-                                    // color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'RobotoSlab',
-                                    fontSize: 33,
+
+                                     color: Colors.white
                                   ),
                                 )),
-                            SizedBox(
-                              height: 55,
-                            ),
-                            emailField,
-                            SizedBox(height: 25.0),
-                            passwordField,
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            Container(
-                              alignment: Alignment(1.0, 0),
-                              padding: EdgeInsets.only(top: 15.0, left: 20.0),
-                              child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ForgetPasswordPage(),
-                                        ));
-                                  },
-                                  child: Text(
-                                    'Forgot Your Password ?',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      // color: Colors.white
-                                    ),
+                          ),
+
+                          // SizedBox(
+                          //   height: 15.0,
+                          // ),
+                         // // sellButon,
+                         //  SizedBox(
+                         //    height: 25.0,
+                         //  ),
+
+                          SizedBox(
+                            height: 25.0,
+                          ),
+                          Row(children: <Widget>[
+                            Expanded(
+                              child: new Container(
+                                  margin: const EdgeInsets.only(
+                                      left: 10.0, right: 20.0),
+                                  child: Divider(
+                                    height: 20,
+                                    thickness: 1.5,
+                                     color: Colors.white,
                                   )),
                             ),
-                            SizedBox(
-                              height: 15.0,
+                            Text(
+                              "OR",
+                              style: TextStyle(
+                                fontSize: 20,
+                                 color: Colors.white
+                              ),
                             ),
-                            LoginButton(
-                              formKey: _formKey,
-                              email: _email,
-                              password: _password,
-                              mail: _emailValue,
-                              pass: _passValue,
+                            Expanded(
+                              child: new Container(
+                                  margin: const EdgeInsets.only(
+                                      left: 20.0, right: 10.0),
+                                  child: Divider(
+                                    color: Colors.white,
+                                    height: 20,
+                                    thickness: 1.5,
+                                  )),
                             ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            sellButon,
-                            SizedBox(
-                              height: 25.0,
-                            ),
+                          ]),
+                          SizedBox(
+                            height: 35.0,
+                          ),
 
-                            SizedBox(
-                              height: 25.0,
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RegisterPage(),
+                                  ),(Route<dynamic> route) => false);
+                            },
+                            child: Text(
+                              "Don't have account? Sign Up",
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  color: Colors.white
+                              ),
                             ),
-                            Row(children: <Widget>[
-                              Expanded(
-                                child: new Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 10.0, right: 20.0),
-                                    child: Divider(
-                                      height: 20,
-                                      thickness: 1.5,
-                                      // color: Colors.white,
-                                    )),
-                              ),
-                              Text(
-                                "OR",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                    // color: Colors.white
-                                    ),
-                              ),
-                              Expanded(
-                                child: new Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 20.0, right: 10.0),
-                                    child: Divider(
-                                      color: Colors.black12,
-                                      height: 20,
-                                      thickness: 1.5,
-                                    )),
-                              ),
-                            ]),
-                            SizedBox(
-                              height: 25.0,
-                            ),
-                            signUpButon
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                         // signUpButon
+                        ],
                       ),
                     )),
               ),
@@ -321,33 +360,7 @@ class LoginButton extends StatefulWidget {
 }
 
 class _LoginButtonState extends State<LoginButton> {
-  // ApiResponse _apiResponse = new ApiResponse();
-  // AuthApi api;
-  // void _loginSUbmit(CustomerRegistration customer) async {
-  //   _apiResponse = await api.authenticateUser(customer);
-  // }
 
-  // void _handleSubmitted() async {
-  //   final FormState form = widget._formKey.currentState;
-  //   CustomerRegistration customer = CustomerRegistration();
-  //   customer.customerEmail = widget.mail;
-  //   customer.password = widget.pass;
-  //   if (!form.validate()) {
-  //     print('Please fix the errors in red before submitting.');
-  //   } else {
-  //     form.save();
-  //     _apiResponse = await api.authenticateUser(customer);
-  //     setState(() {
-  //       if ((_apiResponse.ApiError as ApiError) == null) {
-  //         _saveAndRedirectToHome();
-  //       } else {
-  //         print((_apiResponse.ApiError as ApiError).error == null
-  //             ? '*****************'
-  //             : (_apiResponse.ApiError as ApiError).error);
-  //       }
-  //     });
-  //   }
-  // }
 
   void _saveAndRedirectToHome(String token) async {
     print("Saving token and redirecting" + token);
@@ -430,11 +443,11 @@ class _LoginButtonState extends State<LoginButton> {
       }
       return Material(
         elevation: 5.0,
-        borderRadius: BorderRadius.circular(30.0),
-        color: Colors.deepOrangeAccent,
+        borderRadius: BorderRadius.circular(25.0),
+        color: AppColors.WHITE,
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          //padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
           onPressed: () {
 
             //  setState(() {
@@ -450,10 +463,10 @@ class _LoginButtonState extends State<LoginButton> {
               }
             }
           },
-          child: Text("Login".toUpperCase(),
+          child: Text("SIGN IN".toUpperCase(),
               textAlign: TextAlign.center,
               style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              TextStyle(color: AppColors.LOGO_ORANGE, fontSize: 20)),
         ),
       );
     }));

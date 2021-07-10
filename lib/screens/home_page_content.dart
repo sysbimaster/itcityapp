@@ -64,8 +64,8 @@ if(prefs.containsKey("email")){
     //   return isCommon;
     // }
     if (BlocProvider.of<HomeBloc>(context).state is HomeInitial) {
-      BlocProvider.of<HomeBloc>(context).add(FetchFeaturedProduct());
-      BlocProvider.of<HomeBloc>(context).add(FetchPopularProduct());
+     // BlocProvider.of<HomeBloc>(context).add(FetchFeaturedProduct());
+      //BlocProvider.of<HomeBloc>(context).add(FetchPopularProduct());
       initPref();
 
 
@@ -75,9 +75,9 @@ if(prefs.containsKey("email")){
       // });
     }
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, homeState) {
-      print(featuredproducts.length.toString());
-      featuredproducts = BlocProvider.of<HomeBloc>(context).featuredProduct;
-      popularproducts = BlocProvider.of<HomeBloc>(context).popularProduct;
+     // print(featuredproducts.length.toString());
+     // featuredproducts = BlocProvider.of<HomeBloc>(context).featuredProduct;
+      //popularproducts = BlocProvider.of<HomeBloc>(context).popularProduct;
       wishlist = BlocProvider.of<WishlistBloc>(context).customerWishlist;
       print('State of home =>' + homeState.toString());
 
@@ -99,7 +99,7 @@ if(prefs.containsKey("email")){
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: Column(children: [
-               CurrencyBar(),
+
                 CategoryCard(),
                 BannerList(),
 

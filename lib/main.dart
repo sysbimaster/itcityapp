@@ -8,6 +8,7 @@ import 'package:itcity_online_store/screens/screens.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/api/services/services.dart';
 import 'package:flutter/services.dart';
+import 'package:sqflite/sqflite.dart';
 
 import 'blocs/bloc/search_bloc.dart';
 
@@ -22,6 +23,7 @@ final UserApi userApi = UserApi();
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

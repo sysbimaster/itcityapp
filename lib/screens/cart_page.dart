@@ -37,7 +37,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.LOGO_ORANGE,
+      backgroundColor: AppColors.WHITE,
       bottomNavigationBar: BottomNavigationCart(),
       appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -46,32 +46,21 @@ class _CartPageState extends State<CartPage> {
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.remove_shopping_cart,
-                size: 18,
-              ),
-              color: Colors.white,
-              onPressed: () {
-                BlocProvider.of<CartBloc>(context)
-                .add(RemoveAllProductFromCartEvent(this.userId));
-              },
-            ),
-          ],
+
           elevation: 0.0,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.orange, Colors.deepOrangeAccent])),
-          )),
+          // flexibleSpace: Container(
+          //   decoration: BoxDecoration(
+          //       gradient: LinearGradient(
+          //           begin: Alignment.topCenter,
+          //           end: Alignment.bottomCenter,
+          //           colors: [Colors.orange, Colors.deepOrangeAccent])),
+          // )
+      ),
       body: Container(
-        margin: EdgeInsets.all(8),
+        margin: EdgeInsets.all(0),
       
-        padding: EdgeInsets.symmetric(horizontal: 12),
-        decoration: kContainerFullDecoration,
+        padding: EdgeInsets.symmetric(horizontal: 0,vertical: 0),
+        //decoration: kContainerFullDecoration,
         child:        CartCard(),
       ),
     );

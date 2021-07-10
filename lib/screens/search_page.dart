@@ -34,6 +34,7 @@ class _SearchPageState extends State<SearchPage> {
                       MaterialPageRoute(builder: (context) => SearchPage()));
                 },
                 child: TextField(
+                  autofocus: true,
                   controller: controller,
                   onSubmitted: (value) {
                     BlocProvider.of<SearchBloc>(context)
@@ -47,7 +48,7 @@ class _SearchPageState extends State<SearchPage> {
                       hoverColor: Colors.grey,
                       border: OutlineInputBorder(
                           borderRadius: const BorderRadius.all(
-                            const Radius.circular(10.0),
+                            const Radius.circular(50.0),
                           ),
                           borderSide: BorderSide(color: Colors.white)),
                       hintText: "Search Product, brands and more",

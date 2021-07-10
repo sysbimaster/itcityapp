@@ -26,7 +26,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:AppColors.LOGO_ORANGE,
+      backgroundColor:AppColors.WHITE,
       appBar: AppBar(
           automaticallyImplyLeading: false,
           actions: [
@@ -50,16 +50,17 @@ class ProfilePage extends StatelessWidget {
           ),
           centerTitle: true,
           elevation: 0.0,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.orange, Colors.deepOrangeAccent])),
-          )),
+          // flexibleSpace: Container(
+          //   decoration: BoxDecoration(
+          //       gradient: LinearGradient(
+          //           begin: Alignment.topCenter,
+          //           end: Alignment.bottomCenter,
+          //           colors: [Colors.orange, Colors.deepOrangeAccent])),
+          // )
+      ),
       body: Container(
         margin: EdgeInsets.all(8),
-        decoration: kContainerFullDecoration,
+        //decoration: kContainerFullDecoration,
         child: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
@@ -110,7 +111,7 @@ class _CustomerInfoState extends State<CustomerInfo> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-      print('State of user=>' + state.toString());
+     // print('State of user=>' + state.toString());
 
       if (state is CustomerInformationLoadingState) {
         return Container(
@@ -192,9 +193,9 @@ class _CustomerInfoState extends State<CustomerInfo> {
                             : 'customer'
                         : 'customer',
                     style: (TextStyle(
-                      fontFamily: 'RobotoSlab',
+                    //  fontFamily: 'RobotoSlab',
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                     // fontWeight: FontWeight.bold,
                     )),
                   ),
                 ),
@@ -222,9 +223,9 @@ class _CustomerInfoState extends State<CustomerInfo> {
                       customerInfo == null ? '' : customerInfo.customerMobile,
                       style: TextStyle(
                          color: Colors.white,
-                        fontFamily: 'RobotoSlab',
+                      //  fontFamily: 'RobotoSlab',
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                       // fontWeight: FontWeight.bold,
                       )),
                 ),
                 ListTile(
@@ -239,9 +240,9 @@ class _CustomerInfoState extends State<CustomerInfo> {
                           : customerInfo.customerEmail,
                       style: TextStyle(
                          color: Colors.white,
-                        fontFamily: 'RobotoSlab',
+                      //  fontFamily: 'RobotoSlab',
                         fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                       // fontWeight: FontWeight.bold,
                       )),
                 ),
                 ListTile(
@@ -256,10 +257,10 @@ class _CustomerInfoState extends State<CustomerInfo> {
                             textAlign: TextAlign.start,
                             text: TextSpan(
                                 style: TextStyle(
-                                  fontFamily: 'Monospace',
+                              //    fontFamily: 'Monospace',
                               color: Colors.white,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                                  //fontWeight: FontWeight.bold,
                                 ),
                                 children: [
                                   TextSpan(

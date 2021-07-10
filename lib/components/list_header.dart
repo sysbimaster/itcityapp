@@ -23,9 +23,9 @@ class _ListHeaderState extends State<ListHeader> {
               child: Text(widget.headerName,
                   style: (TextStyle(
                     // fontFamily: 'YanoneKaffeesatz',
-                    fontFamily: 'RobotoSlab',
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800,
+                  //  fontFamily: 'RobotoSlab',
+                    fontSize: 28,
+                    fontWeight: FontWeight.normal,
                   )))),
                 widget.leftWidget != null?Container(
                   child: TimerApp()
