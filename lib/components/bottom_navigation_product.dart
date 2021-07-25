@@ -31,6 +31,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
   //  token = await _flutterSecureStorage.read(key: "token");
   }
 
+
   @override
   void initState() {
     super.initState();
@@ -100,9 +101,9 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                   widget.product.productPrice != null
                                       ? widget.product.productPrice
                                       : 0.0;
-                              BlocProvider.of<CartBloc>(context).add(
-                                  RemoveProductFromCartEvent(cart.cartData,
-                                      cart.userId, widget.product.productId));
+                              // BlocProvider.of<CartBloc>(context).add(
+                              //     RemoveProductFromCartEvent(cart.cartData,
+                              //         cart.userId, widget.product.productId));
                             },
                             child: Text("REMOVE FROM CART"))
                       ],
@@ -241,14 +242,14 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
   }
   void navigateLoginPage() {
     Route route = MaterialPageRoute(builder: (context) => LoginPage());
-    Navigator.push(context, route).then(onGoBack);
+   // Navigator.push(context, route).then(onGoBack);
 
   }
   FutureOr onGoBack(dynamic value) {
-
-    setState(() {
-      BlocProvider.of<ProductBloc>(context)
-          .add(FetchProductByProductId(widget.product.productId));
-    });
+    //
+    // setState(() {
+    //   BlocProvider.of<ProductBloc>(context)
+    //       .add(FetchProductByProductId(widget.product.productId));
+    // });
   }
 }

@@ -28,7 +28,8 @@ const kContainerFullDecoration = BoxDecoration(
 const String productImage =
     'https://www.api-test.itcityonlinestore.com/uploads/product/single-product/';
 const String categoryImage =
-    'https://www.itcityonlinestore.com/uploads/category/thumb_images/';
+    'https://www.api-test.itcityonlinestore.com/uploads/category/app_image/';
+
 const String homeImage =
     'https://www.api-test.itcityonlinestore.com/uploads/home-slider/';
 const String homeAds =

@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'dart:async';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/components/intro_slides.dart';
 import 'package:flutter/services.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
@@ -28,6 +30,7 @@ class SplashScreen extends StatefulWidget {
 class SplashScreenState extends State<SplashScreen> {
   bool firstTime;
   String country;
+  String email;
   void introslides() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     firstTime = (prefs.getBool('initScreen') ?? false);
@@ -51,9 +54,34 @@ class SplashScreenState extends State<SplashScreen> {
     });
   }
 
+  fetchDatas() async {
+    BlocProvider.of<HomeBloc>(context).add(FetchHomeImages());
+    BlocProvider.of<CategoryBloc>(context).add(FetchCategory());
+    BlocProvider.of<HomeBloc>(context).add(FetchHomeAds());
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (BlocProvider.of<HomeBloc>(context).state is HomeInitial) {
+
+      // if(prefs.containsKey('currency')){
+      //   BlocProvider.of<HomeBloc>(context)
+      //       .add(FetchTodaysDealsByDate(prefs.getString('currency')));
+      //
+      //   BlocProvider.of<HomeBloc>(context).add(FetchFeaturedProduct(prefs.getString('currency')));
+      //   BlocProvider.of<HomeBloc>(context).add(FetchPopularProduct(prefs.getString('currency')));
+      //   BlocProvider.of<HomeBloc>(context).add(FetchComputerCollections(prefs.getString('currency')));
+      //
+      //   BlocProvider.of<HomeBloc>(context).add(FetchMobileCollections(prefs.getString('currency')));
+      // }
+
+
+
+    }
+  }
   @override
   void initState() {
+
+    fetchDatas();
     introslides();
+
     super.initState();
     print("splash is running");
   }
@@ -89,9 +117,10 @@ class SplashScreenState extends State<SplashScreen> {
         //         colors: [Colors.white10, Colors.white70])),
         child: Center(
           child: Image.asset(
-            'assets/images/logosplash.png',
-            width: 400,
-            height: 400,
+            'assets/images/logosplash1.png',
+            width: 300,
+            height: 300,
+            fit: BoxFit.contain,
           ),
         ),
       ),

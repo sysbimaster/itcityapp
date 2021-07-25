@@ -22,10 +22,13 @@ class _CartPageState extends State<CartPage> {
   
   int _itemCount = 0;
     String userId = '';
+    String currency ;
   void getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId = await prefs.getString('customerId');
-
+    setState(() async {
+      userId = await prefs.getString('customerId');
+      currency = await prefs.getString('currency');
+    });
   }
 
   @override
@@ -38,16 +41,17 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.WHITE,
-      bottomNavigationBar: BottomNavigationCart(),
+      bottomNavigationBar: BottomNavigationCartNew(),
       appBar: AppBar(
-          automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false,
+          backgroundColor: AppColors.LOGO_ORANGE,
           title: Text(
             'My Cart',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color:AppColors.WHITE,fontSize: 25),
           ),
-          centerTitle: true,
 
-          elevation: 0.0,
+
+          elevation: 1.0,
           // flexibleSpace: Container(
           //   decoration: BoxDecoration(
           //       gradient: LinearGradient(

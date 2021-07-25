@@ -11,6 +11,7 @@ import 'package:itcity_online_store/resources/values.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:itcity_online_store/screens/cart_page.dart';
 import 'package:itcity_online_store/screens/home_page_content.dart';
+import 'package:itcity_online_store/screens/main_page.dart';
 import 'package:itcity_online_store/screens/privacy_policy_page.dart';
 import 'package:itcity_online_store/screens/profile_page.dart';
 import 'package:itcity_online_store/screens/return_policy_page.dart';
@@ -31,18 +32,19 @@ class HomePageNew extends StatefulWidget {
 
 class _HomePageNewState extends State<HomePageNew> {
   String country;
-  String currency ;
+  String currency;
   TextEditingController controller = TextEditingController();
-  getCountry() async{
+  getCountry() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     this.currency = prefs.getString('currency');
     this.country = prefs.getString('country');
-    if(prefs.containsKey("email")){
+    if (prefs.containsKey("email")) {
       print(prefs.getString('email'));
-      BlocProvider.of<UserBloc>(context).add(FetchCustomerInformationEvent(prefs.getString('email')));
+      BlocProvider.of<UserBloc>(context)
+          .add(FetchCustomerInformationEvent(prefs.getString('email')));
     }
-
   }
+
   Future<bool> check() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
@@ -52,134 +54,234 @@ class _HomePageNewState extends State<HomePageNew> {
     }
     return false;
   }
+
   @override
   void initState() {
     check().then((intenet) {
       if (intenet != null && intenet) {
         print('internetConnection');
         getCountry();
-      }else {
+      } else {
         print(' No internetConnection');
         showDialog<void>(
           context: context,
-          builder:(BuildContext context) => NoInternetDialog(),
+          builder: (BuildContext context) => NoInternetDialog(),
         );
       }
-
     });
 
     // TODO: implement initState
     super.initState();
   }
+
+  @override
+  void dispose() {
+    Loader.hide();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<CartBloc, CartState>(
   listener: (context, state) {
-   if(state is AddProductToCartLoadingState){
-     Loader.show(context,
-         isAppbarOverlay: true,
-         isBottomBarOverlay: false,
-         progressIndicator: CircularProgressIndicator(),
-         themeData: Theme.of(context)
-             .copyWith(accentColor: Colors.black38),
-         overlayColor: Color(0x99E8EAF6));
-   } else if (state is AddProductToCartSuccessState){
-     Loader.hide();
-     showModalBottomSheet(context: context,
-    builder: (context) {
-    return Column(
-    crossAxisAlignment:CrossAxisAlignment.center,
-    mainAxisSize: MainAxisSize.min,
-    children: <Widget>[
-    SizedBox(
-    height: 35,
-    ),
-    Text(
-    "Please Login to add products to the Cart",
-    style: TextStyle(fontSize: 18),
-    textAlign: TextAlign.center,
-    ),
-    SizedBox(
-    height: 15,
-    ),
-    Container(
-    width : MediaQuery.of(context).size.width * .75,
-    child: TextButton(
-
-    style: ButtonStyle(
-    backgroundColor: MaterialStateProperty
-        .all<Color>(
-    AppColors.LOGO_ORANGE),
-    shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
-    borderRadius:BorderRadius.circular(10.0),
-    side: BorderSide(
-    color: Colors
-        .red))),
-    foregroundColor:
-    MaterialStateProperty
-        .all<Color>(
-    AppColors
-        .WHITE),
-    ),
-    onPressed: null,
-    child: Text(
-    "SIGN IN",
-    style:
-    TextStyle(fontSize: 18),
-    textAlign: TextAlign.center,
-    )),
-    ),
-    SizedBox(
-    height: 35,
-    ),
-    ],
-    );
-    });
+    if (state is AddProductToCartLoadingState) {
+      Loader.show(context,
+          isAppbarOverlay: true,
+          isBottomBarOverlay: false,
+          progressIndicator: CircularProgressIndicator(),
+          themeData:
+          Theme.of(context).copyWith(accentColor: Colors.black38),
+          overlayColor: Colors.black26);
+    } else if (state is AddProductToCartSuccessState) {
+      Loader.hide();
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+           // print("model run 1");
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Text(
+                    "Product added to Cart",
+                    style: TextStyle(fontSize: 27),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        constraints: BoxConstraints(
+                          minHeight:
+                          MediaQuery.of(context).size.height * .07,
+                        ),
+                        width: MediaQuery.of(context).size.width * .35,
+                        child: TextButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                              MaterialStateProperty.all<Color>(
+                                  AppColors.WHITE),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(10.0),
+                                      side: BorderSide(
+                                          color: AppColors.LOGO_ORANGE))),
+                              foregroundColor:
+                              MaterialStateProperty.all<Color>(
+                                  AppColors.LOGO_ORANGE),
+                            ),
+                            onPressed: () {
+                              print("pop clicked");
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              "CONTINUE SHOPPING",
+                              style: TextStyle(fontSize: 16),
+                              textAlign: TextAlign.center,
+                            )),
+                      ),
+                      Container(
+                        constraints: BoxConstraints(
+                          minHeight:
+                          MediaQuery.of(context).size.height * .07,
+                        ),
+                        width: MediaQuery.of(context).size.width * .35,
+                        child: TextButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                              MaterialStateProperty.all<Color>(
+                                  AppColors.LOGO_ORANGE),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(10.0),
+                                      side: BorderSide(
+                                          color: AppColors.LOGO_ORANGE))),
+                              foregroundColor:
+                              MaterialStateProperty.all<Color>(
+                                  AppColors.WHITE),
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, "/cart", (route) => false);
+                            },
+                            child: Text(
+                              "GO TO CART",
+                              style: TextStyle(fontSize: 16),
+                              textAlign: TextAlign.center,
+                            )),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 35,
+                  ),
+                ],
+              ),
+            );
+          });
+    } else if (state is AddProductToCartErrorState) {
+      Loader.hide();
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  height: 35,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.clear_outlined,
+                    color: AppColors.WHITE,
+                    size: 75,
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  "Something Went Wrong",
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  "Please Try Again Later",
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+              ],
+            );
+          });
+    } else {
+      Loader.hide();
     }
 
+    // TODO: implement listener}
   },
   child: Scaffold(
-      backgroundColor: AppColors.WHITE,
+      backgroundColor: AppColors.GREY,
       drawer: DrawerData(),
       appBar: AppBar(
-
         backgroundColor: AppColors.LOGO_ORANGE,
         title: Image.asset(
           'assets/images/logo_home.png',
-          width: 250,
-          height: 60,
+          width: 130,
+          height: 55,
+          fit: BoxFit.contain,
         ),
         centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CartPage()));
+              Navigator.pushNamedAndRemoveUntil(context, '/cart', (route) => false);
             },
-            icon: Icon(Icons.shopping_cart_outlined,color:AppColors.WHITE,),
+            icon: Icon(
+              Icons.shopping_cart_outlined,
+              color: AppColors.WHITE,
+            ),
           ),
         ],
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(70),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: (){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SearchPage()));
-                },
-                child: Container(
-                  height: 34,
+          preferredSize: Size.fromHeight(75),
+          child: Column(children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchPage()));
+              },
+              child: Container(
+                height: 34,
                 alignment: Alignment.bottomCenter,
                 margin: EdgeInsets.fromLTRB(15, 10, 15, 10),
                 child: TextField(
-                    enabled: false,
+                  enabled: false,
                   controller: controller,
-
                   decoration: InputDecoration(
-                    // fillColor: Theme.of(context).inputDecorationTheme.fillColor,
+                      // fillColor: Theme.of(context).inputDecorationTheme.fillColor,
                       fillColor: Colors.white,
                       contentPadding: EdgeInsets.fromLTRB(25, 2, 25, 2),
                       filled: true,
@@ -191,23 +293,20 @@ class _HomePageNewState extends State<HomePageNew> {
                           borderSide: BorderSide(color: Colors.white)),
                       hintText: "Search Product, brands and more",
                       suffixIcon: IconButton(
-
                         icon: Icon(Icons.search),
                         padding: EdgeInsets.only(right: 20),
                       ),
                       hintStyle:
-                      Theme.of(context).inputDecorationTheme.hintStyle),
+                          Theme.of(context).inputDecorationTheme.hintStyle),
                 ),
-            ),
               ),
-              GestureDetector(
-                onTap: (){
+            ),
+            GestureDetector(
+                onTap: () {
                   Navigator.pushNamed(context, '/selectCountry');
                 },
-                  child: CurrencyBar())
-          ]
-          ),
-
+                child: CurrencyBar())
+          ]),
         ),
       ),
       body: HomePageContentNew(),
@@ -215,8 +314,6 @@ class _HomePageNewState extends State<HomePageNew> {
 );
   }
 }
-
-
 
 class DrawerData extends StatelessWidget {
   const DrawerData();
@@ -227,6 +324,7 @@ class DrawerData extends StatelessWidget {
       prefs.remove('token');
       prefs.remove('email');
       prefs.remove('isRegistered');
+      prefs.remove('customerId');
       // await _flutterSecureStorage.delete(key: 'token');
       // await _flutterSecureStorage.delete(key: 'email');
       // await _flutterSecureStorage.delete(key: 'isRegistered');
@@ -350,7 +448,7 @@ class NoInternetDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
         shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         child: Container(
@@ -387,15 +485,13 @@ class NoInternetDialog extends StatelessWidget {
                     ),
                     Center(
                         child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: new Text(
-                              "Uh Oh! Netowrk Problem",
-                              style:
+                      padding: const EdgeInsets.all(10.0),
+                      child: new Text("Uh Oh! Netowrk Problem",
+                          style:
                               TextStyle(fontSize: 20.0, color: Colors.black)),
-                        ) //
-                    ),
+                    ) //
+                        ),
                     SizedBox(height: 24.0),
-
                   ],
                 ),
               ),

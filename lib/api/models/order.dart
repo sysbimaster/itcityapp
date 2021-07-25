@@ -24,6 +24,7 @@ class Order{
   String ipAddress;
   String userAgent;
   String remarks;
+  String currency;
 
   Order();
    @override
@@ -58,7 +59,7 @@ class Order{
     ipAddress = json['ip_address'] == null ? null : json['ip_address'];
     userAgent = json['user_agent'] == null ? null : json['user_agent'];
     remarks = json['remarks'] == null ? null : json['remarks'];
-    
+    currency = json['cur'] == null ? null : json['cur'];
   }
 
   Map<String, dynamic> toJson() {
@@ -88,6 +89,7 @@ class Order{
     if(ipAddress !=null) json['ip_address']= ipAddress;
     if(userAgent !=null) json['user_agent']= userAgent;
     if(remarks  !=null) json['remarks ']= remarks ;
+    if(currency  !=null) json['cur ']= currency ;
     return json;
   }
   static List<Order> listFromJson(List<dynamic> json){

@@ -105,8 +105,8 @@ class _ProductListState extends State<ProductList> {
                               //final storage = new FlutterSecureStorage();
                               if(prefs.containsKey('email')) {
                                 wish.username = prefs.getString('email');
-                                BlocProvider.of<WishlistBloc>(context)
-                                    .add(RemoveProductFromWishlistEvent(wish));
+                                // BlocProvider.of<WishlistBloc>(context)
+                                //     .add(RemoveProductFromWishlistEvent(wish,));
                                 print(
                                     'product is removing from wishlist>>>>>>>>>>>>>');
                                 _toggleFavorite();

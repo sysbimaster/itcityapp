@@ -18,7 +18,7 @@ class _CategoryCardState extends State<CategoryCard> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<CategoryBloc>(context).add(FetchCategory());
+   // BlocProvider.of<CategoryBloc>(context).add(FetchCategory());
   }
 
   @override
@@ -32,6 +32,7 @@ class _CategoryCardState extends State<CategoryCard> {
                   size: 50,
                 ));
       }
+
 
       return Container(
         height: 135.0,

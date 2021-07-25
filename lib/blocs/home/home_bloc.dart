@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:itcity_online_store/blocs/home/home.dart';
 import 'package:bloc/bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
@@ -27,19 +28,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield* _mapFetchBrandDetailsToState(event, state);
     }
     if (event is FetchTodaysDealsByDate) {
-      yield* _mapFetchTodaysDealsByDatetoState(event, state);
+      yield* _mapFetchTodaysDealsByDatetoState(event, state,event.currency);
     }
     if (event is FetchPopularProduct) {
-      yield* _mapFetchPopularProductToState(event, state);
+      yield* _mapFetchPopularProductToState(event, state,event.currencyp);
     }
     if (event is FetchFeaturedProduct) {
-      yield* _mapFetchFeaturedProductToState(event, state);
+      yield* _mapFetchFeaturedProductToState(event, state,event.currencyf);
     }
     if(event is FetchMobileCollections){
-      yield* _mapFetchMobileCollections(event,state);
+      yield* _mapFetchMobileCollections(event,state,event.currencym);
     }
     if(event is FetchComputerCollections){
-      yield* _mapFetchComputerCollections(event,state);
+      yield* _mapFetchComputerCollections(event,state,event.currencyco);
     }
     if (event is FetchHomeAds){
       yield* _mapFetchHomeAdsToState(event, state);
@@ -86,9 +87,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Stream<HomeState> _mapFetchTodaysDealsByDatetoState(
-      HomeEvent event, HomeState state) async* {
+      HomeEvent event, HomeState state,String currency) async* {
     try {
-      dealslist = await homeApi.fetchTodaysDealsByDate();
+      dealslist = await homeApi.fetchTodaysDealsByDate(currency);
+      print("deals called in home bloc" + currency);
+    //  print('deal list length'+ dealslist[0].productPrice);
+      // for(var i=0;i<dealslist.length;i++){
+      //   print("product price ="  + dealslist[i].productPrice);
+      // }
 
       yield TodaysDealsLoadedState(deals: dealslist);
     } catch (e) {
@@ -98,10 +104,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Stream<HomeState> _mapFetchPopularProductToState(
-      HomeEvent event, HomeState state) async* {
+      HomeEvent event, HomeState state,String currency) async* {
     yield PopularProductLoadingState();
     try {
-      final List<Product> product = await homeApi.fetchPopularProduct();
+      final List<Product> product = await homeApi.fetchPopularProduct(currency);
       popularProduct = product;
       yield PopularProductLoadedState(popular: popularProduct);
     } catch (e) {
@@ -111,10 +117,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Stream<HomeState> _mapFetchFeaturedProductToState(
-      HomeEvent event, HomeState state) async* {
+      HomeEvent event, HomeState state,String currency) async* {
     yield FeaturedProductLoadingState();
     try {
-      final List<Product> product = await homeApi.fetchFeaturedProduct();
+      final List<Product> product = await homeApi.fetchFeaturedProduct(currency);
       featuredProduct = product;
       print(product.length.toString()+ "inside mapfetchfeaturedproductstate");
 
@@ -125,10 +131,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
-  Stream<HomeState> _mapFetchMobileCollections (HomeEvent event, HomeState state) async*{
+  Stream<HomeState> _mapFetchMobileCollections (HomeEvent event, HomeState state,String currency) async*{
         yield MobileCollectionLoadingState();
         try {
-          final List<Product> product = await homeApi.fetchMobileCollections();
+          final List<Product> product = await homeApi.fetchMobileCollections(currency);
           mobileColletions = product;
           yield MobileCollectionLoadedState(mobileCollections: mobileColletions);
         }catch (e){
@@ -138,10 +144,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
 }
 
-  Stream<HomeState> _mapFetchComputerCollections (HomeEvent event, HomeState state) async*{
+  Stream<HomeState> _mapFetchComputerCollections (HomeEvent event, HomeState state,String currency) async*{
     yield ComputerCollectionLoadingState();
     try {
-      final List<Product> product = await homeApi.fetchComputerCollections();
+      final List<Product> product = await homeApi.fetchComputerCollections(currency);
      computerCollections = product;
      print('computerCollections length in bloc' + computerCollections.length.toString() );
       yield ComputerCollectionLoadedState(computerCollections: computerCollections);

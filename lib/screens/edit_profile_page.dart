@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/api/models/customer_registration.dart';
 import 'package:itcity_online_store/blocs/user/user.dart';
+import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/main_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +22,7 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   String email = "";
+  String customerIdtest;
   UserBloc userBloc;
   TextEditingController emailController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
@@ -36,7 +38,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   Future<String> getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String email = await prefs.getString("email");
+  email = await prefs.getString("email");
+    customerIdtest = await prefs.getString('customerId');
     print("Email From Edit Page " + email);
     this.email = email;
     emailController.text = this.email;
@@ -67,11 +70,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.remove('isRegistered');
           if (widget.function != null) {
+            BlocProvider.of<UserBloc>(context).add(FetchCustomerInformationEvent(email));
             widget.function();
+
           } else {
             Navigator.pushAndRemoveUntil(context,
                 MaterialPageRoute(builder: (context) {
-                  return MainPage();
+                  return MainPage(0);
                 }), (route) => false);
           }
         }
@@ -79,7 +84,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       child: Scaffold(
         bottomNavigationBar: Material(
             elevation: 5.0,
-            color: Colors.deepOrangeAccent,
+            color: AppColors.LOGO_ORANGE,
             child: BlocBuilder<UserBloc, UserState>(
               builder: (context, state) {
                 if (state is CustomerInformationLoadedState) {
@@ -160,7 +165,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               contentPadding:
                                   EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(32.0))),
+                                  borderRadius: BorderRadius.circular(10.0))),
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Name is Requred";
@@ -177,7 +182,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               contentPadding:
                                   EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(32.0))),
+                                  borderRadius: BorderRadius.circular(10.0))),
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Email is Requred";
@@ -193,7 +198,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               contentPadding:
                                   EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(32.0))),
+                                  borderRadius: BorderRadius.circular(10.0))),
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Mobile Number is Requred";
@@ -209,7 +214,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               contentPadding:
                               EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(32.0))),
+                                  borderRadius: BorderRadius.circular(10.0))),
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Address is Requred";
@@ -225,7 +230,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               contentPadding:
                                   EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(32.0))),
+                                  borderRadius: BorderRadius.circular(10.0))),
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Place / Area is Required";
@@ -241,7 +246,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               contentPadding:
                                   EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(32.0))),
+                                  borderRadius: BorderRadius.circular(10.0))),
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Country is Requred";
@@ -258,7 +263,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               contentPadding:
                                   EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(32.0))),
+                                  borderRadius: BorderRadius.circular(10.0))),
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Pincode is Requred";

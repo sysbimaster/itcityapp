@@ -13,19 +13,19 @@ class BottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<OrderBloc, OrderState>(
   listener: (context, state) {
-    if (state is CreateOrderSuccessState) {
-
-
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
-    return OrderSuccessPage(
-    orderStatus: BlocProvider.of<OrderBloc>(context).orderStatus);
-    }), (Route<dynamic> route) => false);
-    // showDialog(
-    //     context: context,
-    //     builder: (BuildContext context) => CheckoutDialog());
-
-
-    }
+    // if (state is CreateOrderSuccessState) {
+    //
+    //
+    // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
+    // return OrderSuccessPage(
+    // orderStatus: BlocProvider.of<OrderBloc>(context).orderStatus);
+    // }), (Route<dynamic> route) => false);
+    // // showDialog(
+    // //     context: context,
+    // //     builder: (BuildContext context) => CheckoutDialog());
+    //
+    //
+    // }
   },
   child: BlocBuilder<OrderBloc, OrderState>(builder: (context, orderState) {
       if (orderState is CreatePurchaseSuccessState) {

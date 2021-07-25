@@ -15,10 +15,12 @@ class DealOfTheDay {
   String productDesc;
   String productDescArabic;
   var productPrice;
+  var productPriceConvert;
   String productPriceArabic;
   int productQty;
   int minPurQty;
   var productPriceOffer;
+  var productPriceOfferConvert;
   String productPriceOfferArabic;
   int status;
 
@@ -51,6 +53,7 @@ class DealOfTheDay {
         ? null
         : json['product_desc_arabic'];
     productPrice = json['product_price'] == null ? null : json['product_price'];
+    productPriceConvert = json['product_price_convert'] == null ? null : json['product_price_convert'];
     productPriceArabic = json['product_price_arabic'] == null
         ? null
         : json['product_price_arabic'];
@@ -59,6 +62,9 @@ class DealOfTheDay {
     productPriceOffer = json['product_price_offer'] == null
         ? null
         : json['product_price_offer'];
+    productPriceOfferConvert = json['product_price_offer_convert'] == null
+        ? null
+        : json['product_price_offer_convert'];
     productPriceOfferArabic = json['product_price_offer_arabic'] == null
         ? null
         : json['product_price_offer_arabic'];
@@ -76,7 +82,7 @@ class DealOfTheDay {
     
     if (sortOrder != null) json['sort_order'] = sortOrder;
     if (categoryId != null) json['category_id'] = categoryId;
-    if (productSlug != null) json['product_slug '] = productSlug;
+    if (productSlug != null) json['product_slug'] = productSlug;
     if (productName != null) json['product_name'] = productName;
     if (productNameArabic != null)
       json['product_name_arabic'] = productNameArabic;
@@ -86,12 +92,13 @@ class DealOfTheDay {
     if (productDescArabic != null)
       json['_product_desc_arabic'] = productDescArabic;
     if (productPrice != null) json['product_price'] = productPrice;
+    if (productPriceConvert != null) json['product_price_convert'] = productPriceConvert;
     if (productPriceArabic != null)
       json['product_price_arabic'] = productPriceArabic;
     if (productQty != null) json['product_qty'] = productQty;
     if (minPurQty != null) json['min_pur_qty'] = minPurQty;
-    if (productPriceOffer != null)
-      json['product_price_offer'] = productPriceOffer;
+    if (productPriceOfferConvert != null)
+      json['product_price_offer_convert'] = productPriceOfferConvert;
     if (productPriceOfferArabic != null)
       json['product_price_offer_arabic'] = productPriceOfferArabic;
     if (status != null) json['status'] = status;

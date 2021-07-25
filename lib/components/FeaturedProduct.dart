@@ -1,11 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/components/list_header.dart';
+import 'package:itcity_online_store/components/product_card.dart';
 import 'package:itcity_online_store/resources/values.dart';
+import 'package:itcity_online_store/screens/featured_products_full.dart';
+import 'package:itcity_online_store/screens/login_page_new.dart';
+import 'package:itcity_online_store/screens/product_details_new.dart';
 import 'package:itcity_online_store/screens/product_details_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 
@@ -18,14 +25,42 @@ class FeaturedProduct extends StatefulWidget {
 
 class _FeaturedProductState extends State<FeaturedProduct> {
   List<Product> featuredProducts = [];
+  getFeaturedProducts() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    BlocProvider.of<HomeBloc>(context).add(FetchFeaturedProduct(prefs.getString('currency')));
+    // if( !(BlocProvider.of<HomeBloc>(context).state is FeaturedProductLoadedState)){
+    //
+    // }else {
+    //
+    // }
+
+  }
+  String country;
+  String currency;
+  getCountry() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      this.currency = prefs.getString('currency');
+      this.country = prefs.getString('country');
+    });
+  }
   @override
   void initState() {
-    BlocProvider.of<HomeBloc>(context).add(FetchFeaturedProduct());
+    getCountry();
+    //SharedPreferences prefs = await SharedPreferences.getInstance();
+   // getFeaturedProducts();
+   // BlocProvider.of<HomeBloc>(context).add(FetchFeaturedProduct(prefs.getString('currency')));
     // TODO: implement initState
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
+    bool _isFavorited = false;
+    void _toggleFavorite() {
+      setState(() {
+        _isFavorited = !_isFavorited;
+      });
+    }
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
       featuredProducts = BlocProvider.of<HomeBloc>(context).featuredProduct;
       // print('state of deal>>>>>' + state.toString());
@@ -58,159 +93,44 @@ class _FeaturedProductState extends State<FeaturedProduct> {
                     headerName: 'Featured Products',
                     onTap: () {},
                   ),
-                  OutlinedButton(onPressed: (){}, child: Text('View All',style: TextStyle(fontSize: 16),),style: OutlinedButton.styleFrom(
+                  OutlinedButton(onPressed: () async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => FeaturedProductsFull(currency: prefs.getString('currency'),)));
+                  }, child: Text('View All',style: TextStyle(fontSize: 16,color: AppColors.LOGO_ORANGE),),style: OutlinedButton.styleFrom(
                       side: BorderSide(width: 2,color: AppColors.LOGO_ORANGE)
                   ))
                 ],
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * .38,
+              height: MediaQuery.of(context).size.height * .40,
 
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: featuredProducts == null ? 0 : featuredProducts.length,
                   itemBuilder: (BuildContext context,int index){
-                    return GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return ProductDetailPage(
-                            productId: featuredProducts[index].productId,
-                          );
-                        }));
-                      },
-                      child: Stack(
-                        alignment: Alignment.topRight,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width * .49,
-                            constraints: BoxConstraints(
-                                minHeight: 230),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.GREY,width: 1.0),
-                            ),
-                            child: Column(
-                              children: [
-
-                                Container(
-                                  height: 160.0,
-                                  width: 110.0,
-                                  //margin: EdgeInsets.all(20),
-                                  padding: EdgeInsets.all(15),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                                    color: Colors.white,
-                                    image: DecorationImage(
-                                      image: NetworkImage(featuredProducts[index] == null
-                                          ? ''
-                                          : productImage + featuredProducts[index].productImage),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                    padding: EdgeInsets.only(left: 5, right: 5,top:10),
-                                    child: Column(
-                                      // mainAxisAlignment: MainAxisAlignment.start,
-                                      //crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: [
-                                        Container(
-                                            constraints: BoxConstraints(
-                                              minHeight: 37,
-                                            ),
-                                            alignment: Alignment.topLeft,
-                                            child: Text(
-                                               featuredProducts[index] == null
-                                                    ? ''
-                                                    : featuredProducts[index].productName,
-
-                                                maxLines: 2,
-                                                // softWrap: false,
-                                                // overflow: TextOverflow.fade,
-
-                                                style: (TextStyle(
-                                                  // fontFamily: 'YanoneKaffeesatz',
-
-                                                  fontSize: 15,
-
-                                                )))),
-                                        Divider(
-                                          thickness: 2.0,
-                                          color: AppColors.GREY,
-
-                                        ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  // alignment: Alignment.topLeft,
-                                                    child: Text(
-                                                        'KWD ' +
-                                                            featuredProducts[index].productPrice
-                                                                .toString(),
-                                                        style: (TextStyle(
-                                                          // fontFamily: 'RobotoSlab',
-                                                          fontSize: 12,
-                                                          decoration: TextDecoration.lineThrough,
-                                                          color: Colors.deepOrangeAccent,
-                                                          // fontWeight: FontWeight.w800,
-                                                        )),textAlign: TextAlign.left)),
-                                                SizedBox(
-                                                  height: 2,
-                                                  width: 2,
-                                                ),
-                                                Container(
-                                                  //   alignment: Alignment.center,
-                                                    child: Text(
-                                                      'KWD ' +
-                                                         featuredProducts[index].productPriceOffer.toString(),
-                                                      style: (TextStyle(
-                                                        //  fontFamily: 'RobotoSlab',
-                                                        fontSize: 14,
-
-                                                        color: AppColors.LOGO_BLACK,
-                                                        fontWeight: FontWeight.w600,
-                                                      )),textAlign: TextAlign.left,)),
-
-
-                                              ],
-                                            ),
-
-
-                                            IconButton(
-
-                                                icon: Icon(
-                                                  Icons.shopping_cart_outlined,
-
-                                                ),
-                                                onPressed: null)
-                                          ],
-                                        ),
-                                      ],
-                                    )),
-                              ],
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Icon(Icons.favorite_border_outlined,color: AppColors.GREY,),
-                            ),
-                          )
-                        ],
-                      ),
-                    );
+                    return ProductCard(product: featuredProducts[index],currency: this.currency,);
                   }),
             ),
+
+            SizedBox(
+              height: 15,
+            )
 
 
           ],
         ),
       ) ;
     });
+  }
+  void navigateLoginPage() {
+    Route route = MaterialPageRoute(builder: (context) => LoginPageNew());
+    Navigator.push(context, route).then(onGoBack);
+
+
+  }
+  FutureOr onGoBack(dynamic value) {
+    Navigator.pop(context);
+
   }
 }

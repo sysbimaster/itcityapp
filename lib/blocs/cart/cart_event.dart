@@ -21,7 +21,8 @@ class RemoveProductFromCartEvent extends CartEvent {
   final String cartdata;
   final String userId;
   final String productId;
-  RemoveProductFromCartEvent(this.cartdata,this.userId,this.productId);
+  final String productCount;
+  RemoveProductFromCartEvent(this.cartdata,this.userId,this.productId,this.productCount);
 }
 
 class FetchCartDetailsEvent extends CartEvent {

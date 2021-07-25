@@ -24,7 +24,7 @@ class _ListHeaderState extends State<ListHeader> {
                   style: (TextStyle(
                     // fontFamily: 'YanoneKaffeesatz',
                   //  fontFamily: 'RobotoSlab',
-                    fontSize: 28,
+                    fontSize: 25,
                     fontWeight: FontWeight.normal,
                   )))),
                 widget.leftWidget != null?Container(

@@ -456,11 +456,11 @@ class _LoginButtonState extends State<LoginButton> {
               CustomerRegistration customer = CustomerRegistration();
               customer.customerEmail = widget._email.text;
               customer.password = widget._password.text;
-              if (state is UserInitial || state is CustomerLoginFailedState) {
+
                 BlocProvider.of<UserBloc>(context)
                     .add(CustomerLoginEvent(customer));
                 print("login clicked");
-              }
+
             }
           },
           child: Text("SIGN IN".toUpperCase(),

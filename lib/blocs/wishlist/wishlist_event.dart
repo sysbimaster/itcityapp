@@ -4,7 +4,8 @@ abstract class WishlistEvent {}
 
 class FetchWishlistEvent extends WishlistEvent {
   final String username;
-  FetchWishlistEvent(this.username);
+  String currency;
+  FetchWishlistEvent(this.username,this.currency);
 }
 
 class MoveProductFromWishlistToCartEvent extends WishlistEvent {
@@ -24,7 +25,8 @@ class RemoveAllProductFromWishlistEvent extends WishlistEvent {
 
 class RemoveProductFromWishlistEvent extends WishlistEvent {
   final Wishlist wishlist;
-  RemoveProductFromWishlistEvent(this.wishlist);
+  String currency;
+  RemoveProductFromWishlistEvent(this.wishlist,this.currency);
 }
 
 class AddProductToWishlist extends WishlistEvent {

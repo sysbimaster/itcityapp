@@ -22,7 +22,7 @@ class CartApi {
     int uid = int.parse(cart.userId);
     print(cart.userId);
     String cartJson =
-        '{"user_id" : $uid, "cart_data" : "${cart.cartData}","prod_count" : ${cart.productCount},"prod_price" : "${cart.productPrice.toString()}"}';
+        '{"user_id" : $uid,"cur" : "${cart.currency}" ,"cart_data" : "${cart.cartData}","prod_count" : ${cart.productCount},"prod_price" : "${cart.productPrice.toString()}"}';
     print(cartJson);
     Response response =
         await _apiclient.invokeAPI(_addProductToCartPath, 'POST', cartJson);
@@ -40,11 +40,11 @@ class CartApi {
   }
 
   Future<List<Cart>> removeProductFromCart(
-      String userId, String cartData) async {
-    String cartJson = '{"user_id" : $userId, "cart_data": $cartData }';
+      String userId, String cartData,String productCount) async {
+    String cartJson = '{"user_id" : $userId, "cart_data": $cartData,"prod_count":$productCount }';
     print(cartJson + "CartJson");
     Response response = await _apiclient.invokeAPI(
-        _removeProductFromCartPath+ "?user_id=$userId&cart_data=$cartData", 'POST_', {} );
+        _removeProductFromCartPath+ "?user_id=$userId&cart_data=$cartData&prod_count=$productCount", 'POST_', {} );
     print(response);
     return Cart.listFromJson(jsonDecode(response.body)['data']);
   }

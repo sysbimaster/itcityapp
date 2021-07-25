@@ -9,6 +9,7 @@ import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DailyDeals extends StatefulWidget {
   @override
@@ -28,46 +29,7 @@ class _DailyDealsState extends State<DailyDeals> {
       width: MediaQuery.of(context).size.width,
       color: Colors.grey[300],
 
-      // child: FittedBox(
-      //   fit: BoxFit.contain,
-      //   child: Column(
 
-      //     children: [
-      //       Container(
-      //           padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-      //         child: Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //           children: [
-      //             Text('Deal of the Day',
-      //                 style: (TextStyle(
-      //                   color: Colors.white,
-      //                   // fontFamily: 'YanoneKaffeesatz',
-      //                   fontFamily: 'RobotoSlab',
-      //                   fontSize: 18,
-      //                   fontWeight: FontWeight.w800,
-      //                 ))),
-      //             SizedBox(width: 200),
-      //             Container(
-      //                 decoration: BoxDecoration(
-      //                   borderRadius: BorderRadius.circular(60),
-      //                   color: Colors.white,
-      //                 ),
-      //                 padding: EdgeInsets.all(7),
-      //                 child: Text(
-      //                   'View All',
-      //                   style: TextStyle(fontWeight: FontWeight.bold),
-      //                 ))
-      //           ],
-      //         ),
-      //       ),
-      //       SizedBox(height: 10),
-      //       Column(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         children: [DealsList(), TimerApp()],
-      //       ),
-      //     ],
-      //   ),
-      // ),
       child: DealsList(),
     );
   }
@@ -80,11 +42,16 @@ class DealsList extends StatefulWidget {
 
 class _DealsListState extends State<DealsList> {
   List<DealOfTheDay> deals = [];
+  getCategory() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    BlocProvider.of<HomeBloc>(context).add(FetchTodaysDealsByDate(prefs.getString('currency')));
+  }
 
   @override
   void initState() {
+   getCategory();
     super.initState();
-    BlocProvider.of<HomeBloc>(context).add(FetchTodaysDealsByDate());
+
   }
 
   @override

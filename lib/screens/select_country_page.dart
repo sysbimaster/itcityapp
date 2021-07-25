@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,6 +15,25 @@ class SelectCountryPage extends StatefulWidget {
 }
 
 class _SelectCountryPageState extends State<SelectCountryPage> {
+  String userId ;
+  String token = '';
+  String currency;
+  String country;
+  void getEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId = await prefs.getString("customerId");
+    token = await prefs.getString("token");
+    currency = await prefs.getString('currency');
+    country = await prefs.getString('country');
+    //   userId = await _flutterSecureStorage.read(key: "customerId");
+    //  token = await _flutterSecureStorage.read(key: "token");
+  }
+  @override
+  void initState() {
+    getEmail();
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +72,7 @@ class _SelectCountryPageState extends State<SelectCountryPage> {
               ),
               GestureDetector(
                 onTap: () async {
-                  saveandgoHomePage(context, "Saudi Arabia");
+                  showDialogCart(context, "Saudi Arabia");
                 },
                 child: Container(
                   constraints: new BoxConstraints(
@@ -91,7 +112,7 @@ class _SelectCountryPageState extends State<SelectCountryPage> {
               ),
               GestureDetector(
                 onTap: () async {
-                  saveandgoHomePage(context, "Bahrain");
+                  showDialogCart(context, "Bahrain");
                 },
                 child: Container(
                   constraints: new BoxConstraints(
@@ -131,7 +152,7 @@ class _SelectCountryPageState extends State<SelectCountryPage> {
               ),
               GestureDetector(
                 onTap: () async {
-                  saveandgoHomePage(context, "Kuwait");
+                  showDialogCart(context, "Kuwait");
                 },
                 child: Container(
                   constraints: new BoxConstraints(
@@ -171,7 +192,7 @@ class _SelectCountryPageState extends State<SelectCountryPage> {
               ),
               GestureDetector(
                 onTap: () async {
-                  saveandgoHomePage(context, "Oman");
+                  showDialogCart(context, "Oman");
                 },
                 child: Container(
                   constraints: new BoxConstraints(
@@ -211,7 +232,7 @@ class _SelectCountryPageState extends State<SelectCountryPage> {
               ),
               GestureDetector(
                 onTap: () async {
-                  saveandgoHomePage(context, "Philippines");
+                  showDialogCart(context, "Philippines");
                 },
                 child: Container(
                   constraints: new BoxConstraints(
@@ -251,7 +272,7 @@ class _SelectCountryPageState extends State<SelectCountryPage> {
               ),
               GestureDetector(
                 onTap: () async {
-                  saveandgoHomePage(context, "Qatar");
+                  showDialogCart(context, "Qatar");
                 },
                 child: Container(
                   constraints: new BoxConstraints(
@@ -291,7 +312,7 @@ class _SelectCountryPageState extends State<SelectCountryPage> {
               ),
               GestureDetector(
                 onTap: () async {
-                  saveandgoHomePage(context, "UAE");
+                  showDialogCart(context, "UAE");
                 },
                 child: Container(
                   constraints: new BoxConstraints(
@@ -333,6 +354,107 @@ class _SelectCountryPageState extends State<SelectCountryPage> {
     );
   }
 }
+showDialogCart(BuildContext context,String Country) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  if(prefs.getString('customerId') != null && prefs.getString('country') != Country){
+    showDialog(context: context, builder:(_) => new Dialog(
+      shape:
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      elevation: 0.0,
+      backgroundColor: Colors.transparent,
+      child: Container(
+        margin: EdgeInsets.only(left: 0.0, right: 0.0),
+        child: Stack(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(
+                top: 18.0,
+              ),
+              margin: EdgeInsets.only(top: 13.0, right: 8.0),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(16.0),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 0.0,
+                      offset: Offset(0.0, 0.0),
+                    ),
+                  ]),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Icon(
+                    Icons.remove_shopping_cart_outlined,
+                    color: Colors.red,
+                    size: 50,
+                  ),
+                  Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: new Text(
+                            "Changing Currency / Country will Clear your cart. Do you want to proceed",
+                            style:
+                            TextStyle(fontSize: 18.0, color: Colors.black),textAlign: TextAlign.center,),
+                      ) //
+                  ),
+                  SizedBox(height: 24.0),
+                  InkWell(
+                    child: Container(
+                      padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                      decoration: BoxDecoration(
+                        color: Colors.orange,
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(16.0),
+                            bottomRight: Radius.circular(16.0)),
+                      ),
+                      child: Text(
+                        "YES",
+                        style: TextStyle(color: Colors.white, fontSize: 22.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    onTap: () {
+                      saveandgoHomePage(context, Country);
+                      BlocProvider.of<CartBloc>(context).add(RemoveAllProductFromCartEvent(prefs.getString('customerId')));
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => LoginPageNew()),
+                      // );
+                    },
+                  )
+                ],
+              ),
+            ),
+            Positioned(
+              right: 0.0,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: CircleAvatar(
+                    radius: 14.0,
+                    backgroundColor: Colors.white,
+                    child: Icon(Icons.close, color: Colors.red),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ));
+  }else {
+    saveandgoHomePage(context, Country);
+  }
+}
 saveandgoHomePage(BuildContext context,String Country) async{
 if(Country == "Saudi Arabia"){
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -342,7 +464,7 @@ if(Country == "Saudi Arabia"){
 }else if(Country == "Bahrain"){
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString('country', "Bahrain");
-  prefs.setString('currency', "SAR");
+  prefs.setString('currency', "BHD");
   Navigator.popAndPushNamed(context, "/home");
 } else if(Country == "Kuwait"){
   SharedPreferences prefs = await SharedPreferences.getInstance();

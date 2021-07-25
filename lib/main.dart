@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:itcity_online_store/api/services/currency_api.dart';
+import 'package:itcity_online_store/blocs/currency/currency_bloc.dart';
 import 'package:itcity_online_store/resources/values.dart';
+import 'package:itcity_online_store/screens/login_page_new.dart';
 import 'package:itcity_online_store/screens/select_country_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,6 +21,7 @@ final HomeApi homeApi = HomeApi();
 final WishlistApi wishlistApi = WishlistApi();
 final OrderApi orderApi = OrderApi();
 final UserApi userApi = UserApi();
+final CurrencyApi currencyApi = CurrencyApi();
 
 
 
@@ -67,6 +71,8 @@ class MyApp extends StatelessWidget {
            BlocProvider<SearchBloc>(
             create: (context) => SearchBloc(productApi),
           ),
+          BlocProvider<CurrencyBloc>(create: (context) => CurrencyBloc(currencyApi: currencyApi),
+          ),
         ],
         child: MaterialApp(
 
@@ -75,10 +81,10 @@ class MyApp extends StatelessWidget {
           routes: {
             '/': (context) => IntroPage(),
           
-            '/login': (context) => LoginPage(),
-            '/home': (context) => MainPage(),
-        '/profile' :(context) => ProfilePage(),
-        '/cart' :(context) => CartPage(),
+            '/login': (context) => LoginPageNew(),
+            '/home': (context) => MainPage(0),
+        '/profile' :(context) => MainPage(4),
+        '/cart' :(context) => MainPage(3),
           '/selectCountry': (context) => SelectCountryPage(),
         '/wishlist' :(context) => WishlistPage(),
           },

@@ -7,6 +7,7 @@ import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/resources/values.dart';
+import 'package:itcity_online_store/screens/product_details_new.dart';
 import 'package:itcity_online_store/screens/screens.dart';
 
 class BannerList extends StatefulWidget {
@@ -24,9 +25,7 @@ class _BannerListState extends State<BannerList> {
   @override
   int _current = 0;
   Widget build(BuildContext context) {
-    if (BlocProvider.of<HomeBloc>(context).state is HomeInitial) {
-      BlocProvider.of<HomeBloc>(context).add(FetchHomeImages());
-    }
+
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
       image = BlocProvider.of<HomeBloc>(context).image;
       if (state is HomeImagesLoadingState) {
@@ -48,7 +47,8 @@ class _BannerListState extends State<BannerList> {
       }
       return Container(
 
-        height: MediaQuery.of(context).size.height * .26,
+        height: MediaQuery.of(context).size.width /2 ,
+          width: MediaQuery.of(context).size.width,
         color: AppColors.WHITE,
         child: Stack(
           children: [
@@ -73,18 +73,15 @@ class _BannerListState extends State<BannerList> {
                         GestureDetector(
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return ProductDetailPage(
+                              return ProductDetailsNew(
                                 productId: item.url,
                               );
                             }));
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width  ,
-                            child: FittedBox(
-                              child: Image.network(
-                                  item == null ? '' : homeImage + item.imageName),
-                              fit: BoxFit.fill,
-                            ),
+                            child: Image.network(
+                                item == null ? '' : homeImage + item.imageName,fit: BoxFit.fitWidth,),
                           ),
                         ))
                     .toList(),
@@ -94,8 +91,8 @@ class _BannerListState extends State<BannerList> {
                     autoPlayAnimationDuration: Duration(milliseconds: 250),
                    autoPlayCurve: Curves.ease,
                     // enlargeCenterPage: true,
-                    viewportFraction: 2,
-                    aspectRatio: 2.0,
+                    viewportFraction: 1,
+                   aspectRatio: 2.0,
                     onPageChanged: (index, reason) {
                       setState(() {
                         _current = index;
@@ -104,11 +101,11 @@ class _BannerListState extends State<BannerList> {
               ),
             ),
             Align(
-              heightFactor: 5,
+             // heightFactor:,
               widthFactor: 1,
-              alignment: Alignment.bottomCenter,
+             alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
 

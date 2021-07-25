@@ -24,6 +24,12 @@ class ProductApi {
   String _checkProductStockListByProductAttributePath = '';
   String _shareProductByProductIdPath = '';
   String _relatedProductByProductBrandPath = '/relatedproductbyproductid';
+  String _dealsFullPath ='/getTodaysDealByDatefull';
+  String _mobileCollectionsFullPath ='/findmobileProductbyCategoryidfull';
+  String _computerCollectionsFullPath = '/findcomputerProductbyCategoryidfull';
+  String _featuredProductFullPath ='/featuresproductfull';
+  String _popularProductFullPath ='/popularproductfull';
+
 
   Future<List<Product>> getproduct() async {
     Response response = await _apiClient.invokeAPI(_productPath, 'GET', null);
@@ -32,18 +38,43 @@ class ProductApi {
 
   Future<List<Category>> getCategory() async {
     Response response = await _apiClient.invokeAPI(_categoryPath, 'GET', null);
+    print("Category>>>>>"+response.body.toString());
     return Category.listFromJson(jsonDecode(response.body)['data']);
   }
 
-  Future<List<Product>> getProductByCategory(int id) async {
+  Future<List<Product>> getProductByCategory(int id,String currency) async {
     Response response = await _apiClient.invokeAPI(
-        '$_productByCategoryPath?category_id=$id', 'GET', null);
+        '$_productByCategoryPath?category_id=$id&cur=$currency', 'GET', null);
     return Product.listFromJson(jsonDecode(response.body)['data']);
   }
-
-  Future<Product> getProductByProductId(String id) async {
+  Future<List<DealOfTheDay>> getDealsFull(String currency) async {
     Response response = await _apiClient.invokeAPI(
-        '$_productByProductIdPath?product_id=$id', 'GET', null);
+        '$_dealsFullPath?cur=$currency', 'GET', null);
+    return DealOfTheDay.listFromJson(jsonDecode(response.body)['data']);
+  }
+  Future<List<Product>> getmobileCollectionFull(String currency) async {
+    Response response = await _apiClient.invokeAPI(
+        '$_mobileCollectionsFullPath?cur=$currency', 'GET', null);
+    return Product.listFromJson(jsonDecode(response.body)['data']);
+  }
+  Future<List<Product>> getcomputerCollectionFull(String currency) async {
+    Response response = await _apiClient.invokeAPI(
+        '$_computerCollectionsFullPath?cur=$currency', 'GET', null);
+    return Product.listFromJson(jsonDecode(response.body)['data']);
+  }
+  Future<List<Product>> getpopularProductFull(String currency) async {
+    Response response = await _apiClient.invokeAPI(
+        '$_popularProductFullPath?cur=$currency', 'GET', null);
+    return Product.listFromJson(jsonDecode(response.body)['data']);
+  }
+  Future<List<Product>> getfeaturedProductFull(String currency) async {
+    Response response = await _apiClient.invokeAPI(
+        '$_featuredProductFullPath?cur=$currency', 'GET', null);
+    return Product.listFromJson(jsonDecode(response.body)['data']);
+  }
+  Future<Product> getProductByProductId(String id,String currency) async {
+    Response response = await _apiClient.invokeAPI(
+        '$_productByProductIdPath?product_id=$id&cur=$currency', 'GET', null);
     return Product.fromJson(jsonDecode(response.body)['data'][0]);
   }
 
@@ -126,9 +157,9 @@ class ProductApi {
     return Product.listFromJson(jsonDecode(response.body)['data']['data']);
   }
 
-  Future<List<Product>> getRelatedProductByProductBrand(var brand) async {
+  Future<List<Product>> getRelatedProductByProductBrand(var brand,String currency) async {
     Response response = await _apiClient.invokeAPI(
-        '$_relatedProductByProductBrandPath?product_brand=$brand', 'GET', null);
+        '$_relatedProductByProductBrandPath?product_brand=$brand&cur=$currency', 'GET', null);
         print(response.body);
     return Product.listFromJson(jsonDecode(response.body)['data']['data']);
   }

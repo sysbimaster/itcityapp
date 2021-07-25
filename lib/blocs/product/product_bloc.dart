@@ -27,6 +27,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   List<Product> sortedProducts = [];
   List<Product> relatedProduct = [];
   String reviewStatus;
+  List<DealOfTheDay> dealsFullList;
+  List<Product> mobileCollectionsFull;
+  List<Product> popularProductsFull;
+  List<Product> computerCollectionsFull;
+  List<Product> featuredProductsFull;
 
   @override
   Stream<ProductState> mapEventToState(ProductEvent event) async* {
@@ -35,10 +40,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       yield* _mapFetchProductToState(state, event);
     }
     if (event is FetchProductByCategoryId) {
-      yield* _mapFetchProductByCategoryIdToState(state, event, event.id);
+      yield* _mapFetchProductByCategoryIdToState(state, event, event.id,event.currency);
     }
     if (event is FetchProductByProductId) {
-      yield* _mapFetchProductByProductIdToState(state, event, event.id);
+      yield* _mapFetchProductByProductIdToState(state, event, event.id,event.currency);
     }
 
     if (event is FetchProductStockListByProductId) {
@@ -79,10 +84,90 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
     if (event is FetchRelatedProductByProductBrand) {
       yield* _mapFetchRelatedProductByProductBrandToState(
-          state, event, event.brand);
+          state, event, event.brand,event.currency);
+    }
+    if(event is FetchDealsFull){
+      yield* _mapFetchDealsFullToState(state,event,event.currency);
+    }
+    if(event is FetchMobileCollectionsFull){
+      yield* _mapFetchMobileCollectionsFullToState(state,event,event.currency);
+    }
+    if(event is FetchPopularProductsFull){
+      yield* _mapFetchPopularProductsFullToState(state,event,event.currency);
+    }
+    if(event is FetchComputerCollectionsFull){
+      yield* _mapFetchComputerCollectionsFullToState(state,event,event.currency);
+    }
+    if(event is FetchFeaturedProductFull){
+      yield* _mapFetchFeaturedProductsFullToState(state,event,event.currency);
     }
   }
+  Stream<ProductState> _mapFetchFeaturedProductsFullToState(
+      ProductState state, ProductEvent event,String currency) async* {
+    yield FeaturedProductFullLoadingState();
+    try {
+      final List<Product> productList = await productApi.getfeaturedProductFull(currency);
+      featuredProductsFull = productList;
+      yield FeaturedProductFullLoadedState();
+    } catch (e) {
+      print("error in loading product>>>>>>>>>>>" + e.toString());
+      yield FeaturedProductFullErrorState();
+    }
+  }
+  Stream<ProductState> _mapFetchComputerCollectionsFullToState(
+      ProductState state, ProductEvent event,String currency) async* {
+    yield ComputerCollectionsFullLoadingState();
+    try {
+      final List<Product> productList = await productApi.getcomputerCollectionFull(currency);
+      computerCollectionsFull = productList;
+      yield ComputerCollectionsFullLoadedState();
+    } catch (e) {
+      print("error in loading product>>>>>>>>>>>" + e.toString());
+      yield ComputerCollectionsFullErrorState();
+    }
+  }
+  Stream<ProductState> _mapFetchDealsFullToState(
+      ProductState state, ProductEvent event,String currency) async* {
+    yield DealFullLoadingState();
+    try {
+      final List<DealOfTheDay> DealOftheDay = await productApi.getDealsFull(currency);
 
+      // if (product != null) {
+      dealsFullList= DealOftheDay;
+      // }
+
+      yield DealFullLoadedState();
+    } catch (e) {
+      print("error in loading product>>>>>>>>>>>" + e.toString());
+      yield DealFullErrorState();
+    }
+  }
+  Stream<ProductState> _mapFetchMobileCollectionsFullToState(
+      ProductState state, ProductEvent event,String currency) async* {
+    yield MobileCollectionsFullLoadingState();
+    try {
+      final List<Product> productList = await productApi.getmobileCollectionFull(currency);
+      mobileCollectionsFull = productList;
+
+
+      yield MobileCollectionsFullLoadedState();
+    } catch (e) {
+      print("error in loading product>>>>>>>>>>>" + e.toString());
+      yield MobileCollectionsFullErrorState();
+    }
+  }
+  Stream<ProductState> _mapFetchPopularProductsFullToState(
+      ProductState state, ProductEvent event,String currency) async* {
+    yield PopularProductFullLoadingState();
+    try {
+      final List<Product> productList = await productApi.getpopularProductFull(currency);
+      popularProductsFull = productList;
+      yield PopularProductFullLoadedState();
+    } catch (e) {
+      print("error in loading product>>>>>>>>>>>" + e.toString());
+      yield PopularProductFullErrorState();
+    }
+  }
   Stream<ProductState> _mapFetchProductToState(
       ProductState state, ProductEvent event) async* {
     yield ProductLoadingState();
@@ -96,11 +181,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   Stream<ProductState> _mapFetchProductByCategoryIdToState(
-      ProductState state, ProductEvent event, int id) async* {
+      ProductState state, ProductEvent event, int id,String currency) async* {
     yield ProductByCategoryIdLoadingState();
     try {
       final List<Product> productlist =
-          await productApi.getProductByCategory(id);
+          await productApi.getProductByCategory(id,currency);
       productListByCategory = productlist;
       yield ProductByCategoryIdLoadedState();
     } catch (e) {
@@ -110,10 +195,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   Stream<ProductState> _mapFetchProductByProductIdToState(
-      ProductState state, ProductEvent event, var id) async* {
+      ProductState state, ProductEvent event, var id,String currency) async* {
     yield ProductByProductIdLoadingState();
     try {
-      final Product product = await productApi.getProductByProductId(id);
+      final Product product = await productApi.getProductByProductId(id,currency);
       print('product id =>' + product.productId);
       // if (product != null) {
       currentProduct = product;
@@ -240,11 +325,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   Stream<ProductState> _mapFetchRelatedProductByProductBrandToState(
-      ProductState state, ProductEvent event, var brand) async* {
+      ProductState state, ProductEvent event, var brand, String currency) async* {
     yield RelatedProductByProductBrandLoadingState();
     try {
       List<Product> related =
-          await productApi.getRelatedProductByProductBrand(brand);
+          await productApi.getRelatedProductByProductBrand(brand,currency);
       relatedProduct = related;
       yield RelatedProductByProductBrandLoadedState();
     } catch (e) {

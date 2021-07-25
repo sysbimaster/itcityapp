@@ -15,5 +15,11 @@ class FetchOrderStatusEvent extends OrderEvent {
 class CreatePurchaseForOrderEvent extends OrderEvent{
   String userId;
   double subTotal;
-  CreatePurchaseForOrderEvent(this.userId,this.subTotal);
+  String currency;
+  CreatePurchaseForOrderEvent(this.userId,this.subTotal,this.currency);
+}
+
+class GetOrderDetailsEvent extends OrderEvent {
+  int orderId;
+  GetOrderDetailsEvent(this.orderId);
 }

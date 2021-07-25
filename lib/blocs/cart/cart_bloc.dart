@@ -28,7 +28,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       yield* _mapRemoveAllProductFromCartToState(event, state, event.userid);
     }
     if (event is RemoveProductFromCartEvent) {
-      yield* _mapRemoveProductFromCartToState(event, state);
+      yield* _mapRemoveProductFromCartToState(event, state,);
     }
     if (event is FetchCartDetailsEvent) {
       yield* _mapFetchCartDetailsToState(event, state, event.userId);
@@ -55,7 +55,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       final bool cartStatus = await cartApi.addProductToCart(cartInfo);
       status = cartStatus;
       print('add product cartbloc worked' + status.toString());
-    yield AddProductToCartSuccessState();
+      yield AddProductToCartSuccessState();
+      this.add(FetchCartDetailsEvent(cartInfo.userId));
 
     } catch (e) {
       yield AddProductToCartErrorState();
@@ -79,8 +80,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       RemoveProductFromCartEvent event, CartState state) async* {
     yield AddProductToCartLoadingState();
     try {
+      print("Removing one Cart Items"+event.userId);
       var response =
-          await cartApi.removeProductFromCart(event.userId, event.cartdata);
+          await cartApi.removeProductFromCart(event.userId, event.cartdata,event.productCount);
       print(response);
       this.productCount.remove(event.productId);
       this.add(FetchCartDetailsEvent(event.userId));

@@ -2,11 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:itcity_online_store/api/models/Currency.dart';
 import 'package:itcity_online_store/api/models/models.dart';
+import 'package:itcity_online_store/api/services/currency_api.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
+import 'package:itcity_online_store/blocs/currency/currency_bloc.dart';
 import 'package:itcity_online_store/components/product_rating_review.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
+import 'package:itcity_online_store/screens/product_details_new.dart';
 import 'package:itcity_online_store/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,6 +25,45 @@ class DealsCardNew extends StatefulWidget {
 }
 
 class _DealsCardNewState extends State<DealsCardNew> {
+  final CurrencyApi currencyApi = CurrencyApi();
+  String country;
+  String currency;
+  Currency currencyList = Currency();
+  String changedProductPrice = '';
+  bool _isFavorited = false;
+  void _toggleFavorite() {
+    setState(() {
+      _isFavorited = !_isFavorited;
+    });
+  }
+
+  getCountry() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      this.currency = prefs.getString('currency');
+      this.country = prefs.getString('country');
+    });
+  }
+
+  changeCurrency() async {
+    Currency changeCurrency = await currencyApi.getChangedCurrency(
+        'KWD', this.currency, widget.deal.productPriceOffer);
+    print("changed currency" + changeCurrency.result.toString());
+    setState(() {
+      this.currencyList = changeCurrency;
+    });
+  }
+
+  @override
+  void initState() {
+    getCountry();
+    if (currency != 'KWD') {
+      //changeCurrency();
+    }
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double returnAmount;
@@ -28,206 +72,319 @@ class _DealsCardNewState extends State<DealsCardNew> {
     if (strAmount.contains('.')) {
       returnAmount = double.parse(strAmount);
     }
+
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ProductDetailPage(
+          return ProductDetailsNew(
             productId: widget.deal.productId,
           );
         }));
       },
-      child: Stack(
-        alignment: Alignment.topRight,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width * .49,
-            constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height * .37),
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.GREY, width: 1.0),
-            ),
-            child: Column(
-              children: [
-                Container(
-                  height: 160.0,
-                  width: 110.0,
-                  //margin: EdgeInsets.all(20),
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                    color: Colors.white,
-                    image: DecorationImage(
-                      image: NetworkImage(widget.deal == null
-                          ? ''
-                          : productImage + widget.deal.productImage),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+      child: BlocBuilder<WishlistBloc, WishlistState>(
+        builder: (context, state) {
+          return Stack(
+            alignment: Alignment.topRight,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width * .48,
+                constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height * .40),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.GREY, width: 1.0),
                 ),
-                Padding(
-                    padding: EdgeInsets.only(left: 5, right: 5, top: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                            constraints: BoxConstraints(
-                              minHeight: 37,
-                            ),
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                                widget.deal == null
-                                    ? ''
-                                    : widget.deal.productName,
-                                maxLines: 2,
-                                // softWrap: false,
-                                // overflow: TextOverflow.fade,
-
-                                style: (TextStyle(
-                                  // fontFamily: 'YanoneKaffeesatz',
-
-                                  fontSize: 15,
-                                )))),
-                        Divider(
-                          thickness: 2.0,
-                          color: AppColors.GREY,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      height: 170.0,
+                      width: 140.0,
+                      //margin: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        color: Colors.white,
+                        image: DecorationImage(
+                          image: NetworkImage(widget.deal == null
+                              ? ''
+                              : productImage + widget.deal.productImage),
+                          fit: BoxFit.contain,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      ),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(left: 5, right: 5, top: 5),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
-                                alignment: Alignment.center,
-                                child: Text(
-                                    'KWD ' +
-                                        widget.deal.productPriceOffer
-                                            .toString(),
-                                    style: (TextStyle(
-                                      //  fontFamily: 'RobotoSlab',
-                                      fontSize: 14,
-
-                                      color: AppColors.LOGO_BLACK,
-                                      fontWeight: FontWeight.w600,
-                                    )))),
-                            SizedBox(
-                              height: 2,
-                              width: 2,
-                            ),
-                            Container(
-                                alignment: Alignment.center,
-                                child: Text(
-                                    'KWD ' +
-                                        widget.deal.productPrice.toString(),
-                                    style: (TextStyle(
-                                      // fontFamily: 'RobotoSlab',
-                                      fontSize: 12,
-                                      decoration: TextDecoration.lineThrough,
-                                      color: Colors.deepOrangeAccent,
-                                      // fontWeight: FontWeight.w800,
-                                    )))),
-                            IconButton(
-                                icon: Icon(
-                                  Icons.shopping_cart_outlined,
+                                constraints: BoxConstraints(
+                                  minHeight: 37,
                                 ),
-                                onPressed: () async {
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                                  if (prefs.containsKey("customerId")) {
-                                    Cart cart = Cart();
-                                    cart.cartData = widget.deal == null
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                    widget.deal == null
                                         ? ''
-                                        : widget.deal.productId.toString();
-                                    cart.userId = prefs.getString('customerId');
-                                    cart.productCount = 1;
-                                    cart.productPrice =
-                                        widget.deal.productPrice != null
-                                            ? double.parse(widget.deal.productPrice)
-                                            : 0.0;
-                                    BlocProvider.of<CartBloc>(context)
-                                        .add(AddProductToCart(cart));
-                                    print('customer id');
-                                  } else {
-                                    print('no customer id');
-                                    showModalBottomSheet(
-                                        context: context,
-                                        builder: (context) {
-                                          return Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: <Widget>[
-                                              SizedBox(
-                                                height: 35,
-                                              ),
-                                              Text(
-                                                "Please Login to add products to the Cart",
-                                                style: TextStyle(fontSize: 18),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              SizedBox(
-                                                height: 15,
-                                              ),
-                                              Container(
-                                                width : MediaQuery.of(context).size.width * .75,
-                                                child: TextButton(
+                                        : widget.deal.productName,
+                                    maxLines: 2,
+                                    // softWrap: false,
+                                    // overflow: TextOverflow.fade,
 
-                                                    style: ButtonStyle(
-                                                      backgroundColor: MaterialStateProperty
-                                                          .all<Color>(
-                                                          AppColors.LOGO_ORANGE),
-                                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
-                                                              borderRadius:BorderRadius.circular(10.0),
-                                                              side: BorderSide(
-                                                                  color: Colors
-                                                                      .red))),
-                                                      foregroundColor:
-                                                          MaterialStateProperty
-                                                              .all<Color>(
-                                                                  AppColors
-                                                                      .WHITE),
-                                                    ),
-                                                    onPressed: navigateLoginPage,
-                                                    child: Text(
-                                                      "SIGN IN",
-                                                      style:
-                                                          TextStyle(fontSize: 18),
-                                                      textAlign: TextAlign.center,
-                                                    )),
-                                              ),
-                                              SizedBox(
-                                                height: 35,
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  }
-                                })
+                                    style: (TextStyle(
+                                       fontFamily: 'Myriad-semi',
+
+                                      fontSize: 16,
+                                    )))),
+                            Divider(
+                              thickness: 2.0,
+                              color: AppColors.GREY,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    currency != null ? Container(
+
+                                        child:Text(
+                                            currency +
+                                                ' ' +
+                                                widget.deal.productPrice.toStringAsFixed(2),
+                                            style: (TextStyle(
+                                              fontFamily: 'Arial',
+                                              // fontFamily: 'RobotoSlab',
+                                              fontSize: 12,
+                                              decoration:
+                                              TextDecoration.lineThrough,
+                                              color: Colors.deepOrangeAccent,
+                                              // fontWeight: FontWeight.w800,
+                                            )))): SpinKitCircle(
+                                      size: 10,color: AppColors.LOGO_ORANGE,
+                                    ),
+                                    SizedBox(
+                                      height: 2,
+                                      width: 2,
+                                    ),
+                                    currency != null ?Container(
+
+                                        child:  Text(
+                                            currency +
+                                                ' ' +
+                                                widget.deal.productPriceOffer.toStringAsFixed(2),
+                                            style: (TextStyle(
+                                              fontFamily: 'Arial',
+                                              // fontFamily: 'RobotoSlab',
+                                              fontSize: 14,
+                                              //decoration:
+                                              //TextDecoration.lineThrough,
+                                              color: AppColors.LOGO_BLACK,
+                                               fontWeight: FontWeight.bold,
+                                            )))):SpinKitCircle(
+                                      size: 10,color: AppColors.LOGO_ORANGE,
+                                    ),
+
+
+                                  ],
+                                ),
+
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Container(
+                                    width: 38,
+                                    height: 38,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.LOGO_ORANGE,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: IconButton(
+                                        icon: Icon(
+                                          Icons.shopping_cart_outlined,
+                                          color: AppColors.WHITE,
+                                        ),
+                                        onPressed: () async {
+                                          SharedPreferences prefs =
+                                              await SharedPreferences
+                                                  .getInstance();
+                                          if (prefs.containsKey("customerId")) {
+                                            Cart cart = Cart();
+                                            cart.cartData = widget.deal == null
+                                                ? ''
+                                                : widget.deal.productId
+                                                    .toString();
+                                            cart.userId =
+                                                prefs.getString('customerId');
+                                            cart.productCount = 1;
+                                            cart.productPrice = widget
+                                                        .deal.productPrice !=
+                                                    null
+                                                ?
+                                                    widget.deal.productPrice
+                                                : 0.0;
+                                            cart.currency = this.currency;
+                                            BlocProvider.of<CartBloc>(context)
+                                                .add(AddProductToCart(cart));
+                                            print('customer id');
+                                          } else {
+                                            print('no customer id');
+                                            showModalBottomSheet(
+                                                context: context,
+                                                builder: (context) {
+                                                  return Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: <Widget>[
+                                                      SizedBox(
+                                                        height: 35,
+                                                      ),
+                                                      Text(
+                                                        "Please Login to add products to the Cart",
+                                                        style: TextStyle(
+                                                            fontSize: 18),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                      SizedBox(
+                                                        height: 15,
+                                                      ),
+                                                      Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            .75,
+                                                        child: TextButton(
+                                                            style: ButtonStyle(
+                                                              backgroundColor:
+                                                                  MaterialStateProperty.all<
+                                                                          Color>(
+                                                                      AppColors
+                                                                          .LOGO_ORANGE),
+                                                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10.0),
+                                                                  side: BorderSide(
+                                                                      color: Colors
+                                                                          .red))),
+                                                              foregroundColor:
+                                                                  MaterialStateProperty.all<
+                                                                          Color>(
+                                                                      AppColors
+                                                                          .WHITE),
+                                                            ),
+                                                            onPressed:
+                                                                navigateLoginPage,
+                                                            child: Text(
+                                                              "SIGN IN",
+                                                              style: TextStyle(
+                                                                  fontSize: 18),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            )),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 35,
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
+                                          }
+                                        }),
+                                  ),
+                                )
+                              ],
+                            ),
                           ],
-                        ),
-                      ],
-                    )),
-              ],
-            ),
-          ),
-          Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.favorite_border_outlined,
-                color: AppColors.GREY,
+                        )),
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: IconButton(
+                    onPressed: () async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      if (_isFavorited == true) {
+                        Wishlist wish = Wishlist();
+                        print("is favorited"+_isFavorited.toString());
+                        wish.wishlist = widget.deal.productId;
+                        if (prefs.containsKey('email')) {
+                          wish.username = prefs.getString('email');
+                          BlocProvider.of<WishlistBloc>(context)
+                              .add(RemoveProductFromWishlistEvent(wish,this.currency));
+                          print(
+                              'product is removing from wishlist>>>>>>>>>>>>>');
+                          _toggleFavorite();
+                          if (state is RemoveProductFromWishlistLoadingState)
+                            return (Center(
+                              child: CircularProgressIndicator(),
+                            ));
+                        }
+                      } else if (_isFavorited == false) {
+                        print("is favorited"+_isFavorited.toString());
+                        //  final storage = new FlutterSecureStorage();
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        if (prefs.containsKey('email')) {
+                          setState(() {
+                            Wishlist wish = Wishlist();
+                            wish.wishlist = widget.deal.productId;
+
+                            wish.username = prefs.getString('email');
+
+                            BlocProvider.of<WishlistBloc>(context)
+                                .add(AddProductToWishlist(wish));
+                            _toggleFavorite();
+                            print(_isFavorited.toString());
+                            if (state is AddProductToWishlistLoadingState) {
+                              return (Center(
+                                child: CircularProgressIndicator(),
+                              ));
+                            }
+                          });
+                        } else {
+                          Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                    "Please Login to add products to Favourites"),
+                              ));
+                        }
+                      }
+                    },
+                    icon: (_isFavorited
+                        ? Icon(
+                            Icons.favorite,
+                            color: AppColors.LOGO_ORANGE,
+                          )
+                        : Icon(
+                            Icons.favorite_border,
+                            color: AppColors.GREY,
+                          )),
+                  ),
+                ),
+              )
+            ],
+          );
+        },
       ),
     );
   }
+
   void navigateLoginPage() {
     Route route = MaterialPageRoute(builder: (context) => LoginPageNew());
     Navigator.push(context, route).then(onGoBack);
-
   }
-  FutureOr onGoBack(dynamic value) {
 
-
-  }
+  FutureOr onGoBack(dynamic value) {}
 }

@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 import 'package:itcity_online_store/components/components.dart';
 import 'package:itcity_online_store/components/currency_bar.dart';
+import 'package:itcity_online_store/resources/values.dart';
 
 import '../constants.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
@@ -28,9 +30,9 @@ class _HomePageContentState extends State<HomePageContent> {
   void initPref() async {
 prefs = await SharedPreferences.getInstance();
 if(prefs.containsKey("email")){
-  BlocProvider.of<WishlistBloc>(context).add(FetchWishlistEvent(prefs.getString("email")));
+  // BlocProvider.of<WishlistBloc>(context).add(FetchWishlistEvent(prefs.getString("email"),this.));
 } else {
-  BlocProvider.of<WishlistBloc>(context).add(FetchWishlistEvent(" "));
+  // BlocProvider.of<WishlistBloc>(context).add(FetchWishlistEvent(" "));
 }
 
 }
@@ -75,104 +77,104 @@ if(prefs.containsKey("email")){
       // });
     }
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, homeState) {
-     // print(featuredproducts.length.toString());
-     // featuredproducts = BlocProvider.of<HomeBloc>(context).featuredProduct;
-      //popularproducts = BlocProvider.of<HomeBloc>(context).popularProduct;
-      wishlist = BlocProvider.of<WishlistBloc>(context).customerWishlist;
-      print('State of home =>' + homeState.toString());
+       // print(featuredproducts.length.toString());
+       // featuredproducts = BlocProvider.of<HomeBloc>(context).featuredProduct;
+        //popularproducts = BlocProvider.of<HomeBloc>(context).popularProduct;
+        wishlist = BlocProvider.of<WishlistBloc>(context).customerWishlist;
+        print('State of home =>' + homeState.toString());
 
-      if (homeState is PopularProductLoadingState ||
-          homeState is FeaturedProductLoadingState) {
-        print('circular');
-        return Center(
-            child: SpinKitPouringHourglass(
-          color: Theme.of(context).primaryColor,
-          size: 50,
-        ));
-      }
+        if (homeState is PopularProductLoadingState ||
+            homeState is FeaturedProductLoadingState) {
+          print('circular');
+          return Center(
+              child: SpinKitPouringHourglass(
+            color: Theme.of(context).primaryColor,
+            size: 50,
+          ));
+        }
 
-      return Container(
-        decoration: kContainerDecoration,
-        child: LayoutBuilder(builder: (context, constraints) {
-          return SingleChildScrollView(
-            physics: ScrollPhysics(),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: constraints.maxHeight),
-              child: Column(children: [
+        return Container(
+          decoration: kContainerDecoration,
+          child: LayoutBuilder(builder: (context, constraints) {
+            return SingleChildScrollView(
+              physics: ScrollPhysics(),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: Column(children: [
 
-                CategoryCard(),
-                BannerList(),
+                  CategoryCard(),
+                  BannerList(),
 
-                ListHeader(
-                  headerName: 'Deal of the Day ',
-                  leftWidget: TimerApp(),
-                  onTap: () {},
-                ),
-                DailyDeals(),
-                ListHeader(
-                  headerName: 'Featured Product',
-                  onTap: () {},
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 5,right: 5),
-                  child: Container(
-
-                    color: Colors.white38,
-                    child: GridView.builder(
-
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: featuredproducts.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-
-                          crossAxisCount: 2,
-                          childAspectRatio: .52,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                        ),
-                        itemBuilder: (context, index) {
-                          return ProductList(
-                              product: featuredproducts == null
-                                  ? ''
-                                  : featuredproducts[index],
-                              wish: false);
-                        }),
+                  ListHeader(
+                    headerName: 'Deal of the Day ',
+                    leftWidget: TimerApp(),
+                    onTap: () {},
                   ),
-                ),
-                ListHeader(
-                  headerName: 'Popular Products',
-                  onTap: () {},
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 5,right: 5),
-                  child: Container(
-
-                    color: Colors.white38,
-                    child:  GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: popularproducts.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: .52,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                        ),
-                        itemBuilder: (context, index) {
-                          return ProductList(
-                              product: popularproducts == null
-                                  ? ''
-                                  : popularproducts[index],
-                              wish: false);
-                        }),
+                  DailyDeals(),
+                  ListHeader(
+                    headerName: 'Featured Product',
+                    onTap: () {},
                   ),
-                ),
-              ]),
-            ),
-          );
-        }),
-      );
-    });
+                  Padding(
+                    padding: EdgeInsets.only(left: 5,right: 5),
+                    child: Container(
+
+                      color: Colors.white38,
+                      child: GridView.builder(
+
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: featuredproducts.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+
+                            crossAxisCount: 2,
+                            childAspectRatio: .52,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                          ),
+                          itemBuilder: (context, index) {
+                            return ProductList(
+                                product: featuredproducts == null
+                                    ? ''
+                                    : featuredproducts[index],
+                                wish: false);
+                          }),
+                    ),
+                  ),
+                  ListHeader(
+                    headerName: 'Popular Products',
+                    onTap: () {},
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 5,right: 5),
+                    child: Container(
+
+                      color: Colors.white38,
+                      child:  GridView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: popularproducts.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: .52,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                          ),
+                          itemBuilder: (context, index) {
+                            return ProductList(
+                                product: popularproducts == null
+                                    ? ''
+                                    : popularproducts[index],
+                                wish: false);
+                          }),
+                    ),
+                  ),
+                ]),
+              ),
+            );
+          }),
+        );
+      });
   }
 }
 

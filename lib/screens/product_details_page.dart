@@ -52,8 +52,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     super.initState();
     this.getEmail();
 
-    BlocProvider.of<ProductBloc>(context)
-        .add(FetchProductByProductId(widget.productId));
+    // BlocProvider.of<ProductBloc>(context)
+    //     .add(FetchProductByProductId(widget.productId));
   }
 
   void dispose() {
@@ -263,8 +263,8 @@ class _ProductInfoState extends State<ProductInfo> {
                                 wish.wishlist = widget.product.productId;
                                 wish.username = prefs.getString('email');
                                 if (widget.isFavorited) {
-                                  BlocProvider.of<WishlistBloc>(context).add(
-                                      RemoveProductFromWishlistEvent(wish));
+                                  // BlocProvider.of<WishlistBloc>(context).add(
+                                  //     RemoveProductFromWishlistEvent(wish));
                                   print(
                                       'product is removing from wishlist>>>>>>>>>>>>>');
                                   _toggleFavorite();

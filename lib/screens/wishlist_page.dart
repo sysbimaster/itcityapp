@@ -26,12 +26,12 @@ class _WishlistPageState extends State<WishlistPage> {
     return Scaffold(
       backgroundColor:AppColors.WHITE,
       appBar: AppBar(
-          automaticallyImplyLeading: false,
+
           title: Text(
             'Wishlist',
             style: TextStyle(color: Colors.white),
           ),
-          centerTitle: true,
+
           elevation: 0.0,
           // flexibleSpace: Container(
           //   decoration: BoxDecoration(
@@ -58,26 +58,37 @@ class WishlistSection extends StatefulWidget {
 
 class _WishlistSectionState extends State<WishlistSection> {
   String email;
+  String currency;
   List<CustomerWishlist> wishlist = [];
   Future<String> getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     email = await  prefs.getString('email');;
+    currency = await prefs.getString('currency');
     return email;
   }
   @override
   void initState() {
     super.initState();
     getEmail().then((value) {
-      print("Current User Email" + email);
+      if(value!=null){
+        print("Current User Email" + email);
 
 
-      BlocProvider.of<WishlistBloc>(context).add(FetchWishlistEvent(value));
-      print("email in wishlist page" +value);
+        BlocProvider.of<WishlistBloc>(context).add(FetchWishlistEvent(value,this.currency),);
+        print("email in wishlist page" +value);
+      }else{
+showDialogCart(context);
+      }
+
     });
 
 
   }
-
+  void removeItem(int index) {
+    setState(() {
+      wishlist = List.from(wishlist)..removeAt(index);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WishlistBloc, WishlistState>(builder: (context, state) {
@@ -141,13 +152,13 @@ class _WishlistSectionState extends State<WishlistSection> {
         }
         return CustomScrollView(slivers: [
           SliverPadding(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(5),
             sliver: SliverGrid(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: .6,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
+                childAspectRatio: .55,
+                mainAxisSpacing: 5,
+                crossAxisSpacing: 5,
               ),
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
@@ -188,10 +199,96 @@ class _WishlistSectionState extends State<WishlistSection> {
   FutureOr onGoBack(dynamic value) {
     setState(() {});
   }
-
-  void removeItem(int index) {
-    setState(() {
-      wishlist = List.from(wishlist)..removeAt(index);
-    });
-  }
-}
+  showDialogCart(BuildContext context) async {
+    showDialog(context: context, builder: (_) =>
+    new Dialog(
+      shape:
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      elevation: 0.0,
+      backgroundColor: Colors.transparent,
+      child: Container(
+        margin: EdgeInsets.only(left: 0.0, right: 0.0),
+        child: Stack(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(
+                top: 18.0,
+              ),
+              margin: EdgeInsets.only(top: 13.0, right: 8.0),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(16.0),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 0.0,
+                      offset: Offset(0.0, 0.0),
+                    ),
+                  ]),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Icon(
+                    Icons.account_circle_outlined,
+                    color: Colors.red,
+                    size: 60,
+                  ),
+                  Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: new Text(
+                          "Please Login to view your favorites",
+                          style:
+                          TextStyle(fontSize: 18.0, color: Colors.black),
+                          textAlign: TextAlign.center,),
+                      ) //
+                  ),
+                  SizedBox(height: 24.0),
+                  InkWell(
+                    child: Container(
+                      padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                      decoration: BoxDecoration(
+                        color: Colors.orange,
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(16.0),
+                            bottomRight: Radius.circular(16.0)),
+                      ),
+                      child: Text(
+                        "OK",
+                        style: TextStyle(color: Colors.white, fontSize: 22.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, '/home');
+                    },
+                  )
+                ],
+              ),
+            ),
+            Positioned(
+              right: 0.0,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: CircleAvatar(
+                    radius: 14.0,
+                    backgroundColor: Colors.white,
+                    child: Icon(Icons.close, color: Colors.red),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ));
+  }}

@@ -17,4 +17,5 @@ class CurrencyChanged extends CurrencyState{
   String CurrencyType;
   CurrencyChanged({@required this.price, this.CurrencyType });
 }
+class CurrencyChangedErrorState extends CurrencyState{}
 

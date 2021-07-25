@@ -17,6 +17,7 @@ import 'package:itcity_online_store/components/PopularProducts.dart';
 import 'package:itcity_online_store/components/components.dart';
 import 'package:itcity_online_store/components/computer_collections.dart';
 import 'package:itcity_online_store/components/home_ads_banner.dart';
+import 'package:itcity_online_store/components/home_first_ad.dart';
 import 'package:itcity_online_store/components/mobile_collections.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,23 +39,32 @@ class _HomePageContentNewState extends State<HomePageContentNew> {
   bool isCommon = false;
   void initPref() async {
     prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey("email")) {
-      BlocProvider.of<WishlistBloc>(context)
-          .add(FetchWishlistEvent(prefs.getString("email")));
-    } else {
-      BlocProvider.of<WishlistBloc>(context).add(FetchWishlistEvent(" "));
-    }
+    BlocProvider.of<HomeBloc>(context).add(FetchFeaturedProduct(prefs.getString('currency')));
+    BlocProvider.of<HomeBloc>(context).add(FetchPopularProduct(prefs.getString('currency')));
+    BlocProvider.of<HomeBloc>(context).add(FetchMobileCollections(prefs.getString('currency')));
+    // if (prefs.containsKey("email")) {
+    //   BlocProvider.of<WishlistBloc>(context)
+    //       .add(FetchWishlistEvent(prefs.getString("email"),));
+    // } else {
+    //   BlocProvider.of<WishlistBloc>(context).add(FetchWishlistEvent(" "));
+    // }
+  }
+  @override
+  void initState() {
+    initPref();
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     if (BlocProvider.of<HomeBloc>(context).state is HomeInitial) {
-      BlocProvider.of<HomeBloc>(context).add(FetchHomeAds());
+      //BlocProvider.of<HomeBloc>(context).add(FetchHomeAds());
       //BlocProvider.of<HomeBloc>(context).add(FetchFeaturedProduct());
-      // BlocProvider.of<HomeBloc>(context).add(FetchPopularProduct());
-      //BlocProvider.of<HomeBloc>(context).add(FetchMobileCollections());
-      // BlocProvider.of<HomeBloc>(context).add(FetchHomeAds());
-      initPref();
+     // BlocProvider.of<HomeBloc>(context).add(FetchPopularProduct());
+     // BlocProvider.of<HomeBloc>(context).add(FetchMobileCollections());
+       //BlocProvider.of<HomeBloc>(context).add(FetchHomeAds());
+     // initPref();
     }
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, homeState) {
       print(featuredproducts.length.toString());
@@ -87,7 +97,7 @@ class _HomePageContentNewState extends State<HomePageContentNew> {
               child: Column(children: [
                 BannerList(),
                 CategoryCard(),
-                new HomeAdsBanner(
+                new FirstAdHome(
                   index: 0,
                   imageAds: homeAdImages,
                 ),
@@ -97,21 +107,28 @@ class _HomePageContentNewState extends State<HomePageContentNew> {
                   imageAds: homeAdImages,
                 ),
                 MobileCollections(),
-                new HomeAdsBanner(
+                homeAdImages.length >= 3?
+                HomeAdsBanner(
                   index: 2,
                   imageAds: homeAdImages,
-                ),
+                ):Container(),
+
                 PopularProducts(),
-                new HomeAdsBanner(
+                homeAdImages.length >= 4?
+                HomeAdsBanner(
                   index: 3,
                   imageAds: homeAdImages,
-                ),
-                // HomeAdsBanner(index: 3,),
+                ):Container(),
+
+
                 ComputerCollections(),
-                new HomeAdsBanner(
-                  index: 4,
-                  imageAds: homeAdImages,
-                ),
+                homeAdImages.length >= 5?
+                  HomeAdsBanner(
+                    index: 4,
+                    imageAds: homeAdImages,
+                  ):Container(),
+
+
                 FeaturedProduct()
               ]),
             ),

@@ -47,10 +47,10 @@ class _HomeAdsBannerState extends State<HomeAdsBanner> {
         }
         return widget.imageAds.isNotEmpty ? Container(
 
-          height: MediaQuery.of(context).size.height * .25,
+          height: MediaQuery.of(context).size.width * .40,
           width: MediaQuery.of(context).size.width,
 
-          child: Image.network(widget.imageAds[widget.index]==null ? " " : homeAds + widget.imageAds[widget.index].image,fit: BoxFit.fitWidth,),
+          child: Image.network(widget.imageAds[widget.index]==null ? " " : homeAds + widget.imageAds[widget.index].image,fit: BoxFit.contain,),
 
         ): Center(
             child: SpinKitRipple(
