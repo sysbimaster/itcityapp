@@ -70,7 +70,7 @@ class _OrderSummaryState extends State<OrderSummary> {
                         child:Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Shipping Cost',style: TextStyle(color: AppColors.GREY_TEXT,fontSize: 18,)),
+                            Text('Shipping Charge',style: TextStyle(color: AppColors.GREY_TEXT,fontSize: 18,)),
                             total != null? Text(currency+ ' '+delivery.toStringAsFixed(2),style: TextStyle(color: AppColors.GREY_TEXT,fontSize: 18,)): Text(' ')
 
                           ],

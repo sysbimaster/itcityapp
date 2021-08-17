@@ -1,4 +1,4 @@
-package com.sysbreeze.itcity_online_store
+package com.itcityonlinestore.itcity_online_store
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -49,14 +49,16 @@ class MainPage extends StatelessWidget {
         indicatorSize: TabBarIndicatorSize.label,
         indicatorPadding: EdgeInsets.all(5.0),
         indicatorColor: AppColors.LOGO_ORANGE,
+        labelStyle: TextStyle(fontSize: 9.5),
+
         tabs: [
-          Tab(icon: Icon(Icons.home_outlined)),
-          Tab(icon: Icon(Icons.search_rounded)),
+          Tab(icon: Icon(Icons.home_outlined),text: 'Home',),
+          Tab(icon: Icon(Icons.search_rounded),text: 'Search',),
           Tab(
-            icon: Icon(Icons.apps_outlined),
+            icon: Icon(Icons.apps_outlined),text: 'Categories'
           ),
-          Tab(icon: Icon(Icons.shopping_cart_outlined)),
-          Tab(icon: Icon(Icons.account_circle_outlined)),
+          Tab(icon: Icon(Icons.shopping_cart_outlined),text: 'Cart'),
+          Tab(icon: Icon(Icons.account_circle_outlined),text: 'Profile'),
         ],
       ),
     );

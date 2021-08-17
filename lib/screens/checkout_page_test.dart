@@ -100,7 +100,7 @@ class _CheckOutNewState extends State<CheckOutNew> {
                           ),
                           Padding(
                               padding: EdgeInsets.only(left: 15),
-                              child: Text("KTet",
+                              child: Text("Knet",
                                   style: TextStyle(
                                       fontSize: 17,
                                       color: AppColors.GREY_TEXT))),

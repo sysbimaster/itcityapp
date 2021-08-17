@@ -107,17 +107,17 @@ class _ComputerCollectionsState extends State<ComputerCollections> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(0.0),
                 child: Container(
                   height: MediaQuery.of(context).size.height *.20,
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15),
-                        bottomLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15)),
-                  ),
+                  // decoration: BoxDecoration(
+                  //   borderRadius: BorderRadius.only(
+                  //       topLeft: Radius.circular(15),
+                  //       topRight: Radius.circular(15),
+                  //       bottomLeft: Radius.circular(15),
+                  //       bottomRight: Radius.circular(15)),
+                  // ),
                   child: Image.asset('assets/images/computerCollectionsbanner.png',fit: BoxFit.fill,),
                 ),
               ),

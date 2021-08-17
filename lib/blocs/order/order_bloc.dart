@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:itcity_online_store/api/models/order_details.dart';
 import 'package:itcity_online_store/api/models/order_status_new.dart';
+import 'package:itcity_online_store/api/models/product_order_details.dart';
 import 'package:itcity_online_store/blocs/order/order.dart';
 import 'package:itcity_online_store/api/services/services.dart';
 import 'package:itcity_online_store/api/models/models.dart';
@@ -11,6 +12,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   OrderApi orderApi;
   OrderStatusNew orderStatusNew;
   OrderDetails orderDetails;
+  ProductOrderDetails productOrderDetails;
 
   @override
   Stream<OrderState> mapEventToState(
@@ -34,13 +36,16 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     yield GetOrderDetailsLoadingState();
     try {
       orderDetails = await orderApi.getPurchaseDetailsByOrderId(orderId);
+      productOrderDetails = await orderApi.getPurchaseProductDetailsByOrderId(orderId);
+
 
       if(orderDetails!=null){
-        print(orderDetails.products);
+        print("data>>>"+productOrderDetails.data.length.toString());
+        print(orderDetails.data[0].products);
       }
       yield GetOrderDetailsLoadedState(orderDetails);
     } catch (e) {
-      print(e.toString());
+      print("order trace>>"+e.toString());
       GetOrderDetailsErrorState();
     }
   }

@@ -1,4 +1,41 @@
+import 'dart:convert';
 class OrderDetails {
+  List<Data> data;
+  bool success;
+  List<Null> messages;
+
+  OrderDetails({this.data, this.success, this.messages});
+
+  OrderDetails.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = new List<Data>();
+      json['data'].forEach((v) {
+        data.add(new Data.fromJson(v));
+      });
+    }
+    success = json['success'];
+    // if (json['messages'] != null) {
+    //   messages = new List<Null>();
+    //   json['messages'].forEach((v) {
+    //     messages.add(new Null.fromJson(v));
+    //   });
+    // }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.data != null) {
+      data['data'] = this.data.map((v) => v.toJson()).toList();
+    }
+    data['success'] = this.success;
+    // if (this.messages != null) {
+    //   data['messages'] = this.messages.map((v) => v.toJson()).toList();
+    // }
+    return data;
+  }
+}
+
+class Data {
   int purchaseId;
   int customerId;
   Null orderId;
@@ -10,7 +47,7 @@ class OrderDetails {
   String country;
   String shippingCharge;
 
-  OrderDetails(
+  Data(
       {this.purchaseId,
         this.customerId,
         this.orderId,
@@ -21,12 +58,8 @@ class OrderDetails {
         this.purchaseDate,
         this.country,
         this.shippingCharge});
-  @override
-  String toString() {
-    return toJson().toString();
-  }
 
- OrderDetails.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     purchaseId = json['purchase_id'];
     customerId = json['customer_id'];
     orderId = json['order_id'];
@@ -52,10 +85,5 @@ class OrderDetails {
     data['country'] = this.country;
     data['shipping_charge'] = this.shippingCharge;
     return data;
-  }
-  static List<OrderDetails> listFromJson(List<dynamic> json){
-    return json == null
-        ? List<OrderDetails>()
-        : json.map((value) => OrderDetails.fromJson(value)).toList();
   }
 }

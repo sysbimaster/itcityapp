@@ -97,7 +97,7 @@ class _HomePageContentNewState extends State<HomePageContentNew> {
               child: Column(children: [
                 BannerList(),
                 CategoryCard(),
-                new FirstAdHome(
+                new HomeAdsBanner(
                   index: 0,
                   imageAds: homeAdImages,
                 ),

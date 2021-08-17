@@ -7,6 +7,8 @@ import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:maps_launcher/maps_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'edit_profile_page.dart';
 
@@ -200,14 +202,17 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                          child: Row(
-                            children: [
-                              Image.asset('assets/images/icons/help.png',width: 25,height: 25,),
-                              SizedBox(width: 15,),
-                              Text('Online Help',style: TextStyle(fontSize: 16),),
-                            ],
+                        GestureDetector(
+                          onTap: () => MapsLauncher.launchQuery('IT City Online Store,Habeeb Munawer St, Al Farwaniyah, Kuwait'),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: Row(
+                              children: [
+                                Image.asset('assets/images/icons/help.png',width: 25,height: 25,),
+                                SizedBox(width: 15,),
+                                Text('Store Locator',style: TextStyle(fontSize: 16),),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -254,7 +259,6 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * .14,
                   decoration: BoxDecoration(
                     border:  Border(
                       top: BorderSide(width: 0.5, color: Color(0xFFEEEEEE)),
@@ -298,6 +302,19 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
                             ),
                           ),
                         ),
+                        GestureDetector(
+                          onTap:  () => _onShare(context),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: Row(
+                              children: [
+                                Text('Share App (Android) ',style: TextStyle(fontSize: 16),),
+                              ],
+                            ),
+                          ),
+                        ),
+
+
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
                           child: Row(
@@ -317,4 +334,21 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
       },
     );
   }
+  void _onShare(BuildContext context) async {
+    // A builder is used to retrieve the context immediately
+    // surrounding the ElevatedButton.
+    //
+    // The context's `findRenderObject` returns the first
+    // RenderObject in its descendent tree when it's not
+    // a RenderObjectWidget. The ElevatedButton's RenderObject
+    // has its position and size after it's built.
+    final box = context.findRenderObject() as RenderBox;
+
+
+      await Share.share("Check out this awesome app, Awesome offers and amazing products https://play.google.com/store/apps/details?id=com.itcityonlinestore.itcity_online_store",
+          subject: "IT City Online Store App",
+          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+    }
+
+
 }
