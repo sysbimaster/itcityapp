@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
+import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
 import 'package:itcity_online_store/screens/product_details_new.dart';
@@ -16,7 +17,8 @@ import '../constants.dart';
 class MobileCollectionsCard extends StatefulWidget {
   Product product;
   String currency;
- MobileCollectionsCard({Key key,this.currency,this.product}) : super(key: key);
+  double rrating;
+ MobileCollectionsCard({Key key,this.currency,this.product,this.rrating}) : super(key: key);
 
   @override
   _MobileCollectionsCardState createState() => _MobileCollectionsCardState();
@@ -24,6 +26,8 @@ class MobileCollectionsCard extends StatefulWidget {
 
 class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
   bool _isFavorited = false;
+  double rating;
+
   void _toggleFavorite() {
     setState(() {
       _isFavorited = !_isFavorited;
@@ -179,6 +183,48 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
                       color: AppColors.GREY,
                     )),
                   ),
+                ),
+              ),
+              Positioned(
+                left:8,
+                top: 10,
+
+                child: BlocBuilder<RandomReviewBloc, RandomReviewState>(
+                  builder: (context,state){
+
+                    if(state is RandomReviewLoaded){
+                      this.rating = BlocProvider.of<RandomReviewBloc>(context).ratingReview;
+                      print('rating'+this.rating.toStringAsFixed(1));
+                      return Container(
+                        decoration: BoxDecoration(
+
+                            color: AppColors.WHITE,
+                            borderRadius: BorderRadius.all(Radius.circular(15))
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(Icons.star,color: AppColors.LOGO_ORANGE,size: 20,),
+                              Text(widget.rrating!= null?  widget.rrating.toStringAsFixed(1):rating.toStringAsFixed(1),style: TextStyle(
+                                fontFamily: 'Arial',
+                                // fontFamily: 'RobotoSlab',
+                                fontSize: 14,
+                                //decoration:
+                                //TextDecoration.lineThrough,
+                                color: AppColors.LOGO_BLACK,
+                                // fontWeight: FontWeight.bold,
+                              ),),
+                            ],
+                          ),
+                        ),
+                      );
+
+                    }
+                    return Container();
+
+                  },
                 ),
               )
             ],

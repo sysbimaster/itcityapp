@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:itcity_online_store/api/models/cart.dart';
+import 'package:itcity_online_store/api/models/cart.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/category_page.dart';
@@ -19,21 +21,27 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FlutterStatusbarcolor.setStatusBarColor(AppColors.LOGO_DARK_ORANGE);
-    return Scaffold(
-      body: DefaultTabController(
-        initialIndex: selectedPage,
-        length: 5,
-        child: Scaffold(
-          bottomNavigationBar: menu(),
-          body: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              HomePageNew(),
-              SearchPage(),
-              CategoryPage(),
-              CartPage(),
-              ProfilePageNew(),
-            ],
+    return BlocListener<CartBloc, CartState>(
+      listener: (context, state) {
+
+        // TODO: implement listener
+      },
+      child: Scaffold(
+        body: DefaultTabController(
+          initialIndex: selectedPage,
+          length: 5,
+          child: Scaffold(
+            bottomNavigationBar: menu(),
+            body: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                HomePageNew(),
+                SearchPage(),
+                CategoryPage(),
+                CartPage(),
+                ProfilePageNew(),
+              ],
+            ),
           ),
         ),
       ),
@@ -52,13 +60,13 @@ class MainPage extends StatelessWidget {
         labelStyle: TextStyle(fontSize: 9.5),
 
         tabs: [
-          Tab(icon: Icon(Icons.home_outlined),text: 'Home',),
-          Tab(icon: Icon(Icons.search_rounded),text: 'Search',),
+          Tab(icon: Icon(Icons.home_outlined), text: 'Home',),
+          Tab(icon: Icon(Icons.search_rounded), text: 'Search',),
           Tab(
-            icon: Icon(Icons.apps_outlined),text: 'Categories'
+              icon: Icon(Icons.apps_outlined), text: 'Categories'
           ),
-          Tab(icon: Icon(Icons.shopping_cart_outlined),text: 'Cart'),
-          Tab(icon: Icon(Icons.account_circle_outlined),text: 'Profile'),
+          Tab(icon: Icon(Icons.shopping_cart_outlined), text: 'Cart'),
+          Tab(icon: Icon(Icons.account_circle_outlined), text: 'Profile'),
         ],
       ),
     );

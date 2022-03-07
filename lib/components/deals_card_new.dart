@@ -8,6 +8,7 @@ import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/api/services/currency_api.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/blocs/currency/currency_bloc.dart';
+import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';
 import 'package:itcity_online_store/components/product_rating_review.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
@@ -19,7 +20,8 @@ import '../constants.dart';
 
 class DealsCardNew extends StatefulWidget {
   DealOfTheDay deal;
-  DealsCardNew({Key key, @required this.deal}) : super(key: key);
+  double rrating;
+  DealsCardNew({Key key, @required this.deal,this.rrating}) : super(key: key);
   @override
   _DealsCardNewState createState() => _DealsCardNewState();
 }
@@ -30,6 +32,7 @@ class _DealsCardNewState extends State<DealsCardNew> {
   String currency;
   Currency currencyList = Currency();
   String changedProductPrice = '';
+  double rating;
   bool _isFavorited = false;
   void _toggleFavorite() {
     setState(() {
@@ -60,6 +63,7 @@ class _DealsCardNewState extends State<DealsCardNew> {
     if (currency != 'KWD') {
       //changeCurrency();
     }
+    BlocProvider.of<RandomReviewBloc>(context).add(FetchReview());
     // TODO: implement initState
     super.initState();
   }
@@ -221,11 +225,11 @@ class _DealsCardNewState extends State<DealsCardNew> {
                                                         .deal.productPrice !=
                                                     null
                                                 ?
-                                                    widget.deal.productPrice
+                                                    widget.deal.productPrice.toDouble()
                                                 : 0.0;
                                             cart.currency = this.currency;
                                             BlocProvider.of<CartBloc>(context)
-                                                .add(AddProductToCart(cart));
+                                                .add(AddProductToCart(cart,"deals card"));
                                             print('customer id');
                                           } else {
                                             print('no customer id');
@@ -373,6 +377,48 @@ class _DealsCardNewState extends State<DealsCardNew> {
                           )),
                   ),
                 ),
+              ),
+              Positioned(
+                left:8,
+                top: 8,
+
+                child: BlocBuilder<RandomReviewBloc, RandomReviewState>(
+                  builder: (context,state){
+
+                    if(state is RandomReviewLoaded){
+                      this.rating = BlocProvider.of<RandomReviewBloc>(context).ratingReview;
+                      print('rating'+this.rating.toStringAsFixed(1));
+                      return Container(
+                        decoration: BoxDecoration(
+
+                            color: AppColors.WHITE,
+                            borderRadius: BorderRadius.all(Radius.circular(15))
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(Icons.star,color: AppColors.LOGO_ORANGE,size: 20,),
+                              Text(widget.rrating!= null?  widget.rrating.toStringAsFixed(1):rating.toStringAsFixed(1),style: TextStyle(
+                                fontFamily: 'Arial',
+                                // fontFamily: 'RobotoSlab',
+                                fontSize: 14,
+                                //decoration:
+                                //TextDecoration.lineThrough,
+                                color: AppColors.LOGO_BLACK,
+                                // fontWeight: FontWeight.bold,
+                              ),),
+                            ],
+                          ),
+                        ),
+                      );
+
+                    }
+                    return Container();
+
+                  },
+                ),
               )
             ],
           );
@@ -382,6 +428,7 @@ class _DealsCardNewState extends State<DealsCardNew> {
   }
 
   void navigateLoginPage() {
+    Navigator.canPop(context);
     Route route = MaterialPageRoute(builder: (context) => LoginPageNew());
     Navigator.push(context, route).then(onGoBack);
   }

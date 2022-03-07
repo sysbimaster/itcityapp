@@ -7,7 +7,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiClient {
-  static final String basePath = 'https://api-test.itcityonlinestore.com/api';
+  static final String basePath = 'https://api.itcityonlinestore.com/api';
   static final String imageBasePath = basePath + '/files?filename=';
 
  // FlutterSecureStorage _flutterSecureStorage = FlutterSecureStorage();

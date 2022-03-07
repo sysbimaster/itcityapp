@@ -196,7 +196,7 @@ class WishlistCardState extends State<WishlistCard> {
                                                 ?  widget.wishlist.productPrice
                                                 : 0.0;
                                             BlocProvider.of<CartBloc>(context)
-                                                .add(AddProductToCart(cart));
+                                                .add(AddProductToCart(cart,"wishlist card"));
                                             print('customer id');
                                           } else {
                                             print('no customer id');

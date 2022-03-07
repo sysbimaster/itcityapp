@@ -90,7 +90,29 @@ class _BottomNavigationProductNewState
                             borderRadius: BorderRadius.circular(0),
                           ),
                           onPressed: () {
-                            addProductToCart();
+                            if (userId != null) {
+                              if(widget.quantity != null || widget.quantity > 0 ){
+                                print("widget quantity" + widget.quantity.toString());
+                                addProductToCart();
+
+                                // setState(() {
+                                //   buyNowPressed = true;
+                                // });
+                              }else {
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor: AppColors.LOGO_ORANGE,
+                                  content: Text('Product is Out of Stock'),
+                                  duration: Duration(seconds: 3),
+                                ));
+                              }
+                              //
+                            } else {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return LoginPageNew();
+                                  }));
+                            }
+
                           },
                           child: Container(
                             color: Colors.black,
@@ -113,11 +135,11 @@ class _BottomNavigationProductNewState
     cart.productCount = 1;
     cart.productPrice =
     widget.product.productPrice != null
-        ? widget.product.productPrice
+        ? widget.product.productPrice.toDouble()
         : 0.0;
     cart.currency = this.currency;
     BlocProvider.of<CartBloc>(context)
-        .add(AddProductToCart(cart));
+        .add(AddProductToCart(cart,"bottom nav"));
     print('customer id');  }
   }
 

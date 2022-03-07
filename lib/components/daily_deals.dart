@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/components/deals_card_new.dart';
+import 'package:itcity_online_store/components/list_header.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/deals_full_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -100,7 +103,7 @@ class DealsList extends StatefulWidget {
 
 class _DealsListState extends State<DealsList> {
   List<DealOfTheDay> deals = [];
-
+  Random rnd = new Random();
   @override
   void initState() {
     super.initState();
@@ -158,6 +161,7 @@ class _DealsListState extends State<DealsList> {
                     itemBuilder: (BuildContext context, int index) {
                       return DealsCardNew(
                         deal: deals[index],
+                        rrating: 3.9+ rnd.nextDouble(),
                       );
                     }),
               ),

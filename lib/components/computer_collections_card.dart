@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
+import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
 import 'package:itcity_online_store/screens/product_details_new.dart';
@@ -15,7 +17,9 @@ import '../constants.dart';
 class ComputerCollectionsCard extends StatefulWidget {
   Product product;
   String currency;
- ComputerCollectionsCard({Key key,this.product,this.currency}) : super(key: key);
+  double rrating;
+
+ ComputerCollectionsCard({Key key,this.product,this.currency,this.rrating}) : super(key: key);
 
   @override
   _ComputerCollectionsCardState createState() => _ComputerCollectionsCardState();
@@ -23,11 +27,19 @@ class ComputerCollectionsCard extends StatefulWidget {
 
 class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
   bool _isFavorited = false;
+  double rating;
   void _toggleFavorite() {
     setState(() {
       _isFavorited = !_isFavorited;
     });
   }
+  @override
+  void initState() {
+    BlocProvider.of<RandomReviewBloc>(context).add(FetchReview());
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WishlistBloc, WishlistState>(
@@ -170,7 +182,7 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                                       : 0.0;
                                   cart.currency = widget.currency;
                                   BlocProvider.of<CartBloc>(context)
-                                      .add(AddProductToCart(cart));
+                                      .add(AddProductToCart(cart,"computer collections"));
                                   print('customer id');
                                 } else {
                                   print('no customer id');
@@ -311,6 +323,48 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                     color: AppColors.GREY,
                   )),
                 ),
+              ),
+            ),
+            Positioned(
+              left:8,
+              top: 8,
+
+              child: BlocBuilder<RandomReviewBloc, RandomReviewState>(
+                builder: (context,state){
+
+                  if(state is RandomReviewLoaded){
+                    this.rating = BlocProvider.of<RandomReviewBloc>(context).ratingReview;
+                    print('rating'+this.rating.toStringAsFixed(1));
+                    return Container(
+                      decoration: BoxDecoration(
+
+                          color: AppColors.WHITE,
+                          borderRadius: BorderRadius.all(Radius.circular(15))
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.star,color: AppColors.LOGO_ORANGE,size: 20,),
+                            Text(widget.rrating!= null?  widget.rrating.toStringAsFixed(1):rating.toStringAsFixed(1),style: TextStyle(
+                              fontFamily: 'Arial',
+                              // fontFamily: 'RobotoSlab',
+                              fontSize: 14,
+                              //decoration:
+                              //TextDecoration.lineThrough,
+                              color: AppColors.LOGO_BLACK,
+                              // fontWeight: FontWeight.bold,
+                            ),),
+                          ],
+                        ),
+                      ),
+                    );
+
+                  }
+                  return Container();
+
+                },
               ),
             )
           ],

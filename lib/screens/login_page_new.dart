@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:itcity_online_store/resources/values.dart';
@@ -179,7 +180,69 @@ class _LoginPageNewState extends State<LoginPageNew> {
             //   decoration: kAppBarContainerDecoration,
             // )
         ),
-        body: Container(
+        body: BlocListener<UserBloc, UserState>(
+  listener: (context, state) {
+    if(state is CustomerLoginLoadingState){
+      Loader.show(context,
+          isAppbarOverlay: true,
+          isBottomBarOverlay: false,
+          progressIndicator: CircularProgressIndicator(),
+          themeData:
+          Theme.of(context).copyWith(accentColor: Colors.black38),
+          overlayColor: Colors.black26);
+    }else if(state is CustomerLoginErrorState){
+      Loader.hide();
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  height: 35,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.clear_outlined,
+                    color: AppColors.WHITE,
+                    size: 75,
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  "Something Went Wrong",
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  "Please Try Again Later",
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+              ],
+            );
+          });
+
+    }
+    else {
+      Loader.hide();
+    }
+    // TODO: implement listener
+  },
+  child: Container(
           color: AppColors.LOGO_ORANGE,
          // decoration: kContainerDecoration,
           child: new LayoutBuilder(builder:
@@ -312,7 +375,8 @@ class _LoginPageNewState extends State<LoginPageNew> {
               ),
             );
           }),
-        ));
+        ),
+));
   }
 
   _launchSocial(String url, String fallbackUrl) async {

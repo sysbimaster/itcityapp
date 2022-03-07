@@ -23,7 +23,7 @@ class OrderStatusNew{
   String totalAmnt;
   Null ipAddress;
   Null userAgent;
-  Null remarks;
+  String remarks;
   String createdAt;
   Null updatedAt;
 

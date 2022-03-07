@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,6 +39,7 @@ class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
       _isFavorited = !_isFavorited;
     });
   }
+  Random rnd = new Random();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductBloc, ProductState>(
@@ -149,7 +151,7 @@ class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
                       crossAxisSpacing: 0,
                     ),
                     itemBuilder: (context, index) {
-                      return ProductCard(product: computerCollectionsList[index],currency: widget.currency,);
+                      return ProductCard(product: computerCollectionsList[index],currency: widget.currency,rrating: 3.9+ rnd.nextDouble());
                     }),
               ),
             ),

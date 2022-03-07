@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/services/currency_api.dart';
 import 'package:itcity_online_store/blocs/currency/currency_bloc.dart';
+import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
 import 'package:itcity_online_store/screens/select_country_page.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'blocs/bloc/search_bloc.dart';
+import 'blocs/review/get_review_bloc.dart';
 
 final ProductApi productApi = ProductApi();
 final CartApi cartApi = CartApi();
@@ -72,6 +74,10 @@ class MyApp extends StatelessWidget {
             create: (context) => SearchBloc(productApi),
           ),
           BlocProvider<CurrencyBloc>(create: (context) => CurrencyBloc(currencyApi: currencyApi),
+          ),
+          BlocProvider<RandomReviewBloc>(create: (context) => RandomReviewBloc(productApi: productApi),
+          ),
+          BlocProvider<GetReviewBloc>(create: (context) => GetReviewBloc( productApi),
           ),
         ],
         child: MaterialApp(

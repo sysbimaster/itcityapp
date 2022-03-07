@@ -1,13 +1,18 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:http/http.dart';
 import 'package:itcity_online_store/api/api_client.dart';
+import 'package:itcity_online_store/api/models/MultipleImageModel.dart';
+import 'package:itcity_online_store/api/models/get_review_model.dart';
 import 'package:itcity_online_store/api/models/models.dart';
+import 'package:itcity_online_store/api/models/post_review_model.dart';
 import 'dart:async';
 
 import '../models/models.dart';
 
 class ProductApi {
   final ApiClient _apiClient = ApiClient();
+  Random rnd = new Random();
 
   String _productPath = '/findAllProducts';
   String _categoryPath = '/findAllCategories';
@@ -29,6 +34,9 @@ class ProductApi {
   String _computerCollectionsFullPath = '/findcomputerProductbyCategoryidfull';
   String _featuredProductFullPath ='/featuresproductfull';
   String _popularProductFullPath ='/popularproductfull';
+  String _postReviewPath='/createUserReview';
+  String _fetchReviewPath = '/findProductReviewbyProductId';
+  String _fetchMultiImagesPath = '/getProductImagesbyProductId?product_id=';
 
 
   Future<List<Product>> getproduct() async {
@@ -76,6 +84,11 @@ class ProductApi {
     Response response = await _apiClient.invokeAPI(
         '$_productByProductIdPath?product_id=$id&cur=$currency', 'GET', null);
     return Product.fromJson(jsonDecode(response.body)['data'][0]);
+  }
+  Future<MultipleImageModel> getmultiImagesByProductId(String id) async {
+    Response response = await _apiClient.invokeAPI(
+        '$_fetchMultiImagesPath${id}', 'GET', null);
+    return MultipleImageModel.fromJson(jsonDecode(response.body));
   }
 
   Future<List<ProductStockList>> getProductStockListByProductId(
@@ -150,8 +163,8 @@ class ProductApi {
     return (jsonDecode(response.body)['data']).cast<String>();
   }
 
-  Future search(String term) async {
-    var url = "/searchProductOrBrandOrCategory?value=$term";
+  Future search(String term, String currency) async {
+    var url = "/searchProductOrBrandOrCategory?value=$term&cur=$currency";
     print(url);
     Response response =  await _apiClient.invokeAPI(url, 'GET', null);
     return Product.listFromJson(jsonDecode(response.body)['data']['data']);
@@ -162,5 +175,28 @@ class ProductApi {
         '$_relatedProductByProductBrandPath?product_brand=$brand&cur=$currency', 'GET', null);
         print(response.body);
     return Product.listFromJson(jsonDecode(response.body)['data']['data']);
+  }
+
+  Future<double> getRandomReview() async {
+    double max = 5.0;
+    double min = 3.9;
+    double rating  = min + rnd.nextDouble();
+    if(rating > 5.0){
+      return 5.0;
+    }
+    return min + rnd.nextDouble();
+  }
+
+  Future<PostReviewModel> PostRandomReview(String author,String productId,String text,int rating) async {
+    Response response = await _apiClient.invokeAPI(
+        '$_postReviewPath?author_name=$author&product_id=$productId&text=$text&rating=${rating}', 'POST', null);
+    print(response);
+    return PostReviewModel.fromJson(jsonDecode(response.body));
+  }
+  Future<GetReviewModel> GetReview(String productId) async {
+    Response response = await _apiClient.invokeAPI(
+        '$_fetchReviewPath?product_id=$productId', 'GET', null);
+    print(response);
+    return GetReviewModel.fromJson(jsonDecode(response.body));
   }
 }

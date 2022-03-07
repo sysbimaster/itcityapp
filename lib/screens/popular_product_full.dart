@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +34,7 @@ class _PopularProductsFullState extends State<PopularProductsFull> {
     // TODO: implement initState
     super.initState();
   }
+  Random rnd = new Random();
   bool _isFavorited = false;
   void _toggleFavorite() {
     setState(() {
@@ -150,7 +152,7 @@ class _PopularProductsFullState extends State<PopularProductsFull> {
                       crossAxisSpacing: 0,
                     ),
                     itemBuilder: (context, index) {
-                      return ProductCard(currency: widget.currency,product: popularProductFullList[index],);
+                      return ProductCard(currency: widget.currency,product: popularProductFullList[index],rrating: 3.9+ rnd.nextDouble());
                     }),
               ),
             ),

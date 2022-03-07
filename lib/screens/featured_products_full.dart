@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +33,7 @@ class _FeaturedProductsFullState extends State<FeaturedProductsFull> {
     // TODO: implement initState
     super.initState();
   }
-
+Random rnd = new Random();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductBloc, ProductState>(
@@ -145,7 +146,7 @@ class _FeaturedProductsFullState extends State<FeaturedProductsFull> {
                     ),
                     itemBuilder: (context, index) {
 
-                      return ProductCard(product: featuredProductFullList[index],currency: widget.currency,);
+                      return ProductCard(product: featuredProductFullList[index],currency: widget.currency,rrating: 3.9+ rnd.nextDouble());
                     }),
               ),
             ),

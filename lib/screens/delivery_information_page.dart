@@ -52,7 +52,7 @@ class DeliveryInfoPage extends StatelessWidget {
                           color: Colors.white,
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            '1.Our delivery charge will be 1 kd for all over kuwait.\n2.Delivery time will be within 24 hours.\n3.For Shippment tracking kindly contact our customer care on : 98876585.\n4.If any delay\'s in delivery we will inform you via sms/ phone / email.',
+                            '1.Our delivery charge will be 1 kd for all over kuwait.\n2.Delivery time will be within 24 hours.\n3.For Shippment tracking kindly contact our customer care on : +965 90019287.\n4.If any delay\'s in delivery we will inform you via sms/ phone / email.',
                             textAlign: TextAlign.justify,
                             style: (TextStyle(
                               // fontFamily: 'YanoneKaffeesatz',

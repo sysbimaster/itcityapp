@@ -12,6 +12,7 @@ class ProductErrorState extends ProductState {}
 class ProductByProductIdLoadingState extends ProductState {}
 
 class ProductByProductIdLoadedState extends ProductState {}
+class MultiImageByProductIdLoadedState extends ProductState {}
 
 class ProductByProductIdErrorState extends ProductState {}
 

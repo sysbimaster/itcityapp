@@ -231,11 +231,12 @@ class _OrderSucessNewState extends State<OrderSucessNew> {
                       minWidth: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                       onPressed: (){
-                        if(goHomePressed){
-                          Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
-                        }else {
-                          _requestReview;
-                        }
+                        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                        // if(goHomePressed){
+                        //
+                        // }else {
+                        //   _requestReview;
+                        // }
 
 
                       },

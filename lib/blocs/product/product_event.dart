@@ -40,6 +40,11 @@ class FetchProductByProductId extends ProductEvent {
   final String currency;
   FetchProductByProductId(this.id,this.currency);
 }
+class FetchMultiImageByProductId extends ProductEvent {
+  final String id;
+
+  FetchMultiImageByProductId (this.id);
+}
 
 class FetchProductStockListByProductId extends ProductEvent {
   final String id;

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/components/computer_collections_card.dart';
 import 'package:itcity_online_store/components/list_header.dart';
+
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/computer_collections_full.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
@@ -53,7 +55,7 @@ class _ComputerCollectionsState extends State<ComputerCollections> {
     // TODO: implement initState
     super.initState();
   }
-
+  Random rnd = new Random();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
@@ -132,7 +134,7 @@ class _ComputerCollectionsState extends State<ComputerCollections> {
                     itemCount: computerCollection == null ? 0 : computerCollection.length,
                     itemBuilder: (BuildContext context,int index){
 
-                      return ComputerCollectionsCard(product: computerCollection[index],currency: currency,) ;
+                      return ComputerCollectionsCard(product: computerCollection[index],currency: currency,rrating: 3.9+ rnd.nextDouble()) ;
                     }),
               ),
               SizedBox(

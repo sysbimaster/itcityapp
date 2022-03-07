@@ -51,6 +51,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   }
   Stream<OrderState> _mapCreateOrderToState(
       OrderEvent event, OrderState state, Order order) async* {
+    yield CreateOrderLoadingState();
     try {
       orderStatusNew = await orderApi.createOrder(order);
 
@@ -60,6 +61,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
       yield CreateOrderSuccessState(this.orderStatusNew);
     } catch (e) {
+      yield CreateOrderErrorState();
       print(e.toString());
     }
   }

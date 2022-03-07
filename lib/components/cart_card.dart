@@ -61,10 +61,29 @@ class _CartCardState extends State<CartCard> {
 
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, ustate) {
-        return BlocBuilder<CartBloc, CartState>(builder: (context, state) {
-          if(state is CartDetailsLoadingState||state is RemoveAllProductFromCartLoadingState||state is RemoveProductFromCartLoadingState || state is AddProductToCartLoadingState  ){
-            return SpinKitRing(color:AppColors.LOGO_ORANGE,size: 40,);
-          }
+        return BlocListener<CartBloc, CartState>(
+  listener: (context, state) {
+    if(state is RemoveAllProductFromCartLoadingState||state is RemoveProductFromCartLoadingState || state is AddProductToCartLoadingState  ){
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          });
+    } else if (state is CartDetailsLoadedState){
+      Navigator.canPop(context);
+    }
+
+    // TODO: implement listener
+  },
+  child: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+          // if(state is CartDetailsLoadingState||state is RemoveAllProductFromCartLoadingState||state is RemoveProductFromCartLoadingState || state is AddProductToCartLoadingState  ){
+          //   return Center(child: Text('Checking stocks for you. Please wait',style: TextStyle(
+          //       color: AppColors.LOGO_BLACK,fontSize: 20
+          //   ),));
+          // }
           if(ustate is CustomerInformationLoadedState || ustate is CustomerLoginSuccessState){
             print("if cart customerloginstate");
             if (state is CartDetailsLoadedState){
@@ -226,7 +245,7 @@ class _CartCardState extends State<CartCard> {
                                         state.cartItems[index].cartData,
                                         state.cartItems[index].userId,
                                         state.cartItems[index].productId,
-                                        state.cartItems[index].productCount.toString()
+                                        0.toString()
                                       ));
                                     },
                                     child: Row(
@@ -284,7 +303,15 @@ class _CartCardState extends State<CartCard> {
                     );
                   });
             }else {
-              return SpinKitRing(color: AppColors.LOGO_ORANGE,size: 50,);
+              return Container(child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Almost there!',style: TextStyle(
+                      color: AppColors.GREY_TEXT,fontSize: 25
+                  ),),
+                  SpinKitRing(color: AppColors.LOGO_ORANGE,size: 30,lineWidth: 3,),
+                ],
+              ));
             }
           } else {
             //print("if cart customerloginstate"+  BlocProvider.of<UserBloc>(context).state.toString());
@@ -331,7 +358,8 @@ class _CartCardState extends State<CartCard> {
                 ));
           }
 
-        });
+        }),
+);
       },
     );
   }
@@ -361,6 +389,7 @@ class Counter extends StatefulWidget {
 class _CounterState extends State<CounterTest> {
   int _itemCount = 0;
 
+
   @override
   void initState() {
     // TODO: implement initState
@@ -385,7 +414,7 @@ class _CounterState extends State<CounterTest> {
               onPressed: () {
                 widget.cart.productCount++;
                 BlocProvider.of<CartBloc>(context)
-                    .add(AddProductToCart(widget.cart));
+                    .add(AddProductToCart(widget.cart,"cartpage"));
               }),
         ),
         SizedBox(width: 3),
@@ -404,7 +433,7 @@ class _CounterState extends State<CounterTest> {
               iconSize: 12,
               onPressed: () {
                 widget.cart.productCount--;
-                if (widget.cart.productCount <= 0) {
+                if (widget.cart.productCount <= 1) {
                   // Remove From Cart
                   BlocProvider.of<CartBloc>(context)
                       .add(RemoveProductFromCartEvent(
@@ -455,6 +484,7 @@ class CounterTest extends StatefulWidget {
 
 class _CounterTestState extends State<CounterTest> {
   int _itemCount = 0;
+  bool loading = false;
 
   @override
   void initState() {
@@ -465,7 +495,22 @@ class _CounterTestState extends State<CounterTest> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return BlocListener<CartBloc, CartState>(
+  listener: (context, state) {
+    if(state is AddProductToCartLoadingState || state is CartRefreshLoadingState){setState(() {
+      loading = true;
+
+    });
+    }
+    else {
+      loading = false;
+      Cart cart = BlocProvider.of<CartBloc>(context).currentCartList.firstWhere((element) => element.productId == widget.cart.productId);
+      this._itemCount = cart.productCount;
+    }
+
+    // TODO: implement listener
+  },
+  child: Container(
       height:MediaQuery.of(context).size.height * .04 ,
       constraints: BoxConstraints(
         minWidth: MediaQuery.of(context).size.width * .30,
@@ -482,12 +527,12 @@ class _CounterTestState extends State<CounterTest> {
         children: <Widget>[
           _itemCount != 0
               ? IconButton(
-              icon: Icon(Icons.remove),
+              icon:widget.cart.productCount > 1 ? Icon(Icons.remove) :Icon(Icons.delete_outline),
               iconSize: 20,
               onPressed: () {
                 print('remove 1');
                // widget.cart.productCount--;
-                if (widget.cart.productCount <= 0) {
+                if (widget.cart.productCount <= 1) {
                   // Remove From Cart
                   print('remove 2');
                   BlocProvider.of<CartBloc>(context)
@@ -495,7 +540,7 @@ class _CounterTestState extends State<CounterTest> {
                     widget.cart.cartData,
                     widget.cart.userId,
                     widget.cart.productId,
-                    widget.cart.productCount.toString()
+                    0.toString()
 
                   ));
                 } else{
@@ -543,7 +588,10 @@ class _CounterTestState extends State<CounterTest> {
               ),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10,3, 10, 3),
-                child: Text(_itemCount.toString(),style: TextStyle(fontSize: 20),),
+                child: loading ? SpinKitCircle(
+                  color: AppColors.LOGO_ORANGE,
+                  size: 25,
+                ) : Text(_itemCount.toString(),style: TextStyle(fontSize: 20),),
               )),
 
 
@@ -555,10 +603,11 @@ class _CounterTestState extends State<CounterTest> {
                 widget.cart.productCount = 1;
                widget.cart.currency = widget.currency;
                 BlocProvider.of<CartBloc>(context)
-                    .add(AddProductToCart(widget.cart));
+                    .add(AddProductToCart(widget.cart,"cartpage"));
               }),
         ],
       ),
-    );
+    ),
+);
   }
 }

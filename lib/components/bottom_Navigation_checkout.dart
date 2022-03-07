@@ -5,7 +5,7 @@ import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/screens/OrderSuccessPage.dart';
-import 'package:itcity_online_store/screens/home_page.dart';
+
 
 class BottomNavigation extends StatelessWidget {
   dynamic total = 0;
@@ -175,10 +175,7 @@ class CheckoutDialog extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomePage()),
-                            (route) => false);
+
                       },
                     )
                   ],

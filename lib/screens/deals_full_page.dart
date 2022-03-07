@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,6 +40,7 @@ class _DealsFullPageState extends State<DealsFullPage> {
       _isFavorited = !_isFavorited;
     });
   }
+  Random rnd = new Random();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductBloc, ProductState>(
@@ -162,7 +164,7 @@ class _DealsFullPageState extends State<DealsFullPage> {
                       crossAxisSpacing: 0,
                     ),
                     itemBuilder: (context, index) {
-                      return DealsCardNew(deal: dealsList[index]);
+                      return DealsCardNew(deal: dealsList[index],rrating: 3.9+ rnd.nextDouble());
                     }),
               ),
             ),

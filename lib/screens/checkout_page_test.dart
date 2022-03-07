@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:itcity_online_store/components/address_checkout.dart';
 import 'package:itcity_online_store/components/order_summary.dart';
@@ -41,14 +42,34 @@ class _CheckOutNewState extends State<CheckOutNew> {
     // TODO: implement initState
     super.initState();
   }
+  showLoaderDialog(BuildContext context){
+    AlertDialog alert=AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Container(margin: EdgeInsets.only(left: 7),child:Text("Placing your Order..." )),
+        ],),
+    );
+    showDialog(barrierDismissible: false,
+      context:context,
+      builder:(BuildContext context){
+        return alert;
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: BlocListener<OrderBloc, OrderState>(
   listener: (context, state) {
     print('ordr success state'+ state.toString());
-    if (state is CreateOrderSuccessState) {
+    if(state is CreateOrderLoadingState){
+      print('Loading state worked');
 
+      showLoaderDialog(context);
+    }
+    if (state is CreateOrderSuccessState) {
+      Navigator.canPop(context);
 
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
         return OrderSucessNew(
@@ -58,6 +79,54 @@ class _CheckOutNewState extends State<CheckOutNew> {
       //     context: context,
       //     builder: (BuildContext context) => CheckoutDialog());
 
+
+    }
+    else if (state is CreateOrderErrorState){
+      Navigator.canPop(context);
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  height: 35,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.clear_outlined,
+                    color: AppColors.WHITE,
+                    size: 75,
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  "Something Went Wrong",
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  "Please Try Again Later",
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+              ],
+            );
+          });
+    } else {
 
     }
     // TODO: implement listener}
@@ -224,6 +293,7 @@ class _CheckOutNewState extends State<CheckOutNew> {
                                             AppColors.LOGO_ORANGE),
                                       ),
                                       onPressed: Address ? () {
+
                                         Order order = Order();
                                         order.purchaseId =
                                             state.purchase.purchaseId;

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/blocs/cart/cart_bloc.dart';
 import 'package:itcity_online_store/blocs/cart/cart_event.dart';
 import 'package:itcity_online_store/blocs/cart/cart_state.dart';
+import 'package:itcity_online_store/components/CartCardNew.dart';
 
 import 'package:itcity_online_store/components/components.dart';
 import 'package:itcity_online_store/constants.dart';
@@ -65,7 +66,7 @@ class _CartPageState extends State<CartPage> {
       
         padding: EdgeInsets.symmetric(horizontal: 0,vertical: 0),
         //decoration: kContainerFullDecoration,
-        child:        CartCard(),
+        child:        CartCardNew(),
       ),
     );
   }

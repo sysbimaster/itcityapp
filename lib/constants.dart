@@ -26,11 +26,11 @@ const kContainerFullDecoration = BoxDecoration(
       bottomRight: Radius.circular(15)),
 );
 const String productImage =
-    'https://www.api-test.itcityonlinestore.com/uploads/product/single-product/';
+    'https://www.itcityonlinestore.com/uploads/product/single-product/';
 const String categoryImage =
-    'https://www.api-test.itcityonlinestore.com/uploads/category/app_image/';
+    'https://www.itcityonlinestore.com/uploads/category/app_image/';
 
 const String homeImage =
-    'https://www.api-test.itcityonlinestore.com/uploads/home-slider/';
+    'https://www.itcityonlinestore.com/uploads/home-slider/';
 const String homeAds =
-    'https://www.api-test.itcityonlinestore.com/uploads/ads/';
+    'https://www.itcityonlinestore.com/uploads/ads/';

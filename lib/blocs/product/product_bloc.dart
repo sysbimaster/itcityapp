@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:itcity_online_store/api/models/MultipleImageModel.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/blocs/product/products.dart';
 import 'package:bloc/bloc.dart';
@@ -32,6 +33,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   List<Product> popularProductsFull;
   List<Product> computerCollectionsFull;
   List<Product> featuredProductsFull;
+  MultipleImageModel multipleImageModel;
 
   @override
   Stream<ProductState> mapEventToState(ProductEvent event) async* {
@@ -45,7 +47,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     if (event is FetchProductByProductId) {
       yield* _mapFetchProductByProductIdToState(state, event, event.id,event.currency);
     }
-
+    if (event is FetchMultiImageByProductId) {
+      yield* _mapFetchMultiImageByProductIdToState(state, event, event.id);
+    }
     if (event is FetchProductStockListByProductId) {
       yield* _mapFetchProductStockListByProductIdToState(
           state, event, event.id);
@@ -101,6 +105,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     if(event is FetchFeaturedProductFull){
       yield* _mapFetchFeaturedProductsFullToState(state,event,event.currency);
     }
+
   }
   Stream<ProductState> _mapFetchFeaturedProductsFullToState(
       ProductState state, ProductEvent event,String currency) async* {
@@ -205,6 +210,20 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       // }
 
       yield ProductByProductIdLoadedState();
+    } catch (e) {
+      print("error in loading product>>>>>>>>>>>" + e.toString());
+    }
+  }
+  Stream<ProductState> _mapFetchMultiImageByProductIdToState(
+      ProductState state, ProductEvent event, var id) async* {
+    yield ProductByProductIdLoadingState();
+    try {
+     multipleImageModel = await productApi.getmultiImagesByProductId(id);
+
+      // if (product != null) {
+
+
+      yield MultiImageByProductIdLoadedState();
     } catch (e) {
       print("error in loading product>>>>>>>>>>>" + e.toString());
     }

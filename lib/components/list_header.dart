@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:itcity_online_store/screens/home_page_content.dart';
+
 class ListHeader extends StatefulWidget {
   final String headerName;
   final Function onTap;
@@ -27,9 +27,6 @@ class _ListHeaderState extends State<ListHeader> {
                     fontSize: 25,
                     fontWeight: FontWeight.normal,
                   )))),
-                widget.leftWidget != null?Container(
-                  child: TimerApp()
-                ):Container()
 
           // Padding(
           //   padding: EdgeInsets.fromLTRB(20, 10, 20, 10),

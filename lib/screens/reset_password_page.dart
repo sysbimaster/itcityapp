@@ -165,10 +165,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                               padding:
                                   EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                               onPressed: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return HomePage();
-                                }));
+
                               },
                               child: Text("Submit",
                                   textAlign: TextAlign.center,

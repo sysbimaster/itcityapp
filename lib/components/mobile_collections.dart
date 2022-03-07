@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
+import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';
 import 'package:itcity_online_store/components/mobile_card.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/mobile_collections_full_page.dart';
@@ -29,6 +32,7 @@ class _MobileCollectionsState extends State<MobileCollections> {
     BlocProvider.of<HomeBloc>(context).add(FetchMobileCollections(prefs.getString('currency')));
 
   }
+  Random rnd = new Random();
   String country;
   String currency;
   getCountry() async {
@@ -40,6 +44,7 @@ class _MobileCollectionsState extends State<MobileCollections> {
   }
   @override
   void initState() {
+    BlocProvider.of<RandomReviewBloc>(context).add(FetchReview());
     getCountry();
     //getMobileProducts();
   //  BlocProvider.of<HomeBloc>(context).add(FetchMobileCollections());
@@ -113,7 +118,7 @@ class _MobileCollectionsState extends State<MobileCollections> {
               shrinkWrap: true,
               itemCount: mobileCollection == null ? 0 : mobileCollection.length,
               itemBuilder: (BuildContext context,int index){
-                return MobileCollectionsCard(product: mobileCollection[index],currency: currency,);
+                return MobileCollectionsCard(product: mobileCollection[index],currency: currency,rrating: 3.9+ rnd.nextDouble());
               }),
             ),
           SizedBox(

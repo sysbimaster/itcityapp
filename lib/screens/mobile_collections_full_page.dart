@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,6 +38,7 @@ class _MobileCollectionsFullPageState extends State<MobileCollectionsFullPage> {
       _isFavorited = !_isFavorited;
     });
   }
+  Random rnd = new Random();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductBloc, ProductState>(
@@ -148,7 +150,7 @@ class _MobileCollectionsFullPageState extends State<MobileCollectionsFullPage> {
                       crossAxisSpacing: 0,
                     ),
                     itemBuilder: (context, index) {
-                      return ProductCard(product: mobileList[index],currency: widget.Currency,);
+                      return ProductCard(product: mobileList[index],currency: widget.Currency,rrating: 3.9+ rnd.nextDouble());
                     }),
               ),
             ),

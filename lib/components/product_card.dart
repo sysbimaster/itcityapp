@@ -7,6 +7,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/api/models/product.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
+import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
 import 'package:itcity_online_store/screens/product_details_new.dart';
@@ -17,7 +18,8 @@ import '../constants.dart';
 class ProductCard extends StatefulWidget {
   Product product;
   String currency;
-   ProductCard({Key key,this.product,this.currency}) : super(key: key);
+  double rrating;
+   ProductCard({Key key,this.product,this.currency,this.rrating}) : super(key: key);
 
   @override
   _ProductCardState createState() => _ProductCardState();
@@ -25,6 +27,7 @@ class ProductCard extends StatefulWidget {
 
 class _ProductCardState extends State<ProductCard> {
   bool _isFavorited = false;
+  double rating;
   void _toggleFavorite() {
     setState(() {
       _isFavorited = !_isFavorited;
@@ -41,6 +44,7 @@ class _ProductCardState extends State<ProductCard> {
   // }
   @override
   void initState() {
+    BlocProvider.of<RandomReviewBloc>(context).add(FetchReview());
     //getCountry();
     // TODO: implement initState
     super.initState();
@@ -193,11 +197,11 @@ class _ProductCardState extends State<ProductCard> {
                                           cart.productCount = 1;
                                           cart.productPrice =
                                           widget.product.productPrice != null
-                                              ?  widget.product.productPrice
+                                              ? double.parse(widget.product.productPrice.toString())
                                               : 0.0;
                                           cart.currency = widget.currency;
                                           BlocProvider.of<CartBloc>(context)
-                                              .add(AddProductToCart(cart));
+                                              .add(AddProductToCart(cart,'product_card'));
                                           print('customer id');
                                         } else {
                                           print('no customer id');
@@ -321,6 +325,48 @@ class _ProductCardState extends State<ProductCard> {
                     ? Icon(Icons.favorite,color: AppColors.LOGO_ORANGE,)
                     : Icon(Icons.favorite_border,color: AppColors.GREY,)),
               ),
+            ),
+          ),
+         Positioned(
+            left:8,
+            top: 8,
+
+            child: BlocBuilder<RandomReviewBloc, RandomReviewState>(
+              builder: (context,state){
+
+                if(state is RandomReviewLoaded){
+                  this.rating = BlocProvider.of<RandomReviewBloc>(context).ratingReview;
+                  print('rating'+this.rating.toStringAsFixed(1));
+                  return Container(
+                      decoration: BoxDecoration(
+
+                          color: AppColors.WHITE,
+                          borderRadius: BorderRadius.all(Radius.circular(15))
+                      ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.star,color: AppColors.LOGO_ORANGE,size: 20,),
+                          Text(widget.rrating!= null?  widget.rrating.toStringAsFixed(1):rating.toStringAsFixed(1),style: TextStyle(
+                            fontFamily: 'Arial',
+                            // fontFamily: 'RobotoSlab',
+                            fontSize: 14,
+                            //decoration:
+                            //TextDecoration.lineThrough,
+                            color: AppColors.LOGO_BLACK,
+                           // fontWeight: FontWeight.bold,
+                          ),),
+                        ],
+                      ),
+                    ),
+                  );
+
+                }
+                return Container();
+
+              },
             ),
           )
         ],

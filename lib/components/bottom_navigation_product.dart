@@ -46,7 +46,8 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
   Widget build(BuildContext context) {
     int productQuantity =
         widget.product == null ? 0 : widget.product.productQty;
-    return BlocBuilder<OrderBloc, OrderState>(builder: (context, orderState) {
+    return BlocBuilder<OrderBloc, OrderState>(
+        builder: (context, orderState) {
       return BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
           return BlocBuilder<CartBloc, CartState>(
@@ -143,7 +144,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                         ? widget.product.productPrice
                                         : 0.0;
                                 BlocProvider.of<CartBloc>(context)
-                                    .add(AddProductToCart(cart));
+                                    .add(AddProductToCart(cart,"bottom nav product"));
                                 if (cartState is AddProductToCartLoadingState) {
                                   return (Center(
                                     child: CircularProgressIndicator(),
@@ -206,7 +207,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                         ? widget.product.productPrice
                                         : 0.0;
                                 BlocProvider.of<CartBloc>(context)
-                                    .add(AddProductToCart(cart));
+                                    .add(AddProductToCart(cart,"bottom nav product"));
                                 if (cartState is AddProductToCartLoadingState) {
                                   return (Center(
                                     child: CircularProgressIndicator(),

@@ -406,10 +406,7 @@ class CustomerDialog extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomePage()),
-                                (route) => false);
+
                       },
                     )
                   ],

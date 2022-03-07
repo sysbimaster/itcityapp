@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:itcity_online_store/api/models/cart.dart';
 import 'package:itcity_online_store/api/models/purchase.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/constants.dart';
@@ -26,6 +27,7 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
       this.country = prefs.getString('country');
     });
   }
+  List<Cart> cartItems = [];
   @override
   void initState() {
     getCountry();
@@ -37,13 +39,16 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
     return BlocBuilder<CartBloc , CartState>(
       builder: (context,state){
         if(state is CartDetailsLoadedState){
+          cartItems = state.cartItems;
 
           total = 0;
           state.cartItems.forEach((element) {
             print(element.productName);
             total =total + (element.productPrice * element.productCount);
           });
-          return Container(
+        }
+
+        return Container(
             color: Colors.white,
             height: MediaQuery.of(context).size.height * .25,
             child: Column(
@@ -69,10 +74,10 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
                               "Products",
                               style: TextStyle(color: Colors.black,fontSize: 15,),
                             ),
-                            Text(
-                              state.cartItems.length.toString() + ' items' ,
+                            cartItems != null ?  Text(
+                              cartItems.length.toString() + ' items'  ,
                               style: TextStyle(fontSize: 15, ),
-                            )
+                            ):CircularProgressIndicator()
                           ],
                         ),
                         SizedBox(
@@ -85,10 +90,10 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
                               "Total",
                               style: TextStyle(color: Colors.black,fontSize: 18,),
                             ),
-                            Text( currency != null?
+                           total != null ? Text( currency != null?
                             currency + " " + total.toStringAsFixed(2): 'KWD' + total.toStringAsFixed(2) ,
                               style: TextStyle(fontSize: 20, color: AppColors.LOGO_ORANGE),
-                            )
+                            ):CircularProgressIndicator()
                           ],
                         ),
                       ],
@@ -114,8 +119,8 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
                           foregroundColor: MaterialStateProperty.all<Color>(
                               AppColors.LOGO_ORANGE),
                         ),
-                        onPressed: state.cartItems.length == 0?null: () {
-                          String userId =state.cartItems[0].userId;
+                        onPressed: cartItems.length == 0?null: () {
+                          String userId =cartItems[0].userId;
                           BlocProvider.of<OrderBloc>(context).add(CreatePurchaseForOrderEvent(userId,total,currency));
                           Navigator.push(context, MaterialPageRoute(builder: (context){
                             return CheckOutNew();
@@ -131,8 +136,7 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
               ],
             ),
           );
-        }
-        return Container(height: 10,);
+
       },
     );
   }

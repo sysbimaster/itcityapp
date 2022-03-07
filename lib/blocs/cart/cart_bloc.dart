@@ -13,6 +13,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   List<Cart> cartlistUpdated = [];
   List<Cart> cartUpdated = [];
   List<Cart> currentCartList = [];
+  String page;
   @override
   Stream<CartState> mapEventToState(
     CartEvent event,
@@ -22,7 +23,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       yield* _mapFetchTaxDetailsToState(event, state, event.taxPercentage);
     }
     if (event is AddProductToCart) {
-      yield* _mapAddProductToCartToState(event, state, event.cartInfo);
+      yield* _mapAddProductToCartToState(event, state, event.cartInfo,event.page);
     }
     if (event is RemoveAllProductFromCartEvent) {
       yield* _mapRemoveAllProductFromCartToState(event, state, event.userid);
@@ -32,6 +33,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
     if (event is FetchCartDetailsEvent) {
       yield* _mapFetchCartDetailsToState(event, state, event.userId);
+    }
+    if (event is FetchCartRefreshEvent) {
+      yield* _mapCartRefreshToState(event, state, event.userId);
     }
   }
 
@@ -49,14 +53,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   // TO DO: post request
   Stream<CartState> _mapAddProductToCartToState(
-      AddProductToCart event, CartState state, Cart cartInfo) async* {
+      AddProductToCart event, CartState state, Cart cartInfo,String page) async* {
     yield AddProductToCartLoadingState();
     try {
       final bool cartStatus = await cartApi.addProductToCart(cartInfo);
       status = cartStatus;
       print('add product cartbloc worked' + status.toString());
+      this.page = page;
       yield AddProductToCartSuccessState();
-      this.add(FetchCartDetailsEvent(cartInfo.userId));
+      this.add(FetchCartRefreshEvent(cartInfo.userId));
 
     } catch (e) {
       yield AddProductToCartErrorState();
@@ -65,12 +70,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Stream<CartState> _mapRemoveAllProductFromCartToState(
       CartEvent event, CartState state, var userId) async* {
+    yield AddProductToCartLoadingState();
     try {
       print("Removing all Cart Items"+userId);
       final List<Cart> cart = await cartApi.removeAllProductFromCart(userId);
       cartUpdated = cart;
       this.productCount = Map();
-       this.add(FetchCartDetailsEvent(userId));
+      yield AddProductToCartSuccessState();
+       this.add(FetchCartRefreshEvent(userId));
     } catch (e) {
       print(e);
     }
@@ -78,6 +85,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Stream<CartState> _mapRemoveProductFromCartToState(
       RemoveProductFromCartEvent event, CartState state) async* {
+
     yield AddProductToCartLoadingState();
     try {
       print("Removing one Cart Items"+event.userId);
@@ -85,22 +93,41 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           await cartApi.removeProductFromCart(event.userId, event.cartdata,event.productCount);
       print(response);
       this.productCount.remove(event.productId);
-      this.add(FetchCartDetailsEvent(event.userId));
+      this.add(FetchCartRefreshEvent(event.userId));
     } catch (e) {}
   }
 
   Stream<CartState> _mapFetchCartDetailsToState(
       CartEvent event, CartState state, var userId) async* {
+    yield CartDetailsLoadingState();
     try {
       print("Inside CartBloc method userid is" + userId);
       final List<Cart> cartlist = await cartApi.getCartDetails(userId);
       currentCartList = cartlist;
       print("Inside CartBloc method and cart count is " +
           cartlist.length.toString());
-      cartlist.forEach((element) {
-        print(element.cartData.toString() + ">>>>>>>>>>>>>>>>>>");
-        this.productCount[element.productId] = element.productCount;
-      });
+      // cartlist.forEach((element) {
+      //   print(element.cartData.toString() + ">>>>>>>>>>>>>>>>>>");
+      //   this.productCount[element.productId] = element.productCount;
+      // });
+      yield CartDetailsLoadedState(cartlist);
+    } catch (e) {
+      print(e);
+    }
+  }
+  Stream<CartState> _mapCartRefreshToState(
+      CartEvent event, CartState state, var userId) async* {
+    yield CartRefreshLoadingState();
+    try {
+      print("Inside CartBloc method userid is" + userId);
+      final List<Cart> cartlist = await cartApi.getCartDetails(userId);
+      currentCartList = cartlist;
+      print("Inside CartBloc method and cart count is " +
+          cartlist.length.toString());
+      // cartlist.forEach((element) {
+      //   print(element.cartData.toString() + ">>>>>>>>>>>>>>>>>>");
+      //   this.productCount[element.productId] = element.productCount;
+      // });
       yield CartDetailsLoadedState(cartlist);
     } catch (e) {
       print(e);

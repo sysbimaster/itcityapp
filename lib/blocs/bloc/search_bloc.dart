@@ -26,7 +26,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   Stream<SearchState> search(SearchTermEvent event) async* {
       yield SearchLoadingState();
     try {
-      List<Product> product = await productApi.search(event.term);
+      List<Product> product = await productApi.search(event.term,event.currency);
       yield SearchSuccessState(product);
     } catch (e) {
       print("error in fetching all product>>>>>>>" + e.toString());

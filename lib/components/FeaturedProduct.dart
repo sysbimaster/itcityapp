@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +12,7 @@ import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/featured_products_full.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
 import 'package:itcity_online_store/screens/product_details_new.dart';
-import 'package:itcity_online_store/screens/product_details_page.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
@@ -24,6 +25,7 @@ class FeaturedProduct extends StatefulWidget {
 }
 
 class _FeaturedProductState extends State<FeaturedProduct> {
+  Random rnd = new Random();
   List<Product> featuredProducts = [];
   getFeaturedProducts() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -109,7 +111,7 @@ class _FeaturedProductState extends State<FeaturedProduct> {
                   scrollDirection: Axis.horizontal,
                   itemCount: featuredProducts == null ? 0 : featuredProducts.length,
                   itemBuilder: (BuildContext context,int index){
-                    return ProductCard(product: featuredProducts[index],currency: this.currency,);
+                    return ProductCard(product: featuredProducts[index],currency: this.currency,rrating: 3.9+ rnd.nextDouble(),);
                   }),
             ),
 

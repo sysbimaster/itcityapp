@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
+import 'package:itcity_online_store/components/list_header.dart';
 import 'package:itcity_online_store/components/product_card.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
@@ -25,6 +27,7 @@ class PopularProducts extends StatefulWidget {
 }
 
 class _PopularProductsState extends State<PopularProducts> {
+  Random rnd = new Random();
   List<Product> popularProducts = [];
   getPopularProducts() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -113,7 +116,7 @@ class _PopularProductsState extends State<PopularProducts> {
                   scrollDirection: Axis.horizontal,
                   itemCount: popularProducts == null ? 0 : popularProducts.length,
                   itemBuilder: (BuildContext context,int index){
-                    return ProductCard(currency: currency,product: popularProducts[index],);
+                    return ProductCard(currency: currency,product: popularProducts[index],rrating: 3.9+ rnd.nextDouble());
                   }),
             ),
             SizedBox(

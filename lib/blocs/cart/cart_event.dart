@@ -9,7 +9,8 @@ class FetchTaxDetails extends CartEvent {
 
 class AddProductToCart extends CartEvent {
  final  Cart cartInfo;
-  AddProductToCart(this.cartInfo);
+ String page;
+  AddProductToCart(this.cartInfo,this.page);
 }
 
 class RemoveAllProductFromCartEvent extends CartEvent {
@@ -28,4 +29,8 @@ class RemoveProductFromCartEvent extends CartEvent {
 class FetchCartDetailsEvent extends CartEvent {
   final String userId;
   FetchCartDetailsEvent(this.userId);
+}
+class FetchCartRefreshEvent extends CartEvent {
+  final String userId;
+  FetchCartRefreshEvent(this.userId);
 }
