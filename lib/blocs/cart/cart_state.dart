@@ -40,3 +40,10 @@ class CartDetailsLoadedState extends CartState {
 }
 
 class CartDetailsErrorState extends CartState {}
+
+class CartAddRefreshLoadingState extends CartState {}
+class CartAddRefreshLoadedState extends CartState {
+  List<Cart> cartItems;
+  CartAddRefreshLoadedState(this.cartItems);
+}
+class CartAddRefreshErrorState extends CartState {}

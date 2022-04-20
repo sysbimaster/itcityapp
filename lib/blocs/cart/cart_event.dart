@@ -34,3 +34,8 @@ class FetchCartRefreshEvent extends CartEvent {
   final String userId;
   FetchCartRefreshEvent(this.userId);
 }
+
+class FetchCartAddRefreshEvent extends CartEvent {
+  final String userId;
+  FetchCartAddRefreshEvent(this.userId);
+}

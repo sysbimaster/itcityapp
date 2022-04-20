@@ -68,6 +68,7 @@ dependencies:
   in_app_review: ^2.0.2
   maps_launcher: ^2.0.1
   share_plus: ^2.1.4
+  badges: ^2.0.2
 
 dev_dependencies:
   flutter_test:

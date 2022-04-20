@@ -10,8 +10,10 @@ import 'package:itcity_online_store/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomNavigationCartNew extends StatefulWidget {
-  const BottomNavigationCartNew({Key key}) : super(key: key);
+  BottomNavigationCartNew({Key key,this.cartItems}) : super(key: key);
 
+
+  List<Cart> cartItems;
   @override
   _BottomNavigationCartNewState createState() => _BottomNavigationCartNewState();
 }
@@ -20,6 +22,7 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
   double total=0;
   String country;
   String currency;
+
   getCountry() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -27,26 +30,52 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
       this.country = prefs.getString('country');
     });
   }
-  List<Cart> cartItems = [];
+  List<Cart> cartItemsOld = [];
   @override
   void initState() {
     getCountry();
     // TODO: implement initState
     super.initState();
   }
+
+  Future updateCart() async{
+    for(int i = 0;i<cartItemsOld.length;i++){
+      print(widget.cartItems[i].productName +widget.cartItems[i].productCount.toString());
+      widget.cartItems[i].currency = this.currency;
+      await BlocProvider.of<CartBloc>(context)
+          .add(AddProductToCart( widget.cartItems[i],"cartpage"));
+
+    }
+    return Future<bool>.value(true);
+
+  }
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CartBloc , CartState>(
-      builder: (context,state){
-        if(state is CartDetailsLoadedState){
-          cartItems = state.cartItems;
+    return BlocListener<CartBloc, CartState>(
+  listener: (context, state) {
+    if(state is CartDetailsLoadedState ){
+      cartItemsOld = state.cartItems;
 
-          total = 0;
-          state.cartItems.forEach((element) {
-            print(element.productName);
-            total =total + (element.productPrice * element.productCount);
-          });
-        }
+      total = 0;
+      state.cartItems.forEach((element) {
+        print(element.productName);
+        total =total + (element.productPrice * element.productCount);
+      });
+    }
+    if(state is CartAddRefreshLoadedState){
+      cartItemsOld = state.cartItems;
+
+      total = 0;
+      state.cartItems.forEach((element) {
+        print(element.productName);
+        total =total + (element.productPrice * element.productCount);
+      });
+    }
+    // TODO: implement listener
+  },
+  child: BlocBuilder<CartBloc , CartState>(
+      builder: (context,state){
+
 
         return Container(
             color: Colors.white,
@@ -74,8 +103,8 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
                               "Products",
                               style: TextStyle(color: Colors.black,fontSize: 15,),
                             ),
-                            cartItems != null ?  Text(
-                              cartItems.length.toString() + ' items'  ,
+                            cartItemsOld != null ?  Text(
+                              cartItemsOld.length.toString() + ' items'  ,
                               style: TextStyle(fontSize: 15, ),
                             ):CircularProgressIndicator()
                           ],
@@ -119,12 +148,17 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
                           foregroundColor: MaterialStateProperty.all<Color>(
                               AppColors.LOGO_ORANGE),
                         ),
-                        onPressed: cartItems.length == 0?null: () {
-                          String userId =cartItems[0].userId;
-                          BlocProvider.of<OrderBloc>(context).add(CreatePurchaseForOrderEvent(userId,total,currency));
-                          Navigator.push(context, MaterialPageRoute(builder: (context){
-                            return CheckOutNew();
-                          }));
+                        onPressed: cartItemsOld.length == 0?null: () async {
+
+                              String userId =cartItemsOld[0].userId;
+                              BlocProvider.of<OrderBloc>(context).add(CreatePurchaseForOrderEvent(userId,total,currency));
+                              Navigator.push(context, MaterialPageRoute(builder: (context){
+                                return CheckOutNew();
+                              }));
+
+
+
+
                         },
                         child: Text(
                           "PLACE ORDER",
@@ -138,7 +172,8 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
           );
 
       },
-    );
+    ),
+);
   }
 }
 
@@ -232,6 +267,7 @@ class BottomNavigationCart extends StatelessWidget {
                               AppColors.LOGO_ORANGE),
                         ),
                         onPressed: state.cartItems.length == 0?null: () {
+
                           String userId =state.cartItems[0].userId;
                           BlocProvider.of<OrderBloc>(context).add(CreatePurchaseForOrderEvent(userId,total,currency));
                           Navigator.push(context, MaterialPageRoute(builder: (context){

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -28,8 +29,20 @@ class PopularProductsFull extends StatefulWidget {
 class _PopularProductsFullState extends State<PopularProductsFull> {
   List<Product> popularProductFullList;
   TextEditingController tcontroller = TextEditingController();
+  int cartcount = 0;
+  checkCartCount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(prefs.containsKey('cartcount')){
+      cartcount = await  prefs.getInt('cartcount');
+      setState(()  {
+        print('cart count in mainpage');
+        this.cartcount = cartcount;
+      });
+    }
+  }
   @override
   void initState() {
+    checkCartCount();
     BlocProvider.of<ProductBloc>(context).add(FetchPopularProductsFull(widget.currency));
     // TODO: implement initState
     super.initState();
@@ -43,10 +56,19 @@ class _PopularProductsFullState extends State<PopularProductsFull> {
   }
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductBloc, ProductState>(
+    return BlocListener<CartBloc, CartState>(
+  listener: (context, state) {
+    if(state is CartDetailsLoadedState){
+      setState(() {
+        cartcount = BlocProvider.of<CartBloc>(context).currentCartList.length;
+      });
+    }
+    // TODO: implement listener
+  },
+  child: BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         popularProductFullList = BlocProvider.of<ProductBloc>(context).popularProductsFull;
-        if(state is PopularProductFullLoadingState){
+        if(state is PopularProductFullLoadingState|| state is CartAddRefreshLoadedState){
           return Container(
             width: MediaQuery.of(context).size.width,
             height:MediaQuery.of(context).size.height ,
@@ -76,10 +98,10 @@ class _PopularProductsFullState extends State<PopularProductsFull> {
                   onPressed: () {
                     Navigator.pushNamedAndRemoveUntil(context, '/cart', (route) => false);
                   },
-                  icon: Icon(
+                  icon: cartcount == 0 ?Icon(
                     Icons.shopping_cart_outlined,
                     color: AppColors.WHITE,
-                  ),
+                  ):Badge(child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),badgeColor: AppColors.WHITE,),
                 ),
               ],
               bottom: PreferredSize(
@@ -160,7 +182,8 @@ class _PopularProductsFullState extends State<PopularProductsFull> {
         }
         return Container();
       },
-    );
+    ),
+);
   }
   void navigateLoginPage() {
     Route route = MaterialPageRoute(builder: (context) => LoginPageNew());

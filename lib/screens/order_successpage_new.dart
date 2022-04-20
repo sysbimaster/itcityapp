@@ -305,6 +305,7 @@ class _OrderDetailsSectionState extends State<OrderDetailsSection> {
             color: AppColors.GREY,
             width: MediaQuery.of(context).size.width,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -359,10 +360,8 @@ class _OrderDetailsSectionState extends State<OrderDetailsSection> {
                     ),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * .15,
-                  child: ListView.builder(
+               ListView.builder(
+                 shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: productOrderDetails.data.length,
                     itemBuilder: (context, index) {
@@ -392,7 +391,7 @@ class _OrderDetailsSectionState extends State<OrderDetailsSection> {
                       );
                     },
                   ),
-                ),
+
                 Container(),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),

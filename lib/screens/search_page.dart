@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -37,7 +38,41 @@ class _SearchPageState extends State<SearchPage> {
     return WillPopScope(
       onWillPop: () {
         BlocProvider.of<SearchBloc>(context).add(SearchReset());
-        Navigator.pop(context);
+       // Navigator.canPop(context);
+        showDialog(
+            context: context,
+            builder: (context) {
+              TextEditingController walletcontroller =
+              TextEditingController();
+              return AlertDialog(
+                  title: Text('Logout'),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Are You Sure You want to Exit'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  actions: <Widget>[
+                    ElevatedButton(
+                      onPressed: () async {
+                        SystemNavigator.pop();
+                      },
+                      child: Text('Yes'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('No'),
+                    )
+                  ]);
+            });
       },
       child: BlocListener<CartBloc, CartState>(
   listener: (context, state) {

@@ -49,7 +49,7 @@ class _CategoryPageState extends State<CategoryPage> {
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(5),
               child: Row (
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
 
                     IconButton(onPressed: (){
@@ -89,9 +89,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         ),
                       ),
                     ),
-                    IconButton(onPressed: (){
-                      Navigator.popAndPushNamed(context, '/cart');
-                    }, icon: Icon(Icons.shopping_cart_outlined,color: AppColors.LOGO_ORANGE,)),
+
                   ]),
             ),
           ),

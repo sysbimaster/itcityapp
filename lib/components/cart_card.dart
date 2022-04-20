@@ -497,15 +497,23 @@ class _CounterTestState extends State<CounterTest> {
   Widget build(BuildContext context) {
     return BlocListener<CartBloc, CartState>(
   listener: (context, state) {
-    if(state is AddProductToCartLoadingState || state is CartRefreshLoadingState){setState(() {
+    if(state is AddProductToCartSuccessState){
+
+    }
+    if( state is CartRefreshLoadingState){
+      setState(() {
       loading = true;
 
     });
     }
     else {
       loading = false;
-      Cart cart = BlocProvider.of<CartBloc>(context).currentCartList.firstWhere((element) => element.productId == widget.cart.productId);
-      this._itemCount = cart.productCount;
+     //  Cart cart = BlocProvider.of<CartBloc>(context).currentCartList.firstWhere((element) => element.productId == widget.cart.productId);
+     // setState(() {
+     //   this._itemCount = cart.productCount;
+     // });
+
+
     }
 
     // TODO: implement listener
@@ -527,12 +535,12 @@ class _CounterTestState extends State<CounterTest> {
         children: <Widget>[
           _itemCount != 0
               ? IconButton(
-              icon:widget.cart.productCount > 1 ? Icon(Icons.remove) :Icon(Icons.delete_outline),
+              icon:_itemCount > 1 ? Icon(Icons.remove) :Icon(Icons.delete_outline),
               iconSize: 20,
               onPressed: () {
                 print('remove 1');
                // widget.cart.productCount--;
-                if (widget.cart.productCount <= 1) {
+                if (_itemCount <= 1) {
                   // Remove From Cart
                   print('remove 2');
                   BlocProvider.of<CartBloc>(context)
@@ -545,6 +553,10 @@ class _CounterTestState extends State<CounterTest> {
                   ));
                 } else{
                   print('remove 3');
+                  setState(() {
+                    _itemCount--;
+                  });
+
                   widget.cart.productCount =1;
                   BlocProvider.of<CartBloc>(context)
                       .add(RemoveProductFromCartEvent(
@@ -555,7 +567,7 @@ class _CounterTestState extends State<CounterTest> {
 
                   ));
                 }
-                setState(() => _itemCount--);
+
               })
               : IconButton(
               icon: Icon(Icons.remove),
@@ -599,6 +611,9 @@ class _CounterTestState extends State<CounterTest> {
               icon: Icon(Icons.add),
               iconSize: 20,
               onPressed: () {
+                setState(() {
+                  this._itemCount++;
+                });
 
                 widget.cart.productCount = 1;
                widget.cart.currency = widget.currency;

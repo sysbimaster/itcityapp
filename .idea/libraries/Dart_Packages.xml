@@ -30,6 +30,13 @@
             </list>
           </value>
         </entry>
+        <entry key="badges">
+          <value>
+            <list>
+              <option value="$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/badges-2.0.2/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="bloc">
           <value>
             <list>
@@ -961,6 +968,7 @@
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/asn1lib-1.0.2/lib" />
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.6.1/lib" />
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/autocomplete_textfield-1.7.3/lib" />
+      <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/badges-2.0.2/lib" />
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/bloc-7.1.0/lib" />
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.1.0/lib" />
       <root url="file://$USER_HOME$/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_slider-4.0.0/lib" />

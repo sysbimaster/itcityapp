@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -27,12 +28,7 @@ class ComputerCollectionsFull extends StatefulWidget {
 class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
   List<Product> computerCollectionsList;
   TextEditingController tcontroller = TextEditingController();
-  @override
-  void initState() {
-    BlocProvider.of<ProductBloc>(context).add(FetchComputerCollectionsFull(widget.currency));
-    // TODO: implement initState
-    super.initState();
-  }
+
   bool _isFavorited = false;
   void _toggleFavorite() {
     setState(() {
@@ -40,9 +36,38 @@ class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
     });
   }
   Random rnd = new Random();
+  
+  int cartcount = 0;
+  checkCartCount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(prefs.containsKey('cartcount')){
+      cartcount = await  prefs.getInt('cartcount');
+      setState(()  {
+        print('cart count in mainpage');
+        this.cartcount = cartcount;
+      });
+    }
+  }
+  @override
+  void initState() {
+    checkCartCount();
+    BlocProvider.of<ProductBloc>(context).add(FetchComputerCollectionsFull(widget.currency));
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductBloc, ProductState>(
+    return BlocListener<CartBloc, CartState>(
+  listener: (context, state) {
+
+    if(state is CartDetailsLoadedState|| state is CartAddRefreshLoadedState){
+      setState(() {
+        cartcount = BlocProvider.of<CartBloc>(context).currentCartList.length;
+      });
+    }
+    // TODO: implement listener
+  },
+  child: BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         computerCollectionsList= BlocProvider.of<ProductBloc>(context).computerCollectionsFull;
         if(state is ComputerCollectionsFullLoadingState){
@@ -75,10 +100,10 @@ class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
                   onPressed: () {
                     Navigator.pushNamedAndRemoveUntil(context, '/cart', (route) => false);
                   },
-                  icon: Icon(
+                  icon: cartcount == 0 ?Icon(
                     Icons.shopping_cart_outlined,
                     color: AppColors.WHITE,
-                  ),
+                  ):Badge(child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),badgeColor: AppColors.WHITE,),
                 ),
               ],
               bottom: PreferredSize(
@@ -159,7 +184,8 @@ class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
         }
         return Container();
       },
-    );
+    ),
+);
   }
   void navigateLoginPage() {
     Route route = MaterialPageRoute(builder: (context) => LoginPageNew());

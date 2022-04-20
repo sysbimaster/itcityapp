@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:itcity_online_store/components/components.dart';
@@ -24,17 +25,36 @@ class ProductByCategoryPage extends StatefulWidget {
 
 class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
   TextEditingController tcontroller = TextEditingController();
-
+  int cartcount = 0;
+  checkCartCount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(prefs.containsKey('cartcount')){
+      cartcount = await  prefs.getInt('cartcount');
+      setState(()  {
+        print('cart count in mainpage');
+        this.cartcount = cartcount;
+      });
+    }
+  }
 
   @override
   void initState() {
-
+checkCartCount();
     // TODO: implement initState
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocListener<CartBloc, CartState>(
+  listener: (context, state) {
+    if(state is CartDetailsLoadedState|| state is CartAddRefreshLoadedState){
+      setState(() {
+        cartcount = BlocProvider.of<CartBloc>(context).currentCartList.length;
+      });
+    }
+    // TODO: implement listener
+  },
+  child: Scaffold(
 
         appBar:AppBar(
           backgroundColor: AppColors.LOGO_ORANGE,
@@ -50,10 +70,10 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
               onPressed: () {
                 Navigator.pushNamedAndRemoveUntil(context, '/cart', (route) => false);
               },
-              icon: Icon(
+              icon: cartcount == 0 ?Icon(
                 Icons.shopping_cart_outlined,
                 color: AppColors.WHITE,
-              ),
+              ):Badge(child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),badgeColor: AppColors.WHITE,),
             ),
           ],
           bottom: PreferredSize(
@@ -111,7 +131,8 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
             ),
           ),
         ),
-        body: ProductListByCategory(widget.categoryId,));
+        body: ProductListByCategory(widget.categoryId,)),
+);
   }
 }
 

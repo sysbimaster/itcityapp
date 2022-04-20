@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -27,6 +28,17 @@ class FeaturedProductsFull extends StatefulWidget {
 class _FeaturedProductsFullState extends State<FeaturedProductsFull> {
   List<Product> featuredProductFullList;
   TextEditingController tcontroller = TextEditingController();
+  int cartcount = 0;
+  checkCartCount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(prefs.containsKey('cartcount')){
+      cartcount = await  prefs.getInt('cartcount');
+      setState(()  {
+        print('cart count in mainpage');
+        this.cartcount = cartcount;
+      });
+    }
+  }
   @override
   void initState() {
     BlocProvider.of<ProductBloc>(context).add(FetchFeaturedProductFull(widget.currency));
@@ -36,7 +48,16 @@ class _FeaturedProductsFullState extends State<FeaturedProductsFull> {
 Random rnd = new Random();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductBloc, ProductState>(
+    return BlocListener<CartBloc, CartState>(
+  listener: (context, state) {
+    if(state is CartDetailsLoadedState|| state is CartAddRefreshLoadedState){
+      setState(() {
+        cartcount = BlocProvider.of<CartBloc>(context).currentCartList.length;
+      });
+    }
+    // TODO: implement listener
+  },
+  child: BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         featuredProductFullList = BlocProvider.of<ProductBloc>(context).featuredProductsFull;
         if(state is FeaturedProductFullLoadingState){
@@ -69,10 +90,10 @@ Random rnd = new Random();
                   onPressed: () {
                     Navigator.pushNamedAndRemoveUntil(context, '/cart', (route) => false);
                   },
-                  icon: Icon(
+                  icon:  cartcount == 0 ?Icon(
                     Icons.shopping_cart_outlined,
                     color: AppColors.WHITE,
-                  ),
+                  ):Badge(child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),badgeColor: AppColors.WHITE,),
                 ),
               ],
               bottom: PreferredSize(
@@ -163,7 +184,8 @@ Random rnd = new Random();
               )),
         );
       },
-    );
+    ),
+);
   }
   void navigateLoginPage() {
     Route route = MaterialPageRoute(builder: (context) => LoginPageNew());

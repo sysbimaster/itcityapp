@@ -2,6 +2,7 @@ import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/api/api_client.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:itcity_online_store/api/models/orderHistoryModel.dart';
 import 'package:itcity_online_store/api/models/order_details.dart';
 import 'package:itcity_online_store/api/models/order_status_new.dart';
 import 'package:itcity_online_store/api/models/product_order_details.dart';
@@ -14,6 +15,7 @@ class OrderApi {
   String _getOrderStatusPath = '';
   String _getPurchaseDetails ='/getPurchaseDetailsbyOrderId';
   String _getProductPurchase = '/getpurchaseproductdetailbyorderid';
+  String _getOrderHistoryPath = '/findAllOrderbyCustomerid';
 
   Future<OrderStatusNew> createOrder(Order order) async {
     String url = _createOrderPath + "?customer_id=${order.customerId}&purchase_id=${order.purchaseId}&total_amnt=${order.totalAmount}&cur=${order.currency}&remarks=${order.remarks??" "} ";
@@ -52,5 +54,13 @@ class OrderApi {
     print(response.toString());
 
     return ProductOrderDetails.fromJson(jsonDecode(response.body));
+  }
+
+  Future<OrderHistoryModel> getOrderHistory(String CustId) async {
+    String url = _getOrderHistoryPath+"?customer_id=${CustId}";
+    Response response = await _apiclient.invokeAPI(url, 'GET', {});
+
+    return OrderHistoryModel.fromJson(jsonDecode(response.body));
+
   }
 }

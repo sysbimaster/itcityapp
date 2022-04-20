@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,8 @@ class ProductDetailsNew extends StatefulWidget {
   final String productId;
   bool isFavorited = true;
   Function onFavourite;
+
+
   ProductDetailsNew(
       {Key key,
         @required this.productId,
@@ -35,6 +38,8 @@ class ProductDetailsNew extends StatefulWidget {
       : super(key: key) {
     print("This is Favourired" + this.isFavorited.toString());
   }
+
+
 
   @override
   _ProductDetailsNewState createState() => _ProductDetailsNewState();
@@ -48,6 +53,18 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
   int selected = 0;
   String userId = '';
   MultipleImageModel multipleImageModel;
+
+  int cartcount = 0;
+  checkCartCount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(prefs.containsKey('cartcount')){
+      cartcount = await  prefs.getInt('cartcount');
+      setState(()  {
+        print('cart count in mainpage');
+        this.cartcount = cartcount;
+      });
+    }
+  }
   void getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userId = await prefs.getString('customerId');
@@ -76,6 +93,7 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
   @override
   void initState() {
     BlocProvider.of<RandomReviewBloc>(context).add(FetchReview());
+    checkCartCount();
     getCountry();
     this.getEmail();
 
@@ -257,6 +275,13 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
       Loader.hide();
     }
 
+    if(state is CartDetailsLoadedState|| state is CartAddRefreshLoadedState){
+      setState(() {
+        this.cartcount = BlocProvider.of<CartBloc>(context).currentCartList.length;
+
+      });
+    }
+
     // TODO: implement listener
   },
   child: BlocBuilder<ProductBloc, ProductState>(buildWhen: (pstate, state) {
@@ -327,11 +352,11 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
               onPressed: () {
                 Navigator.pushNamedAndRemoveUntil(context, '/cart', (route) => false);
               },
-              icon: Icon(
+              icon: cartcount == 0 ?Icon(
                 Icons.shopping_cart_outlined,
                 color: AppColors.WHITE,
-              ),
-            ),
+              ):Badge(child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),badgeColor: AppColors.WHITE,),
+    ),
           ],
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(50),

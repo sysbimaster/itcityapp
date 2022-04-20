@@ -84,8 +84,8 @@ class _BottomNavigationProductNewState
                       MaterialButton(
                           color: Colors.black,
                           textColor: Colors.white,
-                          height: 40,
-                          minWidth:MediaQuery.of(context).size.width *.15,
+                          height: 45,
+                          minWidth:MediaQuery.of(context).size.width *.10,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(0),
                           ),
@@ -117,7 +117,7 @@ class _BottomNavigationProductNewState
                           child: Container(
                             color: Colors.black,
                             child: IconButton(
-                              icon: Icon(Icons.shopping_cart_outlined,color: AppColors.LOGO_ORANGE,),
+                              icon: Icon(Icons.shopping_cart_outlined,color: AppColors.LOGO_ORANGE,size: 20,),
                             ),
                           ))
                     ],

@@ -3,6 +3,7 @@ import 'package:itcity_online_store/api/models/models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:itcity_online_store/blocs/cart/cart.dart';
 import 'package:itcity_online_store/api/services/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc(this.cartApi) : super(CartInitial());
@@ -37,6 +38,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     if (event is FetchCartRefreshEvent) {
       yield* _mapCartRefreshToState(event, state, event.userId);
     }
+    if (event is FetchCartAddRefreshEvent) {
+      yield* _mapCartAddRefreshToState(event, state, event.userId);
+    }
   }
 
   Stream<CartState> _mapFetchTaxDetailsToState(
@@ -61,7 +65,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       print('add product cartbloc worked' + status.toString());
       this.page = page;
       yield AddProductToCartSuccessState();
-      this.add(FetchCartRefreshEvent(cartInfo.userId));
+     this.add(FetchCartAddRefreshEvent(cartInfo.userId));
 
     } catch (e) {
       yield AddProductToCartErrorState();
@@ -77,7 +81,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       cartUpdated = cart;
       this.productCount = Map();
       yield AddProductToCartSuccessState();
-       this.add(FetchCartRefreshEvent(userId));
+      this.add(FetchCartAddRefreshEvent(userId));
     } catch (e) {
       print(e);
     }
@@ -85,15 +89,20 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Stream<CartState> _mapRemoveProductFromCartToState(
       RemoveProductFromCartEvent event, CartState state) async* {
+    if(int.parse(event.productCount) == 0){
+      yield RemoveProductFromCartLoadingState();
+    }else {
+      yield AddProductToCartLoadingState();
+    }
 
-    yield AddProductToCartLoadingState();
+
     try {
       print("Removing one Cart Items"+event.userId);
       var response =
           await cartApi.removeProductFromCart(event.userId, event.cartdata,event.productCount);
       print(response);
       this.productCount.remove(event.productId);
-      this.add(FetchCartRefreshEvent(event.userId));
+      this.add(FetchCartAddRefreshEvent(event.userId));
     } catch (e) {}
   }
 
@@ -104,6 +113,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       print("Inside CartBloc method userid is" + userId);
       final List<Cart> cartlist = await cartApi.getCartDetails(userId);
       currentCartList = cartlist;
+      setCartCount(currentCartList.length);
       print("Inside CartBloc method and cart count is " +
           cartlist.length.toString());
       // cartlist.forEach((element) {
@@ -122,6 +132,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       print("Inside CartBloc method userid is" + userId);
       final List<Cart> cartlist = await cartApi.getCartDetails(userId);
       currentCartList = cartlist;
+      setCartCount(currentCartList.length);
       print("Inside CartBloc method and cart count is " +
           cartlist.length.toString());
       // cartlist.forEach((element) {
@@ -132,5 +143,31 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     } catch (e) {
       print(e);
     }
+  }
+
+  Stream<CartState> _mapCartAddRefreshToState(
+      CartEvent event, CartState state, var userId) async* {
+    yield CartAddRefreshLoadingState();
+    try {
+      print("Inside CartBloc method userid is" + userId);
+      final List<Cart> cartlist = await cartApi.getCartDetails(userId);
+      currentCartList = cartlist;
+      setCartCount(currentCartList.length);
+      print("Inside CartBloc method and cart count is " +
+          cartlist.length.toString());
+      // cartlist.forEach((element) {
+      //   print(element.cartData.toString() + ">>>>>>>>>>>>>>>>>>");
+      //   this.productCount[element.productId] = element.productCount;
+      // });
+      yield CartAddRefreshLoadedState(cartlist);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void setCartCount(int cartcount) async {
+    print(cartcount);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('cartcount', cartcount);
   }
 }

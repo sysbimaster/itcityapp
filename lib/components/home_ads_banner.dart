@@ -30,11 +30,14 @@ class _HomeAdsBannerState extends State<HomeAdsBanner> {
       //  widget.imageAds = BlocProvider.of<HomeBloc>(context).homeadslist;
         if (state is HomeAdsLoadingState) {
           print('circular');
-          return Center(
-              child: SpinKitRipple(
-                color: Theme.of(context).primaryColor,
-                size: 50,
-              ));
+          return Container(
+
+            height: MediaQuery.of(context).size.width * .40,
+            width: MediaQuery.of(context).size.width,
+
+            child: Image.asset('assets/images/homebanner.jpeg',fit: BoxFit.contain,),
+
+          );
         } else if(state is HomeAdsErrorState) {
           return InkWell(
             onTap: (){
@@ -52,11 +55,14 @@ class _HomeAdsBannerState extends State<HomeAdsBanner> {
 
           child: Image.network(widget.imageAds[widget.index]==null ? " " : homeAds + widget.imageAds[widget.index].image,fit: BoxFit.contain,),
 
-        ): Center(
-            child: SpinKitRipple(
-              color: Theme.of(context).primaryColor,
-              size: 50,
-            ));
+        ): Container(
+
+          height: MediaQuery.of(context).size.width * .40,
+          width: MediaQuery.of(context).size.width,
+
+          child: Image.asset('assets/images/homebanner.jpeg',fit: BoxFit.contain,),
+
+        );
       },
     );
   }

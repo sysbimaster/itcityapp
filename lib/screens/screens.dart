@@ -6,7 +6,7 @@ export './delivery_information_page.dart';
 export './intro_page.dart';
 export './privacy_policy_page.dart';
 export './product_by_category_page.dart';
-export './profile_page.dart';
+
 export './return_policy_page.dart';
 export './shipping_address_page.dart';
 export './terms&condition_page.dart';

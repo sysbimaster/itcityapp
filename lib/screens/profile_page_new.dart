@@ -5,6 +5,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/api/models/customer_registration.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/resources/values.dart';
+import 'package:itcity_online_store/screens/OrderHistoryPage.dart';
+
 import 'package:itcity_online_store/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:maps_launcher/maps_launcher.dart';
@@ -169,14 +171,25 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                          child: Row(
-                            children: [
-                              Image.asset('assets/images/icons/order.png',width: 25,height: 25,),
-                              SizedBox(width: 15,),
-                              Text('Orders',style: TextStyle(fontSize: 16),),
-                            ],
+                        GestureDetector(
+                          onTap: (){
+                            if(customerInfo.customerId != null ){
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return OrderHistoryPage(custId: customerInfo.customerId.toString(),);
+                                  }));
+                            }
+
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: Row(
+                              children: [
+                                Image.asset('assets/images/icons/order.png',width: 25,height: 25,),
+                                SizedBox(width: 15,),
+                                Text('Orders',style: TextStyle(fontSize: 16),),
+                              ],
+                            ),
                           ),
                         ),
                         GestureDetector(

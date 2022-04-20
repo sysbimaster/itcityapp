@@ -13,11 +13,13 @@ import 'package:itcity_online_store/screens/cart_page.dart';
 
 import 'package:itcity_online_store/screens/main_page.dart';
 import 'package:itcity_online_store/screens/privacy_policy_page.dart';
-import 'package:itcity_online_store/screens/profile_page.dart';
+
+import 'package:itcity_online_store/screens/profile_page_new.dart';
 import 'package:itcity_online_store/screens/return_policy_page.dart';
 import 'package:itcity_online_store/screens/search_page.dart';
 import 'package:itcity_online_store/screens/terms&condition_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:badges/badges.dart';
 
 import 'HomePageContentNew.dart';
 import 'about_us_page.dart';
@@ -33,6 +35,7 @@ class HomePageNew extends StatefulWidget {
 class _HomePageNewState extends State<HomePageNew> {
   String country;
   String currency;
+  int cartcount = 0 ;
   TextEditingController controller = TextEditingController();
   getCountry() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -42,6 +45,11 @@ class _HomePageNewState extends State<HomePageNew> {
       print(prefs.getString('email'));
       BlocProvider.of<UserBloc>(context)
           .add(FetchCustomerInformationEvent(prefs.getString('email')));
+    }
+    if(prefs.containsKey('cartcount')){
+      setState(() {
+        cartcount = prefs.getInt('cartcount');
+      });
     }
   }
 
@@ -255,18 +263,30 @@ class _HomePageNewState extends State<HomePageNew> {
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(context, '/cart', (route) => false);
-            },
-            icon: Icon(
-              Icons.shopping_cart_outlined,
-              color: AppColors.WHITE,
-            ),
-          ),
+
+//           cartcount == null&& cartcount ==0 ?IconButton(
+//             onPressed: () {
+//               Navigator.pushNamedAndRemoveUntil(context, '/cart', (route) => false);
+//             },
+//             icon: Icon(
+//               Icons.shopping_cart_outlined,
+//               color: AppColors.WHITE,
+//             ),
+//           ):Padding(
+//             padding: const EdgeInsets.only(right: 20),
+//             child: Badge(
+//               position: BadgePosition.bottomEnd(),
+//               badgeColor: Colors.white,
+//               badgeContent: Text(cartcount.toString()),
+// child:Icon(
+//   Icons.shopping_cart_outlined,
+//   color: AppColors.WHITE,
+// ) ,
+//             ),
+//           ),
         ],
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(75),
+          preferredSize: Size.fromHeight(78),
           child: Column(children: [
             GestureDetector(
               onTap: () {
@@ -335,11 +355,10 @@ class DrawerData extends StatelessWidget {
     final List<DrawerItem> drawer = [
       DrawerItem('Profile', Icons.account_circle, () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ProfilePage();
+          return ProfilePageNew();
         }));
       }),
-      DrawerItem('Language', Icons.language, () {}),
-      DrawerItem('Currency', Icons.money, () {}),
+
       DrawerItem('About Us', Icons.card_membership, () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return AboutUsPage();
