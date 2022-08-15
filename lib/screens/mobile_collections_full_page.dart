@@ -9,7 +9,7 @@ import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/components/product_card.dart';
 import 'package:itcity_online_store/resources/values.dart';
-import 'package:itcity_online_store/screens/product_details_new.dart';
+
 import 'package:itcity_online_store/screens/search_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,7 +33,7 @@ class _MobileCollectionsFullPageState extends State<MobileCollectionsFullPage> {
     if(prefs.containsKey('cartcount')){
       cartcount = await  prefs.getInt('cartcount');
       setState(()  {
-        print('cart count in mainpage');
+
         this.cartcount = cartcount;
       });
     }
@@ -81,7 +81,7 @@ class _MobileCollectionsFullPageState extends State<MobileCollectionsFullPage> {
         }
         if(state is MobileCollectionsFullLoadedState|| state is ProductByProductIdLoadedState||state is RelatedProductByProductBrandLoadedState){
           mobileList = BlocProvider.of<ProductBloc>(context).mobileCollectionsFull;
-          print('deallist length'+mobileList.length.toString());
+
           return Scaffold(
             backgroundColor: AppColors.WHITE,
             appBar: AppBar(
@@ -170,7 +170,7 @@ class _MobileCollectionsFullPageState extends State<MobileCollectionsFullPage> {
                       crossAxisCount: 2,
                       childAspectRatio: .60,
                       mainAxisSpacing: 5,
-                      crossAxisSpacing: 0,
+                      crossAxisSpacing: 5,
                     ),
                     itemBuilder: (context, index) {
                       return ProductCard(product: mobileList[index],currency: widget.Currency,rrating: 3.9+ rnd.nextDouble());

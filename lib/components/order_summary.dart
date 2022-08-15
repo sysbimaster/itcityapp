@@ -36,7 +36,7 @@ class _OrderSummaryState extends State<OrderSummary> {
     return BlocBuilder<OrderBloc, OrderState>(
   builder: (context, state) {
     if(state is CreatePurchaseSuccessState){
-      print('this is working');
+
       total =
           state.purchase.productSubTotal;
       delivery = state.purchase.ShippingCharge;

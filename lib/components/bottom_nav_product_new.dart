@@ -62,9 +62,7 @@ class _BottomNavigationProductNewState
                                 print("widget quantity" + widget.quantity.toString());
                                 addProductToCart();
                                 this.buyNowPressed = true;
-                                // setState(() {
-                                //   buyNowPressed = true;
-                                // });
+
                               }else {
                                 Scaffold.of(context).showSnackBar(SnackBar(
                                   backgroundColor: AppColors.LOGO_ORANGE,
@@ -92,7 +90,7 @@ class _BottomNavigationProductNewState
                           onPressed: () {
                             if (userId != null) {
                               if(widget.quantity != null || widget.quantity > 0 ){
-                                print("widget quantity" + widget.quantity.toString());
+
                                 addProductToCart();
 
                                 // setState(() {
@@ -140,7 +138,7 @@ class _BottomNavigationProductNewState
     cart.currency = this.currency;
     BlocProvider.of<CartBloc>(context)
         .add(AddProductToCart(cart,"bottom nav"));
-    print('customer id');  }
+  }
   }
 
 

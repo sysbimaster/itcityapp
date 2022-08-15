@@ -13,8 +13,9 @@ import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/blocs/bloc/search_bloc.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';
+import 'package:itcity_online_store/components/CartCardNew.dart';
 import 'package:itcity_online_store/components/bottom_nav_product_new.dart';
-import 'package:itcity_online_store/components/cart_card.dart';
+
 import 'package:itcity_online_store/components/components.dart';
 import 'package:itcity_online_store/components/product_review_new.dart';
 import 'package:itcity_online_store/components/show_reviews.dart';
@@ -107,9 +108,10 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
     });
 
   }
+  int _current = 0;
   @override
   Widget build(BuildContext context) {
-    int _current = 0;
+
     int value = 0;
   //  FlutterStatusbarcolor.setStatusBarColor(Colors.white);
     return BlocListener<CartBloc, CartState>(
@@ -428,16 +430,16 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                       Container(
                         color: AppColors.WHITE,
                         child: Center(
-                          child:  multipleImageModel.data.length == 0 ? Image.network(
+                          child:  multipleImageModel.data.length <= 1 ? Image.network(
                             product == null
                                 ? ''
                                 : image + product.productImage,
                             fit: BoxFit.none,
                           ) : Container(
 
-                            height: MediaQuery.of(context).size.width /2 ,
+                            height: MediaQuery.of(context).size.height * .39,
                             width: MediaQuery.of(context).size.width,
-                            color: AppColors.WHITE,
+                            color: Colors.white,
                             child: Stack(
                               children: [
                                 Container(
@@ -447,28 +449,33 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                                         .map((item) =>
 
                                     Container(
-                                      width: MediaQuery.of(context).size.width  ,
-                                      child: Image.network(
-                                        item == null ? '' : image + item.images,fit: BoxFit.fitWidth,),
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Center(
+                                        child: Image.network(
+                                          item == null ? '' : image + item.images,fit: BoxFit.none,),
+                                      ),
                                     ))
                                         .toList(),
                                     options: CarouselOptions(
                                         autoPlay: false,
-                                        autoPlayInterval: Duration(seconds: 3),
+
                                         autoPlayAnimationDuration: Duration(milliseconds: 250),
                                         autoPlayCurve: Curves.ease,
                                         // enlargeCenterPage: true,
                                         viewportFraction: 1,
-                                        aspectRatio: 2.0,
+                                        aspectRatio: 1.2,
                                         onPageChanged: (index, reason) {
+
                                           setState(() {
+
                                             _current = index;
+
                                           });
                                         }),
                                   ),
                                 ),
                                 Align(
-                                  // heightFactor:,
+                                  // heightFactor:,`
                                   widthFactor: 1,
                                   alignment: Alignment.bottomCenter,
                                   child: Padding(
@@ -476,8 +483,9 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
 
-                                      children: multipleImageModel.data.map((url) {
-                                        int index = multipleImageModel.data.indexOf(url);
+                                      children: multipleImageModel.data.map((item) {
+                                        print(_current);
+                                        int index = multipleImageModel.data.indexOf(item);
                                         return Container(
                                           width: 25.0,
                                           height:3.0,
@@ -487,7 +495,7 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                                             shape: BoxShape.rectangle,
                                             color: _current == index
                                                 ? AppColors.LOGO_ORANGE
-                                                : AppColors.WHITE,
+                                                : Colors.black26,
                                           ),
                                         );
                                       }).toList(),

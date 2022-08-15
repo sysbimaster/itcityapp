@@ -17,7 +17,7 @@ class _CurrencyBarState extends State<CurrencyBar> {
     setState(() {
       this.currency = prefs.getString('currency');
       this.country = prefs.getString('country');
-      print(this.currency);
+
 
     });
 
@@ -45,9 +45,7 @@ class _CurrencyBarState extends State<CurrencyBar> {
           Row(
 
             children: [
-              // Padding(
-              //   padding: EdgeInsets.fromLTRB(18, 2, 0, 2),
-              //     child: Icon(Icons.location_on_outlined,color: Colors.white,)),
+
               Padding(
                 padding: EdgeInsets.fromLTRB(18, 2, 5, 2),
                 child:this.currency != null ? Text("Country : " + this.country,style: TextStyle(

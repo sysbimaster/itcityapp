@@ -13,19 +13,7 @@ class BottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<OrderBloc, OrderState>(
   listener: (context, state) {
-    // if (state is CreateOrderSuccessState) {
-    //
-    //
-    // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
-    // return OrderSuccessPage(
-    // orderStatus: BlocProvider.of<OrderBloc>(context).orderStatus);
-    // }), (Route<dynamic> route) => false);
-    // // showDialog(
-    // //     context: context,
-    // //     builder: (BuildContext context) => CheckoutDialog());
-    //
-    //
-    // }
+
   },
   child: BlocBuilder<OrderBloc, OrderState>(builder: (context, orderState) {
       if (orderState is CreatePurchaseSuccessState) {
@@ -41,7 +29,7 @@ class BottomNavigation extends StatelessWidget {
                   if (cartState is CartDetailsLoadedState) {
                     total =
                         orderState.purchase.productSubTotal.toStringAsFixed(2);
-                    print(total);
+
                     return Container(
                       color: Colors.white,
                       padding: EdgeInsets.all(8),
@@ -68,7 +56,7 @@ class BottomNavigation extends StatelessWidget {
                 builder: (context, userState) {
                   if (userState is CustomerInformationLoadedState) {
                     bool Address = userState.customerlist.customerAddress != null;
-                    print("Addressbool" + Address.toString() );
+
                     return Container(
                       decoration: kAppBarContainerDecoration,
                       child: MaterialButton(

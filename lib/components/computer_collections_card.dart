@@ -58,10 +58,10 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
           alignment: Alignment.topRight,
           children: [
             Container(
-                height: MediaQuery.of(context).size.height * 50,
+                height: MediaQuery.of(context).size.height * 40,
                 width: MediaQuery.of(context).size.width * .45,
                 child: Column(
-
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SizedBox(
                         height: 15,
@@ -87,8 +87,8 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                           alignment: Alignment.topLeft,
                           child: Text(
                             widget.product == null
-                                ? 'Computer'
-                                : 'Computer',
+                                ? ' '
+                                : ' ',
                             maxLines: 2,
                             // softWrap: false,
                             // overflow: TextOverflow.fade,
@@ -183,9 +183,9 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                                   cart.currency = widget.currency;
                                   BlocProvider.of<CartBloc>(context)
                                       .add(AddProductToCart(cart,"computer collections"));
-                                  print('customer id');
+
                                 } else {
-                                  print('no customer id');
+
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (context) {
@@ -268,14 +268,13 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                     await SharedPreferences.getInstance();
                     if (_isFavorited == true) {
                       Wishlist wish = Wishlist();
-                      print("is favorited"+_isFavorited.toString());
+
                       wish.wishlist =  widget.product.productId;
                       if (prefs.containsKey('email')) {
                         wish.username = prefs.getString('email');
                         BlocProvider.of<WishlistBloc>(context)
                             .add(RemoveProductFromWishlistEvent(wish,widget.currency));
-                        print(
-                            'product is removing from wishlist>>>>>>>>>>>>>');
+
                         _toggleFavorite();
                         if (state is RemoveProductFromWishlistLoadingState)
                           return (Center(
@@ -283,7 +282,7 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                           ));
                       }
                     } else if (_isFavorited == false) {
-                      print("is favorited"+_isFavorited.toString());
+
                       //  final storage = new FlutterSecureStorage();
                       SharedPreferences prefs =
                       await SharedPreferences.getInstance();
@@ -297,7 +296,7 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                           BlocProvider.of<WishlistBloc>(context)
                               .add(AddProductToWishlist(wish));
                           _toggleFavorite();
-                          print(_isFavorited.toString());
+
                           if (state is AddProductToWishlistLoadingState) {
                             return (Center(
                               child: CircularProgressIndicator(),
@@ -334,7 +333,7 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
 
                   if(state is RandomReviewLoaded){
                     this.rating = BlocProvider.of<RandomReviewBloc>(context).ratingReview;
-                    print('rating'+this.rating.toStringAsFixed(1));
+
                     return Container(
                       decoration: BoxDecoration(
 

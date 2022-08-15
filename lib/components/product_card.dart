@@ -33,15 +33,7 @@ class _ProductCardState extends State<ProductCard> {
       _isFavorited = !_isFavorited;
     });
   }
-  // String country;
-  // String currency;
-  // getCountry() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     this.currency = prefs.getString('currency');
-  //     this.country = prefs.getString('country');
-  //   });
-  // }
+
   @override
   void initState() {
     BlocProvider.of<RandomReviewBloc>(context).add(FetchReview());
@@ -202,9 +194,9 @@ class _ProductCardState extends State<ProductCard> {
                                           cart.currency = widget.currency;
                                           BlocProvider.of<CartBloc>(context)
                                               .add(AddProductToCart(cart,'product_card'));
-                                          print('customer id');
+
                                         } else {
-                                          print('no customer id');
+
                                           showModalBottomSheet(
                                               context: context,
                                               builder: (context) {
@@ -283,7 +275,7 @@ class _ProductCardState extends State<ProductCard> {
                       wish.username = prefs.getString('email');
                       BlocProvider.of<WishlistBloc>(context)
                           .add(RemoveProductFromWishlistEvent(wish,widget.currency));
-                      print('product is removing from wishlist>>>>>>>>>>>>>');
+
                       _toggleFavorite();
                       if (state is RemoveProductFromWishlistLoadingState)
                         return (Center(child: CircularProgressIndicator(),));
@@ -302,7 +294,7 @@ class _ProductCardState extends State<ProductCard> {
                         BlocProvider.of<WishlistBloc>(context)
                             .add(AddProductToWishlist(wish));
                         _toggleFavorite();
-                        print("isfavourited"+_isFavorited.toString());
+
                         if (state
                         is AddProductToWishlistLoadingState) {
                           return (Center(
@@ -336,7 +328,7 @@ class _ProductCardState extends State<ProductCard> {
 
                 if(state is RandomReviewLoaded){
                   this.rating = BlocProvider.of<RandomReviewBloc>(context).ratingReview;
-                  print('rating'+this.rating.toStringAsFixed(1));
+
                   return Container(
                       decoration: BoxDecoration(
 
@@ -394,7 +386,7 @@ class _ProductCardState extends State<ProductCard> {
   }
   FutureOr onGoBacktwo(dynamic value) {
     BlocProvider.of<ProductBloc>(context).add(FetchFeaturedProductFull(widget.currency));
-    print('ongoback2 run');
+
 
   }
 }

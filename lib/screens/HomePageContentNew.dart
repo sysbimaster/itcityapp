@@ -15,10 +15,13 @@ import 'package:itcity_online_store/blocs/wishlist/wishlist_bloc.dart';
 import 'package:itcity_online_store/blocs/wishlist/wishlist_event.dart';
 import 'package:itcity_online_store/components/FeaturedProduct.dart';
 import 'package:itcity_online_store/components/PopularProducts.dart';
+import 'package:itcity_online_store/components/category_card.dart';
+
+
 import 'package:itcity_online_store/components/components.dart';
 import 'package:itcity_online_store/components/computer_collections.dart';
 import 'package:itcity_online_store/components/home_ads_banner.dart';
-import 'package:itcity_online_store/components/home_first_ad.dart';
+
 import 'package:itcity_online_store/components/mobile_collections.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -61,33 +64,16 @@ class _HomePageContentNewState extends State<HomePageContentNew> {
   @override
   Widget build(BuildContext context) {
     if (BlocProvider.of<HomeBloc>(context).state is HomeInitial) {
-      //BlocProvider.of<HomeBloc>(context).add(FetchHomeAds());
-      //BlocProvider.of<HomeBloc>(context).add(FetchFeaturedProduct());
-     // BlocProvider.of<HomeBloc>(context).add(FetchPopularProduct());
-     // BlocProvider.of<HomeBloc>(context).add(FetchMobileCollections());
-       //BlocProvider.of<HomeBloc>(context).add(FetchHomeAds());
-     // initPref();
+
     }
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, homeState) {
-      print(featuredproducts.length.toString());
+
       homeAdImages = BlocProvider.of<HomeBloc>(context).homeadslist;
       featuredproducts = BlocProvider.of<HomeBloc>(context).featuredProduct;
       popularproducts = BlocProvider.of<HomeBloc>(context).popularProduct;
       wishlist = BlocProvider.of<WishlistBloc>(context).customerWishlist;
       mobileCollections = BlocProvider.of<HomeBloc>(context).mobileColletions;
 
-      print('State of home =>' + homeState.toString());
-      // print('State of homeads =>' + homeAdImages[0].image);
-
-      // if (homeState is PopularProductLoadingState ||
-      //     homeState is FeaturedProductLoadingState ) {
-      //   print('circular');
-      //   return Center(
-      //       child: SpinKitRipple(
-      //         color: Theme.of(context).primaryColor,
-      //         size: 50,
-      //       ));
-      // }
 
       return BlocListener<CartBloc, CartState>(
   listener: (context, state) {
@@ -107,7 +93,7 @@ class _HomePageContentNewState extends State<HomePageContentNew> {
         showModalBottomSheet(
             context: context,
             builder: (context) {
-              // print("model run 1");
+
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -151,7 +137,7 @@ class _HomePageContentNewState extends State<HomePageContentNew> {
                                     AppColors.LOGO_ORANGE),
                               ),
                               onPressed: () {
-                                print("pop clicked");
+
                                 Navigator.of(context).pop();
                               },
                               child: Text(
@@ -285,7 +271,9 @@ class _HomePageContentNewState extends State<HomePageContentNew> {
                 HomeAdsBanner(
                   index: 3,
                   imageAds: homeAdImages,
-                ):Container(),
+                ):Container(
+                  height: 10,
+                ),
 
 
                 ComputerCollections(),
@@ -293,7 +281,9 @@ class _HomePageContentNewState extends State<HomePageContentNew> {
                   HomeAdsBanner(
                     index: 4,
                     imageAds: homeAdImages,
-                  ):Container(),
+                  ):Container(
+                  height: 10,
+                ),
 
 
                 FeaturedProduct()
@@ -345,7 +335,7 @@ class _TimerAppState extends State<TimerApp> {
             if (eventTime != DateTime.now()) {
               timeDiff = timeDiff - 1;
             } else {
-              print('Times up!');
+
             }
           });
         }

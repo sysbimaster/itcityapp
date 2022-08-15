@@ -48,10 +48,10 @@ class _RelatedProductState extends State<RelatedProduct> {
       List<Product> products =
           BlocProvider.of<ProductBloc>(context).relatedProduct;
 
-      print('State of related product list =>' + state.toString());
+
 
       if (state is RelatedProductByProductBrandLoadingState) {
-        print('circular');
+
         return Center(
           child: CircularProgressIndicator(),
         );

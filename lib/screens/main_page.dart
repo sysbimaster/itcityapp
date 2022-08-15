@@ -40,7 +40,7 @@ class _MainPageState extends State<MainPage> {
     if(prefs.containsKey('cartcount')){
       cartcount = await  prefs.getInt('cartcount');
       setState(()  {
-        print('cart count in mainpage');
+
        this.cartcount = cartcount;
       });
     }
@@ -53,7 +53,7 @@ class _MainPageState extends State<MainPage> {
         if(state is CartDetailsLoadedState || state is CartAddRefreshLoadedState){
           setState(() {
             this.cartcount = BlocProvider.of<CartBloc>(context).currentCartList.length;
-            print('cart count in mainpage'+this.cartcount.toString());
+
           });
         }
 

@@ -31,7 +31,7 @@ class _ProductRatingNewState extends State<ProductRatingNew> {
     // this.country = prefs.getString('country');
     if (prefs.containsKey("email")) {
       this.authorname = prefs.getString('email');
-      print(prefs.getString('email'));
+
       BlocProvider.of<UserBloc>(context)
           .add(FetchCustomerInformationEvent(prefs.getString('email')));
     }

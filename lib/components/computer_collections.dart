@@ -61,9 +61,9 @@ class _ComputerCollectionsState extends State<ComputerCollections> {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         computerCollection =  BlocProvider.of<HomeBloc>(context).computerCollections;
-        print("computer length"+computerCollection.length.toString());
+
         if (state is ComputerCollectionLoadingState) {
-          print('circular');
+
           return Center(
               child: SpinKitRipple(
                 color: Theme.of(context).primaryColor,
@@ -113,13 +113,7 @@ class _ComputerCollectionsState extends State<ComputerCollections> {
                 child: Container(
                   height: MediaQuery.of(context).size.height *.20,
                   width: MediaQuery.of(context).size.width,
-                  // decoration: BoxDecoration(
-                  //   borderRadius: BorderRadius.only(
-                  //       topLeft: Radius.circular(15),
-                  //       topRight: Radius.circular(15),
-                  //       bottomLeft: Radius.circular(15),
-                  //       bottomRight: Radius.circular(15)),
-                  // ),
+
                   child: Image.asset('assets/images/computerCollectionsbanner.png',fit: BoxFit.fill,),
                 ),
               ),
@@ -129,7 +123,7 @@ class _ComputerCollectionsState extends State<ComputerCollections> {
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    physics: NeverScrollableScrollPhysics(),
+                  //  physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: computerCollection == null ? 0 : computerCollection.length,
                     itemBuilder: (BuildContext context,int index){

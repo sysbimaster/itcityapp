@@ -19,7 +19,7 @@ class _HomeAdsBannerState extends State<HomeAdsBanner> {
 
   @override
   void initState() {
-  //  BlocProvider.of<HomeBloc>(context).add(FetchHomeAds());
+
     // TODO: implement initState
     super.initState();
   }
@@ -27,9 +27,9 @@ class _HomeAdsBannerState extends State<HomeAdsBanner> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-      //  widget.imageAds = BlocProvider.of<HomeBloc>(context).homeadslist;
+
         if (state is HomeAdsLoadingState) {
-          print('circular');
+
           return Container(
 
             height: MediaQuery.of(context).size.width * .40,

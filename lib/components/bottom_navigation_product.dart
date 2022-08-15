@@ -27,8 +27,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userId = await prefs.getString("customerId");
     token = await prefs.getString("token");
- //   userId = await _flutterSecureStorage.read(key: "customerId");
-  //  token = await _flutterSecureStorage.read(key: "token");
+
   }
 
 
@@ -36,10 +35,8 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
   void initState() {
     super.initState();
     getEmail();
-    print(userId);
-    if (token != null) {
-      print("token in product" + token);
-    }
+
+
   }
 
   @override
@@ -131,7 +128,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                 ));
                               } else {
                                 if (state is CustomerLoginSuccessState || state is CustomerInformationLoadedState) {
-                                print('this method '+ widget.product.productName);
+
                                   widget.quantity = widget.quantity + 1;
                                 Cart cart = Cart();
                                 cart.cartData = widget.product == null
@@ -155,7 +152,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                 bool value =
                                     statusCart == null ? false : statusCart;
                                 if (value) {
-                                  print(' inserted ');
+
                                   Scaffold.of(context).showSnackBar(SnackBar(
                                     content: Text('Product Added to Cart'),
                                     duration: Duration(seconds: 3),
@@ -218,7 +215,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                 bool value =
                                     statusCart == null ? false : statusCart;
                                 if (value) {
-                                  print(' inserted ');
+
                                   Scaffold.of(context).showSnackBar(SnackBar(
                                     content: Text('Product Added to Cart'),
                                     duration: Duration(seconds: 3),
@@ -246,11 +243,5 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
    // Navigator.push(context, route).then(onGoBack);
 
   }
-  FutureOr onGoBack(dynamic value) {
-    //
-    // setState(() {
-    //   BlocProvider.of<ProductBloc>(context)
-    //       .add(FetchProductByProductId(widget.product.productId));
-    // });
-  }
+
 }

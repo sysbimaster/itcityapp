@@ -14,7 +14,7 @@ import 'package:itcity_online_store/screens/product_details_new.dart';
 import 'package:itcity_online_store/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart';
+
 import 'list_header.dart';
 
 class MobileCollections extends StatefulWidget {
@@ -46,8 +46,7 @@ class _MobileCollectionsState extends State<MobileCollections> {
   void initState() {
     BlocProvider.of<RandomReviewBloc>(context).add(FetchReview());
     getCountry();
-    //getMobileProducts();
-  //  BlocProvider.of<HomeBloc>(context).add(FetchMobileCollections());
+
     // TODO: implement initState
     super.initState();
   }
@@ -56,10 +55,10 @@ class _MobileCollectionsState extends State<MobileCollections> {
     return BlocBuilder<HomeBloc, HomeState>(
   builder: (context, state) {
     mobileCollection =  BlocProvider.of<HomeBloc>(context).mobileColletions;
-  //  print("mobile length"+productImage + mobileCollection[0].productImage);
+
 
     if (state is MobileCollectionLoadingState) {
-      print('circular');
+
       return Center(
           child: SpinKitRipple(
             color: Theme.of(context).primaryColor,
@@ -114,10 +113,11 @@ class _MobileCollectionsState extends State<MobileCollections> {
           child: ListView.builder(
 
               scrollDirection: Axis.horizontal,
-              physics: NeverScrollableScrollPhysics(),
+             // physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: mobileCollection == null ? 0 : mobileCollection.length,
               itemBuilder: (BuildContext context,int index){
+
                 return MobileCollectionsCard(product: mobileCollection[index],currency: currency,rrating: 3.9+ rnd.nextDouble());
               }),
             ),

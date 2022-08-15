@@ -122,7 +122,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                                   return ResetPasswordPage();
                                 }));
 
-                                print(_email);
+
                               },
                               child: Text("Send",
                                   textAlign: TextAlign.center,

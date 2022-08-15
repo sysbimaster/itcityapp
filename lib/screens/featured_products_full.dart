@@ -11,11 +11,11 @@ import 'package:itcity_online_store/blocs/product/product_bloc.dart';
 import 'package:itcity_online_store/components/product_card.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
-import 'package:itcity_online_store/screens/product_details_new.dart';
+
 import 'package:itcity_online_store/screens/search_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart';
+
 
 class FeaturedProductsFull extends StatefulWidget {
   String currency;
@@ -106,9 +106,7 @@ Random rnd = new Random();
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
 
-                          // IconButton(onPressed: (){
-                          //   Navigator.of(context).pop();
-                          // }, icon: Icon(Icons.arrow_back_ios,color: AppColors.LOGO_ORANGE,)),
+
                           GestureDetector(
                             onTap: () {
                               Navigator.push(context,

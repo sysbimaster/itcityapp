@@ -40,7 +40,7 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
 
   Future updateCart() async{
     for(int i = 0;i<cartItemsOld.length;i++){
-      print(widget.cartItems[i].productName +widget.cartItems[i].productCount.toString());
+
       widget.cartItems[i].currency = this.currency;
       await BlocProvider.of<CartBloc>(context)
           .add(AddProductToCart( widget.cartItems[i],"cartpage"));
@@ -58,7 +58,7 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
 
       total = 0;
       state.cartItems.forEach((element) {
-        print(element.productName);
+
         total =total + (element.productPrice * element.productCount);
       });
     }
@@ -67,7 +67,7 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
 
       total = 0;
       state.cartItems.forEach((element) {
-        print(element.productName);
+
         total =total + (element.productPrice * element.productCount);
       });
     }
@@ -178,116 +178,4 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
 }
 
 
-class BottomNavigationCart extends StatelessWidget {
-  double total=0;
-  String currency;
-  BottomNavigationCart(this.currency);
-
-  @override
-  Widget build(BuildContext context) {
-
-    return BlocBuilder<CartBloc , CartState>(
-      builder: (context,state){
-        if(state is CartDetailsLoadedState){
-       
-          total = 0;
-          state.cartItems.forEach((element) {
-            print(element.productName);
-            total =total + (element.productPrice * element.productCount);
-          });
-          return Container(
-            color: Colors.white,
-            height: MediaQuery.of(context).size.height * .25,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: AppColors.GREY,
-                      borderRadius: BorderRadius.all(Radius.circular(15))
-                    ),
-                    child: Column(
-                      children: [
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Products",
-                              style: TextStyle(color: Colors.black,fontSize: 15,),
-                            ),
-                            Text(
-                              state.cartItems.length.toString() + ' items' ,
-                              style: TextStyle(fontSize: 15, ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Total",
-                              style: TextStyle(color: Colors.black,fontSize: 18,),
-                            ),
-                            Text( currency != null?
-                              currency+ " " + total.toStringAsFixed(2): 'KWD' + total.toStringAsFixed(2) ,
-                              style: TextStyle(fontSize: 20, color: AppColors.LOGO_ORANGE),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Container(
-                    constraints: BoxConstraints(
-                      minHeight: MediaQuery.of(context).size.height * .07,
-                    ),
-                    width: MediaQuery.of(context).size.width ,
-                    child: TextButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              AppColors.WHITE),
-                          shape: MaterialStateProperty.all<
-                              RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  side: BorderSide(color: AppColors.LOGO_ORANGE))),
-                          foregroundColor: MaterialStateProperty.all<Color>(
-                              AppColors.LOGO_ORANGE),
-                        ),
-                        onPressed: state.cartItems.length == 0?null: () {
-
-                          String userId =state.cartItems[0].userId;
-                          BlocProvider.of<OrderBloc>(context).add(CreatePurchaseForOrderEvent(userId,total,currency));
-                          Navigator.push(context, MaterialPageRoute(builder: (context){
-                            return CheckoutPage();
-                          }));
-                        },
-                        child: Text(
-                          "PLACE ORDER",
-                          style: TextStyle(fontSize: 20),
-                          textAlign: TextAlign.center,
-                        )),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-        return Container(height: 10,);
-      },
-    );
-
-  }
-}
+//

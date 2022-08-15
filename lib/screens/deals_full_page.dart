@@ -15,7 +15,7 @@ import 'package:itcity_online_store/screens/product_details_new.dart';
 import 'package:itcity_online_store/screens/search_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart';
+
 
 class DealsFullPage extends StatefulWidget {
   String currency;
@@ -35,7 +35,7 @@ class _DealsFullPageState extends State<DealsFullPage> {
     if(prefs.containsKey('cartcount')){
       cartcount = await  prefs.getInt('cartcount');
       setState(()  {
-        print('cart count in mainpage');
+
         this.cartcount = cartcount;
       });
     }
@@ -95,7 +95,7 @@ class _DealsFullPageState extends State<DealsFullPage> {
         }
         if(state is DealFullLoadedState|| state is ProductByProductIdLoadedState||state is RelatedProductByProductBrandLoadedState){
           dealsList = BlocProvider.of<ProductBloc>(context).dealsFullList;
-          print('deallist length'+dealsList.length.toString());
+
           return Scaffold(
             backgroundColor: AppColors.WHITE,
           appBar: AppBar(

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:itcity_online_store/domain/mock/items.dart';
+
 import 'package:itcity_online_store/components/components.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +12,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'login_page.dart';
+
 import 'login_page_new.dart';
 
 class WishlistPage extends StatefulWidget {

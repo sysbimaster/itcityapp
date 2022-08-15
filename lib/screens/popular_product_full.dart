@@ -169,9 +169,9 @@ class _PopularProductsFullState extends State<PopularProductsFull> {
                     itemCount: popularProductFullList.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: .65,
+                      childAspectRatio: .60,
                       mainAxisSpacing: 5,
-                      crossAxisSpacing: 0,
+                      crossAxisSpacing: 5,
                     ),
                     itemBuilder: (context, index) {
                       return ProductCard(currency: widget.currency,product: popularProductFullList[index],rrating: 3.9+ rnd.nextDouble());

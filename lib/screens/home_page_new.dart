@@ -9,9 +9,7 @@ import 'package:itcity_online_store/blocs/user/user_state.dart';
 import 'package:itcity_online_store/components/currency_bar.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:itcity_online_store/screens/cart_page.dart';
 
-import 'package:itcity_online_store/screens/main_page.dart';
 import 'package:itcity_online_store/screens/privacy_policy_page.dart';
 
 import 'package:itcity_online_store/screens/profile_page_new.dart';
@@ -19,7 +17,7 @@ import 'package:itcity_online_store/screens/return_policy_page.dart';
 import 'package:itcity_online_store/screens/search_page.dart';
 import 'package:itcity_online_store/screens/terms&condition_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:badges/badges.dart';
+
 
 import 'HomePageContentNew.dart';
 import 'about_us_page.dart';
@@ -42,7 +40,7 @@ class _HomePageNewState extends State<HomePageNew> {
     this.currency = prefs.getString('currency');
     this.country = prefs.getString('country');
     if (prefs.containsKey("email")) {
-      print(prefs.getString('email'));
+
       BlocProvider.of<UserBloc>(context)
           .add(FetchCustomerInformationEvent(prefs.getString('email')));
     }
@@ -67,10 +65,10 @@ class _HomePageNewState extends State<HomePageNew> {
   void initState() {
     check().then((intenet) {
       if (intenet != null && intenet) {
-        print('internetConnection');
+
         getCountry();
       } else {
-        print(' No internetConnection');
+
         showDialog<void>(
           context: context,
           builder: (BuildContext context) => NoInternetDialog(),
@@ -92,161 +90,6 @@ class _HomePageNewState extends State<HomePageNew> {
   Widget build(BuildContext context) {
     return BlocListener<CartBloc, CartState>(
   listener: (context, state) {
-    // if (state is AddProductToCartLoadingState) {
-    //   Loader.show(context,
-    //       isAppbarOverlay: true,
-    //       isBottomBarOverlay: false,
-    //       progressIndicator: CircularProgressIndicator(),
-    //       themeData:
-    //       Theme.of(context).copyWith(accentColor: Colors.black38),
-    //       overlayColor: Colors.black26);
-    // } else if (state is AddProductToCartSuccessState) {
-    //   Loader.hide();
-    //   showModalBottomSheet(
-    //       context: context,
-    //       builder: (context) {
-    //        // print("model run 1");
-    //         return Padding(
-    //           padding: const EdgeInsets.all(8.0),
-    //           child: Column(
-    //             crossAxisAlignment: CrossAxisAlignment.center,
-    //             mainAxisSize: MainAxisSize.min,
-    //             children: <Widget>[
-    //               SizedBox(
-    //                 height: 25,
-    //               ),
-    //               Text(
-    //                 "Product added to Cart",
-    //                 style: TextStyle(fontSize: 27),
-    //                 textAlign: TextAlign.center,
-    //               ),
-    //               SizedBox(
-    //                 height: 25,
-    //               ),
-    //               Row(
-    //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //                 children: [
-    //                   Container(
-    //                     constraints: BoxConstraints(
-    //                       minHeight:
-    //                       MediaQuery.of(context).size.height * .07,
-    //                     ),
-    //                     width: MediaQuery.of(context).size.width * .35,
-    //                     child: TextButton(
-    //                         style: ButtonStyle(
-    //                           backgroundColor:
-    //                           MaterialStateProperty.all<Color>(
-    //                               AppColors.WHITE),
-    //                           shape: MaterialStateProperty.all<
-    //                               RoundedRectangleBorder>(
-    //                               RoundedRectangleBorder(
-    //                                   borderRadius:
-    //                                   BorderRadius.circular(10.0),
-    //                                   side: BorderSide(
-    //                                       color: AppColors.LOGO_ORANGE))),
-    //                           foregroundColor:
-    //                           MaterialStateProperty.all<Color>(
-    //                               AppColors.LOGO_ORANGE),
-    //                         ),
-    //                         onPressed: () {
-    //                           print("pop clicked");
-    //                           Navigator.of(context).pop();
-    //                         },
-    //                         child: Text(
-    //                           "CONTINUE SHOPPING",
-    //                           style: TextStyle(fontSize: 16),
-    //                           textAlign: TextAlign.center,
-    //                         )),
-    //                   ),
-    //                   Container(
-    //                     constraints: BoxConstraints(
-    //                       minHeight:
-    //                       MediaQuery.of(context).size.height * .07,
-    //                     ),
-    //                     width: MediaQuery.of(context).size.width * .35,
-    //                     child: TextButton(
-    //                         style: ButtonStyle(
-    //                           backgroundColor:
-    //                           MaterialStateProperty.all<Color>(
-    //                               AppColors.LOGO_ORANGE),
-    //                           shape: MaterialStateProperty.all<
-    //                               RoundedRectangleBorder>(
-    //                               RoundedRectangleBorder(
-    //                                   borderRadius:
-    //                                   BorderRadius.circular(10.0),
-    //                                   side: BorderSide(
-    //                                       color: AppColors.LOGO_ORANGE))),
-    //                           foregroundColor:
-    //                           MaterialStateProperty.all<Color>(
-    //                               AppColors.WHITE),
-    //                         ),
-    //                         onPressed: () {
-    //                           Navigator.pushNamedAndRemoveUntil(
-    //                               context, "/cart", (route) => false);
-    //                         },
-    //                         child: Text(
-    //                           "GO TO CART",
-    //                           style: TextStyle(fontSize: 16),
-    //                           textAlign: TextAlign.center,
-    //                         )),
-    //                   )
-    //                 ],
-    //               ),
-    //               SizedBox(
-    //                 height: 35,
-    //               ),
-    //             ],
-    //           ),
-    //         );
-    //       });
-    // } else if (state is AddProductToCartErrorState) {
-    //   Loader.hide();
-    //   showModalBottomSheet(
-    //       context: context,
-    //       builder: (context) {
-    //         return Column(
-    //           crossAxisAlignment: CrossAxisAlignment.center,
-    //           mainAxisSize: MainAxisSize.min,
-    //           children: <Widget>[
-    //             SizedBox(
-    //               height: 35,
-    //             ),
-    //             Container(
-    //               decoration: BoxDecoration(
-    //                 color: Colors.red,
-    //                 shape: BoxShape.circle,
-    //               ),
-    //               child: Icon(
-    //                 Icons.clear_outlined,
-    //                 color: AppColors.WHITE,
-    //                 size: 75,
-    //               ),
-    //             ),
-    //             SizedBox(
-    //               height: 25,
-    //             ),
-    //             Text(
-    //               "Something Went Wrong",
-    //               style: TextStyle(fontSize: 18),
-    //               textAlign: TextAlign.center,
-    //             ),
-    //             SizedBox(
-    //               height: 15,
-    //             ),
-    //             Text(
-    //               "Please Try Again Later",
-    //               style: TextStyle(fontSize: 18),
-    //               textAlign: TextAlign.center,
-    //             ),
-    //             SizedBox(
-    //               height: 35,
-    //             ),
-    //           ],
-    //         );
-    //       });
-    // } else {
-    //   Loader.hide();
-    // }
 
     // TODO: implement listener}
   },
@@ -264,26 +107,7 @@ class _HomePageNewState extends State<HomePageNew> {
         centerTitle: true,
         actions: [
 
-//           cartcount == null&& cartcount ==0 ?IconButton(
-//             onPressed: () {
-//               Navigator.pushNamedAndRemoveUntil(context, '/cart', (route) => false);
-//             },
-//             icon: Icon(
-//               Icons.shopping_cart_outlined,
-//               color: AppColors.WHITE,
-//             ),
-//           ):Padding(
-//             padding: const EdgeInsets.only(right: 20),
-//             child: Badge(
-//               position: BadgePosition.bottomEnd(),
-//               badgeColor: Colors.white,
-//               badgeContent: Text(cartcount.toString()),
-// child:Icon(
-//   Icons.shopping_cart_outlined,
-//   color: AppColors.WHITE,
-// ) ,
-//             ),
-//           ),
+//
         ],
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(78),
@@ -345,11 +169,9 @@ class DrawerData extends StatelessWidget {
       prefs.remove('email');
       prefs.remove('isRegistered');
       prefs.remove('customerId');
-      // await _flutterSecureStorage.delete(key: 'token');
-      // await _flutterSecureStorage.delete(key: 'email');
-      // await _flutterSecureStorage.delete(key: 'isRegistered');
+
       BlocProvider.of<UserBloc>(context).add(UserLogoutEvent());
-      print('remove token............................');
+
     }
 
     final List<DrawerItem> drawer = [

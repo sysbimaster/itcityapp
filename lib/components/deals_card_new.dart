@@ -9,7 +9,7 @@ import 'package:itcity_online_store/api/services/currency_api.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/blocs/currency/currency_bloc.dart';
 import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';
-import 'package:itcity_online_store/components/product_rating_review.dart';
+
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
 import 'package:itcity_online_store/screens/product_details_new.dart';
@@ -51,7 +51,7 @@ class _DealsCardNewState extends State<DealsCardNew> {
   changeCurrency() async {
     Currency changeCurrency = await currencyApi.getChangedCurrency(
         'KWD', this.currency, widget.deal.productPriceOffer);
-    print("changed currency" + changeCurrency.result.toString());
+
     setState(() {
       this.currencyList = changeCurrency;
     });
@@ -230,9 +230,9 @@ class _DealsCardNewState extends State<DealsCardNew> {
                                             cart.currency = this.currency;
                                             BlocProvider.of<CartBloc>(context)
                                                 .add(AddProductToCart(cart,"deals card"));
-                                            print('customer id');
+
                                           } else {
-                                            print('no customer id');
+
                                             showModalBottomSheet(
                                                 context: context,
                                                 builder: (context) {
@@ -321,14 +321,13 @@ class _DealsCardNewState extends State<DealsCardNew> {
                           await SharedPreferences.getInstance();
                       if (_isFavorited == true) {
                         Wishlist wish = Wishlist();
-                        print("is favorited"+_isFavorited.toString());
+
                         wish.wishlist = widget.deal.productId;
                         if (prefs.containsKey('email')) {
                           wish.username = prefs.getString('email');
                           BlocProvider.of<WishlistBloc>(context)
                               .add(RemoveProductFromWishlistEvent(wish,this.currency));
-                          print(
-                              'product is removing from wishlist>>>>>>>>>>>>>');
+
                           _toggleFavorite();
                           if (state is RemoveProductFromWishlistLoadingState)
                             return (Center(
@@ -336,8 +335,8 @@ class _DealsCardNewState extends State<DealsCardNew> {
                             ));
                         }
                       } else if (_isFavorited == false) {
-                        print("is favorited"+_isFavorited.toString());
-                        //  final storage = new FlutterSecureStorage();
+
+
                         SharedPreferences prefs =
                             await SharedPreferences.getInstance();
                         if (prefs.containsKey('email')) {
@@ -350,7 +349,7 @@ class _DealsCardNewState extends State<DealsCardNew> {
                             BlocProvider.of<WishlistBloc>(context)
                                 .add(AddProductToWishlist(wish));
                             _toggleFavorite();
-                            print(_isFavorited.toString());
+
                             if (state is AddProductToWishlistLoadingState) {
                               return (Center(
                                 child: CircularProgressIndicator(),
@@ -387,7 +386,7 @@ class _DealsCardNewState extends State<DealsCardNew> {
 
                     if(state is RandomReviewLoaded){
                       this.rating = BlocProvider.of<RandomReviewBloc>(context).ratingReview;
-                      print('rating'+this.rating.toStringAsFixed(1));
+
                       return Container(
                         decoration: BoxDecoration(
 

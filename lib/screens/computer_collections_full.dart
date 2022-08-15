@@ -11,11 +11,11 @@ import 'package:itcity_online_store/blocs/product/product_bloc.dart';
 import 'package:itcity_online_store/components/product_card.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
-import 'package:itcity_online_store/screens/product_details_new.dart';
+
 import 'package:itcity_online_store/screens/search_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart';
+
 
 class ComputerCollectionsFull extends StatefulWidget {
   String currency;
@@ -43,7 +43,7 @@ class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
     if(prefs.containsKey('cartcount')){
       cartcount = await  prefs.getInt('cartcount');
       setState(()  {
-        print('cart count in mainpage');
+
         this.cartcount = cartcount;
       });
     }
@@ -84,7 +84,7 @@ class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
         }
         if(state is ComputerCollectionsFullLoadedState|| state is ProductByProductIdLoadedState||state is RelatedProductByProductBrandLoadedState){
           computerCollectionsList= BlocProvider.of<ProductBloc>(context).computerCollectionsFull;
-          print('deallist length'+computerCollectionsList.length.toString());
+
           return Scaffold(
             backgroundColor: AppColors.WHITE,
             appBar: AppBar(

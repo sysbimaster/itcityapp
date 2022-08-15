@@ -40,7 +40,7 @@ class _ShowReviewsState extends State<ShowReviews> {
         if (state is FetchReviewLoaded) {
           this.getReviewModel =
               BlocProvider.of<GetReviewBloc>(context).getReviewModel;
-          print(getReviewModel.data.length);
+
 
           return Container(
             width: MediaQuery.of(context).size.width,

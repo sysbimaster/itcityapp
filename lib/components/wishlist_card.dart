@@ -10,7 +10,7 @@ import 'package:itcity_online_store/constants.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
 import 'package:itcity_online_store/screens/product_details_new.dart';
-import 'package:itcity_online_store/screens/screens.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WishlistCard extends StatefulWidget {
@@ -197,9 +197,9 @@ class WishlistCardState extends State<WishlistCard> {
                                                 : 0.0;
                                             BlocProvider.of<CartBloc>(context)
                                                 .add(AddProductToCart(cart,"wishlist card"));
-                                            print('customer id');
+
                                           } else {
-                                            print('no customer id');
+
                                             showModalBottomSheet(
                                                 context: context,
                                                 builder: (context) {
@@ -278,7 +278,7 @@ class WishlistCardState extends State<WishlistCard> {
                         wish.username = prefs.getString('email');
                         BlocProvider.of<WishlistBloc>(context)
                             .add(RemoveProductFromWishlistEvent(wish,this.currency));
-                        print('product is removing from wishlist>>>>>>>>>>>>>');
+
                         _toggleFavorite();
                         if (state is RemoveProductFromWishlistLoadingState)
                           return (Center(child: CircularProgressIndicator(),));
@@ -297,7 +297,7 @@ class WishlistCardState extends State<WishlistCard> {
                           BlocProvider.of<WishlistBloc>(context)
                               .add(AddProductToWishlist(wish));
                           _toggleFavorite();
-                          print("isfavourited"+_isFavorited.toString());
+
                           if (state
                           is AddProductToWishlistLoadingState) {
                             return (Center(
@@ -346,7 +346,7 @@ class WishlistCardState extends State<WishlistCard> {
   }
   FutureOr onGoBacktwo(dynamic value) {
     BlocProvider.of<ProductBloc>(context).add(FetchFeaturedProductFull(currency));
-    print('ongoback2 run');
+
 
   }
 }

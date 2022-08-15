@@ -29,7 +29,7 @@ class _BannerListState extends State<BannerList> {
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
       image = BlocProvider.of<HomeBloc>(context).image;
       if (state is HomeImagesLoadingState) {
-        print('circular');
+
         return Center(
                 child: SpinKitRipple(
                   color: Theme.of(context).primaryColor,
@@ -57,19 +57,7 @@ class _BannerListState extends State<BannerList> {
               child: CarouselSlider(
                 items: image
                     .map((item) =>
-                        // Container(
-                        //       height: 150.0,
-                        //       width: 360.0,
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                        //         color: Colors.white,
-                        //         image: DecorationImage(
-                        //           image: NetworkImage(
-                        //               item == null ? '' : homeImage + item.imageName),
-                        //           fit: BoxFit.fill,
-                        //         ),
-                        //       ),
-                        //     ),
+
                         GestureDetector(
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) {

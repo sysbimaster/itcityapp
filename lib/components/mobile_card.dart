@@ -128,14 +128,13 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
                       await SharedPreferences.getInstance();
                       if (_isFavorited == true) {
                         Wishlist wish = Wishlist();
-                        print("is favorited"+_isFavorited.toString());
+
                         wish.wishlist =  widget.product.productId;
                         if (prefs.containsKey('email')) {
                           wish.username = prefs.getString('email');
                           BlocProvider.of<WishlistBloc>(context)
                               .add(RemoveProductFromWishlistEvent(wish,widget.currency));
-                          print(
-                              'product is removing from wishlist>>>>>>>>>>>>>');
+
                           _toggleFavorite();
                           if (state is RemoveProductFromWishlistLoadingState)
                             return (Center(
@@ -143,8 +142,7 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
                             ));
                         }
                       } else if (_isFavorited == false) {
-                        print("is favorited"+_isFavorited.toString());
-                        //  final storage = new FlutterSecureStorage();
+
                         SharedPreferences prefs =
                         await SharedPreferences.getInstance();
                         if (prefs.containsKey('email')) {
@@ -157,7 +155,7 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
                             BlocProvider.of<WishlistBloc>(context)
                                 .add(AddProductToWishlist(wish));
                             _toggleFavorite();
-                            print(_isFavorited.toString());
+
                             if (state is AddProductToWishlistLoadingState) {
                               return (Center(
                                 child: CircularProgressIndicator(),
@@ -194,7 +192,7 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
 
                     if(state is RandomReviewLoaded){
                       this.rating = BlocProvider.of<RandomReviewBloc>(context).ratingReview;
-                      print('rating'+this.rating.toStringAsFixed(1));
+
                       return Container(
                         decoration: BoxDecoration(
 
@@ -209,13 +207,11 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
                               Icon(Icons.star,color: AppColors.LOGO_ORANGE,size: 20,),
                               Text(widget.rrating!= null?  widget.rrating.toStringAsFixed(1):rating.toStringAsFixed(1),style: TextStyle(
                                 fontFamily: 'Arial',
-                                // fontFamily: 'RobotoSlab',
+
                                 fontSize: 14,
-                                //decoration:
-                                //TextDecoration.lineThrough,
+
                                 color: AppColors.LOGO_BLACK,
-                                // fontWeight: FontWeight.bold,
-                              ),),
+                                                         ),),
                             ],
                           ),
                         ),

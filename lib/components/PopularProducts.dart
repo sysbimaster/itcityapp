@@ -67,9 +67,9 @@ class _PopularProductsState extends State<PopularProducts> {
         });
       }
       popularProducts = BlocProvider.of<HomeBloc>(context).popularProduct;
-      // print('state of deal>>>>>' + state.toString());
+
       if(state is PopularProductLoadingState){
-        print('popular loading');
+
         return Center(
             child: SpinKitRipple(
               color: Theme.of(context).primaryColor,
@@ -77,7 +77,7 @@ class _PopularProductsState extends State<PopularProducts> {
             ));
       }
 
-      // print('deals length=>>>>>>>>' + deals.length.toString());
+
 
       return Container(
 
@@ -108,9 +108,7 @@ class _PopularProductsState extends State<PopularProducts> {
             ),
             Container(
              height: MediaQuery.of(context).size.height * .40,
-              constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height * .40,
-              ),
+
 
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,

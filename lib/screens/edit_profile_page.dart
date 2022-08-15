@@ -40,7 +40,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
   email = await prefs.getString("email");
     customerIdtest = await prefs.getString('customerId');
-    print("Email From Edit Page " + email);
+
     this.email = email;
     emailController.text = this.email;
     userBloc = BlocProvider.of<UserBloc>(context);
@@ -143,8 +143,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   pincodeController.text =
                       state.customerlist.customerPincode ?? "";
                 }
-                print(state.customerlist.customerMobile);
-                print("This build method worked ");
+
 
                 return Container(
                   height: MediaQuery.of(context).size.height - 120,

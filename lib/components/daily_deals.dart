@@ -2,12 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
-import 'package:itcity_online_store/components/components.dart';
-import 'dart:async';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:intl/intl.dart';
+
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
@@ -30,12 +25,6 @@ class _DailyDealsState extends State<DailyDeals> {
     this.currency = prefs.getString('currency');
     BlocProvider.of<HomeBloc>(context)
         .add(FetchTodaysDealsByDate(prefs.getString('currency')));
-    // if( !(BlocProvider.of<HomeBloc>(context).state is TodaysDealsLoadedState)){
-    //   BlocProvider.of<HomeBloc>(context)
-    //       .add(FetchTodaysDealsByDate(prefs.getString('currency')));
-    // }else {
-    //
-    // }
 
   }
 
@@ -48,49 +37,10 @@ class _DailyDealsState extends State<DailyDeals> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // width: MediaQuery.of(context).size.width,
+
       color: Colors.white12,
 
-      // child: FittedBox(
-      //   fit: BoxFit.contain,
-      //   child: Column(
 
-      //     children: [
-      //       Container(
-      //           padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-      //         child: Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //           children: [
-      //             Text('Deal of the Day',
-      //                 style: (TextStyle(
-      //                   color: Colors.white,
-      //                   // fontFamily: 'YanoneKaffeesatz',
-      //                   fontFamily: 'RobotoSlab',
-      //                   fontSize: 18,
-      //                   fontWeight: FontWeight.w800,
-      //                 ))),
-      //             SizedBox(width: 200),
-      //             Container(
-      //                 decoration: BoxDecoration(
-      //                   borderRadius: BorderRadius.circular(60),
-      //                   color: Colors.white,
-      //                 ),
-      //                 padding: EdgeInsets.all(7),
-      //                 child: Text(
-      //                   'View All',
-      //                   style: TextStyle(fontWeight: FontWeight.bold),
-      //                 ))
-      //           ],
-      //         ),
-      //       ),
-      //       SizedBox(height: 10),
-      //       Column(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         children: [DealsList(), TimerApp()],
-      //       ),
-      //     ],
-      //   ),
-      // ),
       child: DealsList(),
     );
   }
@@ -107,17 +57,17 @@ class _DealsListState extends State<DealsList> {
   @override
   void initState() {
     super.initState();
-    // BlocProvider.of<HomeBloc>(context).add(FetchTodaysDealsByDate());
+
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
       deals = BlocProvider.of<HomeBloc>(context).dealslist;
-       print('state of deal>>>>>' + state.toString());
+
 
       if (state is TodaysDealsLoadingState) {
-        print('circular');
+
         return Center(
             child: SpinKitRipple(
           color: Theme.of(context).primaryColor,
@@ -180,7 +130,7 @@ class _DealsListState extends State<DealsList> {
           ));
 
 
-      // print('deals length=>>>>>>>>' + deals.length.toString());
+
 
     });
   }

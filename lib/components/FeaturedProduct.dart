@@ -30,11 +30,6 @@ class _FeaturedProductState extends State<FeaturedProduct> {
   getFeaturedProducts() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     BlocProvider.of<HomeBloc>(context).add(FetchFeaturedProduct(prefs.getString('currency')));
-    // if( !(BlocProvider.of<HomeBloc>(context).state is FeaturedProductLoadedState)){
-    //
-    // }else {
-    //
-    // }
 
   }
   String country;
@@ -49,25 +44,19 @@ class _FeaturedProductState extends State<FeaturedProduct> {
   @override
   void initState() {
     getCountry();
-    //SharedPreferences prefs = await SharedPreferences.getInstance();
-   // getFeaturedProducts();
-   // BlocProvider.of<HomeBloc>(context).add(FetchFeaturedProduct(prefs.getString('currency')));
+
     // TODO: implement initState
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     bool _isFavorited = false;
-    void _toggleFavorite() {
-      setState(() {
-        _isFavorited = !_isFavorited;
-      });
-    }
+
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
       featuredProducts = BlocProvider.of<HomeBloc>(context).featuredProduct;
-      // print('state of deal>>>>>' + state.toString());
+
       if(state is FeaturedProductLoadingState){
-        print('popular loading');
+
         return Center(
             child: SpinKitRipple(
               color: Theme.of(context).primaryColor,
@@ -75,13 +64,13 @@ class _FeaturedProductState extends State<FeaturedProduct> {
             ));
       }
 
-      // print('deals length=>>>>>>>>' + deals.length.toString());
+
 
       return Container(
 
         color: AppColors.WHITE,
         constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height * .47,
+          minHeight: MediaQuery.of(context).size.height * .50,
         ),
         child: Column(
           children: [
