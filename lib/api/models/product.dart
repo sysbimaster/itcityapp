@@ -41,7 +41,7 @@ class Product {
     productDescArabic = json['product_desc_arabic'] == null
         ? null
         : json['product_desc_arabic'];
-    productPrice = json['product_price'] == null ? null : double.parse(json['product_price']) ;
+    productPrice = json['product_price'] == null ? null : json['product_price'] ;
     productPriceArabic = json['product_price_arabic'] == null
         ? null
         : json['product_price_arabic'];

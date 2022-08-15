@@ -1,64 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:itcity_online_store/resources/values.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CurrencyBar extends StatefulWidget {
-  const CurrencyBar({Key key}) : super(key: key);
+  const CurrencyBar({Key key,String currency,String }) : super(key: key);
 
   @override
   _CurrencyBarState createState() => _CurrencyBarState();
 }
 
 class _CurrencyBarState extends State<CurrencyBar> {
+  String country ;
+  String currency ;
+  getCountry() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      this.currency = prefs.getString('currency');
+      this.country = prefs.getString('country');
+
+
+    });
+
+  }
+  @override
+  void initState() {
+    getCountry();
+
+
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: AppColors.LOGO_BLACK,
       constraints: BoxConstraints(
-        minHeight: 38,
+        minHeight: 33,
       ),
-      child: Container(
-        constraints: BoxConstraints(
-          minHeight: 35,
-        ),
-        decoration: BoxDecoration (
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(18), bottomRight: Radius.circular(18)),
-          color: AppColors.LOGO_ORANGE,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              offset: Offset(0.0, 2.0), //(x,y)
-              blurRadius: 6.0,
-            ),
-          ],
-        ),
-        //color: Colors.deepOrangeAccent,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
 
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(18, 2, 0, 2),
-                    child: Icon(Icons.account_balance_wallet_rounded,color: Colors.white,)),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
-                  child: Text('Currency : KWD',style: TextStyle(
-                    color:Colors.white,fontSize: 16,fontWeight: FontWeight.w800
-                  ), ),
-                ),
+          Row(
 
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(5, 2, 18, 2),
-              child: Text('Change',style: TextStyle(
-                  color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600, decoration: TextDecoration.underline,
-              ), ),
-            )
-          ],
-        ),
+            children: [
+
+              Padding(
+                padding: EdgeInsets.fromLTRB(18, 2, 5, 2),
+                child:this.currency != null ? Text("Country : " + this.country,style: TextStyle(
+                  color:Colors.white,fontSize: 14
+                ), ): Text('Please select a country',style: TextStyle(
+                    color:Colors.white,fontSize: 14
+                ), ),
+              ),
+
+            ],
+          ),
+
+          this.currency!= null?Padding(
+            padding: EdgeInsets.fromLTRB(5, 2, 18, 2),
+            child: Text('CHANGE',style: TextStyle(
+              color: Colors.white,fontSize: 14,), ),
+          ): Container()
+
+        ],
       ),
     );
   }

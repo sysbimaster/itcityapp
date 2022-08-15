@@ -4,14 +4,46 @@ abstract class ProductEvent {}
 
 class FetchProduct extends ProductEvent {}
 
+class FetchDealsFull extends ProductEvent{
+  final String currency;
+  FetchDealsFull(this.currency);
+}
+
+class FetchMobileCollectionsFull extends ProductEvent {
+  final String currency;
+  FetchMobileCollectionsFull(this.currency);
+}
+
+class FetchComputerCollectionsFull extends ProductEvent{
+  final String currency;
+  FetchComputerCollectionsFull(this.currency);
+}
+class FetchPopularProductsFull extends ProductEvent {
+  final String currency;
+  FetchPopularProductsFull(this.currency);
+}
+
+class FetchFeaturedProductFull extends ProductEvent{
+  final String currency;
+  FetchFeaturedProductFull(this.currency);
+}
+
+
 class FetchProductByCategoryId extends ProductEvent {
   final int id;
-  FetchProductByCategoryId(this.id);
+  final String currency;
+  FetchProductByCategoryId(this.id,this.currency);
 }
 
 class FetchProductByProductId extends ProductEvent {
   final String id;
-  FetchProductByProductId(this.id);
+  final String currency;
+  FetchProductByProductId(this.id,this.currency);
+}
+class FetchMultiImageByProductId extends ProductEvent {
+  final String id;
+
+  FetchMultiImageByProductId (this.id);
 }
 
 class FetchProductStockListByProductId extends ProductEvent {
@@ -67,5 +99,6 @@ class ShareProductByProductIdEvent extends ProductEvent {
 
 class FetchRelatedProductByProductBrand extends ProductEvent {
   final String brand;
-  FetchRelatedProductByProductBrand(this.brand);
+  final String currency;
+  FetchRelatedProductByProductBrand(this.brand, this.currency);
 }

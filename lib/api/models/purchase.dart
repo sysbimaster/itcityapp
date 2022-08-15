@@ -8,6 +8,7 @@ class Purchase {
   double productSubTotal;
   int productPurchaseId;
   String purchaseDate;
+  double ShippingCharge;
 
   Purchase();
   @override
@@ -30,6 +31,7 @@ class Purchase {
     productPurchaseId =
         json['product_purchase_id'] == null ? null : json['product_purchase_id'];
     purchaseDate = json['purchase_date'] == null ? null : json['purchase_date'];
+    ShippingCharge = json['shipping_charge'] == null ? null : double.parse(json['shipping_charge']);
   }
 
   Map<String, dynamic> toJson() {
@@ -42,6 +44,7 @@ class Purchase {
     if (productSubTotal != null) json['product_sub_total'] = productSubTotal;
     if (productPurchaseId != null) json['product_purchase_id'] = productPurchaseId;
     if (purchaseDate != null) json['purchase_date'] = purchaseDate;
+    if (ShippingCharge != null) json['shipping_charge'] = ShippingCharge;
     return json;
   }
 

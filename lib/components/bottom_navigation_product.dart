@@ -27,25 +27,24 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userId = await prefs.getString("customerId");
     token = await prefs.getString("token");
- //   userId = await _flutterSecureStorage.read(key: "customerId");
-  //  token = await _flutterSecureStorage.read(key: "token");
+
   }
+
 
   @override
   void initState() {
     super.initState();
     getEmail();
-    print(userId);
-    if (token != null) {
-      print("token in product" + token);
-    }
+
+
   }
 
   @override
   Widget build(BuildContext context) {
     int productQuantity =
         widget.product == null ? 0 : widget.product.productQty;
-    return BlocBuilder<OrderBloc, OrderState>(builder: (context, orderState) {
+    return BlocBuilder<OrderBloc, OrderState>(
+        builder: (context, orderState) {
       return BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
           return BlocBuilder<CartBloc, CartState>(
@@ -100,9 +99,9 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                   widget.product.productPrice != null
                                       ? widget.product.productPrice
                                       : 0.0;
-                              BlocProvider.of<CartBloc>(context).add(
-                                  RemoveProductFromCartEvent(cart.cartData,
-                                      cart.userId, widget.product.productId));
+                              // BlocProvider.of<CartBloc>(context).add(
+                              //     RemoveProductFromCartEvent(cart.cartData,
+                              //         cart.userId, widget.product.productId));
                             },
                             child: Text("REMOVE FROM CART"))
                       ],
@@ -129,7 +128,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                 ));
                               } else {
                                 if (state is CustomerLoginSuccessState || state is CustomerInformationLoadedState) {
-                                print('this method '+ widget.product.productName);
+
                                   widget.quantity = widget.quantity + 1;
                                 Cart cart = Cart();
                                 cart.cartData = widget.product == null
@@ -142,7 +141,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                         ? widget.product.productPrice
                                         : 0.0;
                                 BlocProvider.of<CartBloc>(context)
-                                    .add(AddProductToCart(cart));
+                                    .add(AddProductToCart(cart,"bottom nav product"));
                                 if (cartState is AddProductToCartLoadingState) {
                                   return (Center(
                                     child: CircularProgressIndicator(),
@@ -153,7 +152,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                 bool value =
                                     statusCart == null ? false : statusCart;
                                 if (value) {
-                                  print(' inserted ');
+
                                   Scaffold.of(context).showSnackBar(SnackBar(
                                     content: Text('Product Added to Cart'),
                                     duration: Duration(seconds: 3),
@@ -205,7 +204,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                         ? widget.product.productPrice
                                         : 0.0;
                                 BlocProvider.of<CartBloc>(context)
-                                    .add(AddProductToCart(cart));
+                                    .add(AddProductToCart(cart,"bottom nav product"));
                                 if (cartState is AddProductToCartLoadingState) {
                                   return (Center(
                                     child: CircularProgressIndicator(),
@@ -216,7 +215,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                 bool value =
                                     statusCart == null ? false : statusCart;
                                 if (value) {
-                                  print(' inserted ');
+
                                   Scaffold.of(context).showSnackBar(SnackBar(
                                     content: Text('Product Added to Cart'),
                                     duration: Duration(seconds: 3),
@@ -241,14 +240,8 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
   }
   void navigateLoginPage() {
     Route route = MaterialPageRoute(builder: (context) => LoginPage());
-    Navigator.push(context, route).then(onGoBack);
+   // Navigator.push(context, route).then(onGoBack);
 
   }
-  FutureOr onGoBack(dynamic value) {
 
-    setState(() {
-      BlocProvider.of<ProductBloc>(context)
-          .add(FetchProductByProductId(widget.product.productId));
-    });
-  }
 }

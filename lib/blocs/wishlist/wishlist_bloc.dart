@@ -18,7 +18,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     WishlistEvent event,
   ) async* {
     if (event is FetchWishlistEvent) {
-      yield* _mapFetchWishlistToState(event, state, event.username);
+      yield* _mapFetchWishlistToState(event, state, event.username,event.currency);
     }
     if (event is MoveProductFromWishlistToCartEvent) {
       yield* _mapMoveProductFromWishlistToCartToState(
@@ -33,7 +33,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
           event, state, event.wishlistId);
     }
     if (event is RemoveProductFromWishlistEvent) {
-      yield* _mapRemoveProductFromWishlistToState(event, state, event.wishlist);
+      yield* _mapRemoveProductFromWishlistToState(event, state, event.wishlist,event.currency);
     }
     if (event is AddProductToWishlist) {
       yield* _mapAddProductToWishlistToState(event, state, event.wish);
@@ -41,11 +41,11 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   }
 
   Stream<WishlistState> _mapFetchWishlistToState(
-      WishlistEvent event, WishlistState state, String username) async* {
+      WishlistEvent event, WishlistState state, String username,String currency) async* {
     yield WishlistLoadingState();
     try {
       final List<CustomerWishlist> favourite =
-          await wishlistApi.fetchWishlist(username);
+          await wishlistApi.fetchWishlist(username,currency);
       customerWishlist = favourite;
 
       yield WishlistLoadedState(wishlist: customerWishlist);
@@ -84,13 +84,13 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   Stream<WishlistState> _mapRemoveProductFromWishlistToState(
       RemoveProductFromWishlistEvent event,
       WishlistState state,
-      Wishlist wishlist) async* {
+      Wishlist wishlist,String currency) async* {
     yield RemoveProductFromWishlistLoadingState();
     try {
       var removeProductStatus =
           await wishlistApi.removeProductFromWishlist(wishlist);
       print('remove product from wishlist status>>>>>>>' + removeProductStatus);
-      this.add(FetchWishlistEvent(event.wishlist.username));
+      this.add(FetchWishlistEvent(event.wishlist.username,currency));
     } catch (e) {
       print('error in removing product from wishlist >>>>>>>>' + e.toString());
     }

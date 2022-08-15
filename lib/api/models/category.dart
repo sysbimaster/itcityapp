@@ -34,7 +34,7 @@ class Category {
         json['meta_tag_desc'] == null ? null : json['meta_tag_desc'];
     metaTagKeywords =
         json['meta_tag_keywords'] == null ? null : json['meta_tag_keywords'];
-    categoryImage = json['cat_image'] == null ? null : json['cat_image'];
+    categoryImage = json['app_image'] == null ? null : json['app_image'];
     status = json['status'] == null ? null : json['status'];
   }
 
@@ -51,7 +51,7 @@ class Category {
     if (metaTagTitle != null) json['meta_tag_title'] = metaTagTitle;
     if (metaTagDescription != null) json['meta_tag_desc'] = metaTagDescription;
     if (metaTagKeywords != null) json['meta_tag_keywords'] = metaTagKeywords;
-    if (categoryImage != null) json['cat_image'] = categoryImage;
+    if (categoryImage != null) json['app_image'] = categoryImage;
     if (status != null) json['status'] = status;
     return json;
   }

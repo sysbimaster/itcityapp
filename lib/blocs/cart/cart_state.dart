@@ -33,10 +33,17 @@ class RemoveProductFromCartSuccessState extends CartState {}
 class RemoveProductFromCartErrorState extends CartState {}
 
 class CartDetailsLoadingState extends CartState {}
-
+class CartRefreshLoadingState extends CartState {}
 class CartDetailsLoadedState extends CartState {
   List<Cart> cartItems;
   CartDetailsLoadedState(this.cartItems);
 }
 
 class CartDetailsErrorState extends CartState {}
+
+class CartAddRefreshLoadingState extends CartState {}
+class CartAddRefreshLoadedState extends CartState {
+  List<Cart> cartItems;
+  CartAddRefreshLoadedState(this.cartItems);
+}
+class CartAddRefreshErrorState extends CartState {}

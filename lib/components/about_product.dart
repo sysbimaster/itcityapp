@@ -14,13 +14,6 @@ class AboutProduct extends StatefulWidget {
 class _AboutProductState extends State<AboutProduct> {
   @override
   Widget build(BuildContext context) {
-    // String _parseHtmlString(String htmlString) {
-    //   final document = parse(htmlString);
-    //   final String parsedString =
-    //       parse(document.body.text).documentElement.text;
-
-    //   return parsedString;
-    // }
 
     String description = widget.product.productDesc;
     return Card(

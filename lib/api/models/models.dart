@@ -22,3 +22,4 @@ export './deal_of_the_day.dart';
 export './customer_wishlist.dart';
 export './api_response.dart';
 export './api_error.dart';
+export './HomeAds.dart';

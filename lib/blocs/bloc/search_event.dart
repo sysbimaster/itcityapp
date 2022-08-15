@@ -10,7 +10,8 @@ abstract class SearchEvent extends Equatable {
 
 class SearchTermEvent extends SearchEvent {
   String term;
-  SearchTermEvent(this.term);
+  String currency;
+  SearchTermEvent(this.term,this.currency);
 }
 
 class SearchReset extends SearchEvent {

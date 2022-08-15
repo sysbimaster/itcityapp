@@ -79,7 +79,9 @@ class UserApi {
     Response response =
         await _apiclient.invokeAPI(_customerLoginPath, 'POST', customer);
 
+
     String token = (jsonDecode(response.body)['token']);
+
     return token;
   }
 

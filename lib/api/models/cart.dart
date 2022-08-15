@@ -7,6 +7,8 @@ class Cart{
   String productNameArabic;
   String productImage;
   String productDesc;
+  String currency;
+
   double productPrice;
   String productDescArabic;
   int productCount;
@@ -30,6 +32,7 @@ class Cart{
     productPrice = json['prod_price'] == null ? null :double.parse( json['prod_price']);
     productImage = json['product_image'] == null ? null : json['product_image'];
     productId = json['product_id'] == null ? null : json['product_id'];
+    currency  = json['cur'] == null ? null : json['cur'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,6 +48,7 @@ class Cart{
     if(productPrice !=null) json['product_price']= productPrice;
     if(productImage !=null) json['product_image']= productImage;
     if(productId != null) json['product_id'] = productId;
+    if(currency != null) json['cur'] = productId;
     return json;
   }
   static List<Cart> listFromJson(List<dynamic> json){

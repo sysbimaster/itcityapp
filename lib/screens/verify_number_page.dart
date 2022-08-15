@@ -54,7 +54,7 @@ class _VerifyNumberPageState extends State<VerifyNumberPage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => MainPage(),
+                builder: (context) => MainPage(0),
               ));
         },
         child: Text("VERIFY",
