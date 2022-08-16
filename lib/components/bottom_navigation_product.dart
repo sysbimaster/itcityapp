@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:itcity_online_store/screens/login_page_new.dart';
 import 'package:itcity_online_store/screens/screens.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,7 +75,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                               } else {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return LoginPage();
+                                  return LoginPageNew();
                                 }));
                               }
                             },
@@ -239,7 +240,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
     });
   }
   void navigateLoginPage() {
-    Route route = MaterialPageRoute(builder: (context) => LoginPage());
+    Route route = MaterialPageRoute(builder: (context) => LoginPageNew());
    // Navigator.push(context, route).then(onGoBack);
 
   }
