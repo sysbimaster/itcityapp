@@ -19,7 +19,7 @@ import 'list_header.dart';
 
 class MobileCollections extends StatefulWidget {
   
- MobileCollections({Key key}) : super(key: key);
+ MobileCollections({Key? key}) : super(key: key);
 
   @override
   _MobileCollectionsState createState() => _MobileCollectionsState();
@@ -33,8 +33,8 @@ class _MobileCollectionsState extends State<MobileCollections> {
 
   }
   Random rnd = new Random();
-  String country;
-  String currency;
+  String? country;
+  String? currency;
   getCountry() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {

@@ -2,21 +2,20 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
-import 'package:itcity_online_store/components/components.dart';
+
 import 'package:itcity_online_store/components/product_card.dart';
-import 'package:itcity_online_store/resources/values.dart';
+
 import 'package:itcity_online_store/screens/login_page_new.dart';
-import 'package:itcity_online_store/screens/product_details_new.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 import '../constants.dart';
 class RelatedProduct extends StatefulWidget {
-  final String productBrand;
-  final String currency;
+  final String? productBrand;
+  final String? currency;
   RelatedProduct({this.productBrand,this.currency});
   @override
   _RelatedProductState createState() => _RelatedProductState();

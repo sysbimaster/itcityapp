@@ -1,16 +1,16 @@
 class Category {
-  int categoryId;
-  int parentId;
-  int sortOrder;
-  String categoryFor;
-  String categoryName;
-  String categoryNameArabic;
-  String categoryDescription;
-  String metaTagTitle;
-  String metaTagDescription;
-  String metaTagKeywords;
-  String categoryImage;
-  int status;
+  int? categoryId;
+  int? parentId;
+  int? sortOrder;
+  String? categoryFor;
+  String? categoryName;
+  String? categoryNameArabic;
+  String? categoryDescription;
+  String? metaTagTitle;
+  String? metaTagDescription;
+  String? metaTagKeywords;
+  String? categoryImage;
+  int? status;
 
   Category();
   @override
@@ -56,9 +56,9 @@ class Category {
     return json;
   }
 
-  static List<Category> listFromJson(List<dynamic> json) {
+  static List<Category> listFromJson(List<dynamic>? json) {
     return json == null
-        ? List<Category>()
+        ? []
         : json.map((value) => Category.fromJson(value)).toList();
   }
 }

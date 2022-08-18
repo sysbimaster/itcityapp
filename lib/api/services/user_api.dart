@@ -49,43 +49,43 @@ class UserApi {
     return SellOnItcity.fromJson(jsonDecode(response.body)['data']);
   }
 
-  Future<String> removeUserAccount(var customerId) async {
+  Future<String?> removeUserAccount(var customerId) async {
     Response response = await _apiclient.invokeAPI(
         _removeUserAccountPath, 'DELETE', customerId.toJson());
     return (jsonDecode(response.body)['data']).cast<String>();
   }
 
-  Future<String> signUpForNewsLetter(var email) async {
+  Future<String?> signUpForNewsLetter(var email) async {
     Response response = await _apiclient.invokeAPI(
         _signUpForNewsLetterPath, 'POST', email.toJson());
     return (jsonDecode(response.body)['data']).cast<String>();
   }
 
-  Future<String> otpVerification(var otp) async {
+  Future<String?> otpVerification(var otp) async {
     Response response =
         await _apiclient.invokeAPI(_otpVerificationPath, 'GET', otp.toJson());
     return (jsonDecode(response.body)['data']).cast<String>();
   }
 
-  Future<String> forgotPassword(var email) async {
+  Future<String?> forgotPassword(var email) async {
     Response response =
         await _apiclient.invokeAPI(_forgotPasswordPath, 'GET', email.toJson());
     return (jsonDecode(response.body)['data']).cast<String>();
   }
 
-  Future<String> customerLogin(CustomerRegistration register) async {
+  Future<String?> customerLogin(CustomerRegistration register) async {
     String customer =
         '{"customer_email": "${register.customerEmail}","password": "${register.password}"}';
     Response response =
         await _apiclient.invokeAPI(_customerLoginPath, 'POST', customer);
 
 
-    String token = (jsonDecode(response.body)['token']);
+    String? token = (jsonDecode(response.body)['token']);
 
     return token;
   }
 
-  Future<String> checkMobileNumberStatus(var mobile) async {
+  Future<String?> checkMobileNumberStatus(var mobile) async {
     print(mobile);
     Response response = await _apiclient.invokeAPI(
         '$_checkMobileNumberStatusPath?customer_mobile=$mobile', 'GET', null);
@@ -93,7 +93,7 @@ class UserApi {
     return (jsonDecode(response.body)['data']).cast<String>();
   }
 
-  Future<String> checkEmailSubScription(var email) async {
+  Future<String?> checkEmailSubScription(var email) async {
     Response response = await _apiclient.invokeAPI(
         _checkEmailSubScriptionPath, 'GET', email.toJson());
     return (jsonDecode(response.body)['data']).cast<String>();
@@ -111,7 +111,7 @@ class UserApi {
       }
   }
 
-  Future<CustomerRegistration> fetchCustomerInformation(String mail) async {
+  Future<CustomerRegistration> fetchCustomerInformation(String? mail) async {
     Response response = await _apiclient.invokeAPI(
         '$_customerInfoPath?customer_email=$mail', 'GET', null);
     return CustomerRegistration.fromJson(jsonDecode(response.body)['data'][0]);

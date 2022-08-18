@@ -12,8 +12,8 @@ import 'package:itcity_online_store/resources/values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductRatingNew extends StatefulWidget {
-  String productId;
-  ProductRatingNew({Key key, this.productId}) : super(key: key);
+  String? productId;
+  ProductRatingNew({Key? key, this.productId}) : super(key: key);
 
   @override
   _ProductRatingNewState createState() => _ProductRatingNewState();
@@ -21,10 +21,10 @@ class ProductRatingNew extends StatefulWidget {
 
 class _ProductRatingNewState extends State<ProductRatingNew> {
   TextEditingController textEditingController = new TextEditingController();
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
   bool isReviewOpen = false;
-  int rating;
-  String authorname;
+  int? rating;
+  String? authorname;
   getCountry() async {
     this.prefs = await SharedPreferences.getInstance();
     //   this.currency = prefs.getString('currency');

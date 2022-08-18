@@ -13,7 +13,7 @@ class _ShippingAddressState extends State<ShippingAddress> {
         decoration: new BoxDecoration(
           boxShadow: [
             new BoxShadow(
-              color: Colors.grey[100],
+              color: Colors.grey[100]!,
               blurRadius: 4.0,
             ),
           ],

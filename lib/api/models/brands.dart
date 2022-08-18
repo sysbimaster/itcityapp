@@ -1,16 +1,16 @@
 class Brands{
-  String brandId;
-  String brandsName;
-  String brandsNameArabic;
-  String brandImage;
-  String urlWorld;
-  String brandDescription;
-  String brandFor;
-  String adImage;
-  String bannerImage;
-  String offerText;
-  String subDescription;
-  String featured;
+  String? brandId;
+  String? brandsName;
+  String? brandsNameArabic;
+  String? brandImage;
+  String? urlWorld;
+  String? brandDescription;
+  String? brandFor;
+  String? adImage;
+  String? bannerImage;
+  String? offerText;
+  String? subDescription;
+  String? featured;
 
   Brands();
    @override
@@ -50,9 +50,9 @@ class Brands{
     if(featured !=null) json['featured']= featured;
     return json;
   }
-  static List<Brands> listFromJson(List<dynamic> json){
+  static List<Brands> listFromJson(List<dynamic>? json){
     return json == null
-    ? List<Brands>()
+    ? []
     : json.map((value) => Brands.fromJson(value)).toList();
   }
 }

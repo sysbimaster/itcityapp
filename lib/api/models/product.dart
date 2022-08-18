@@ -1,22 +1,22 @@
 class Product {
-  int id;
-  String productId;
-  int sortOrder;
-  String categoryId;
-  String productSlug;
-  String productName;
-  String productNameArabic;
-  String productBrand;
-  String productImage;
-  String productDesc;
-  String productDescArabic;
+  int? id;
+  String? productId;
+  int? sortOrder;
+  String? categoryId;
+  String? productSlug;
+  String? productName;
+  String? productNameArabic;
+  String? productBrand;
+  String? productImage;
+  String? productDesc;
+  String? productDescArabic;
   var productPrice;
-  String productPriceArabic;
-  int productQty;
-  int minPurQty;
+  String? productPriceArabic;
+  int? productQty;
+  int? minPurQty;
   var productPriceOffer;
-  String productPriceOfferArabic;
-  int status;
+  String? productPriceOfferArabic;
+  int? status;
 
   Product();
   @override
@@ -24,7 +24,7 @@ class Product {
     return toJson().toString();
   }
 
-  Product.fromJson(Map<String, dynamic> json) {
+  Product.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;
     id = json['id'] == null ? null : json['id'];
     productId = json['product_id'] == null ? null : json['product_id'];
@@ -85,9 +85,9 @@ class Product {
     return json;
   }
 
-  static List<Product> listFromJson(List<dynamic> json) {
+  static List<Product> listFromJson(List<dynamic>? json) {
     return json == null
-        ? List<Product>()
+        ? []
         : json.map((value) => Product.fromJson(value)).toList();
   }
 }

@@ -14,32 +14,31 @@ class CurrencyBloc extends Bloc<CurrencyEvent,CurrencyState>{
   final CurrencyApi currencyApi;
   var ChangedPrice;
 
-  CurrencyBloc({this.currencyApi})
-      : assert(currencyApi != null),
-        super(null);
+  CurrencyBloc({required this.currencyApi})
+      :super(CurrencyInitial()){
+    on<CurrencyInitialEvent>((event, emit) =>mapEventToState(event, emit));
+    on<CurrencyChangeEvent>((event, emit) => _mapFetchCurrencyChangeEventToState(event,emit,event.firstCurrencyType,event.ChangeCurrencyType,event.price));
 
-
-  @override
-  Stream<CurrencyState> mapEventToState(CurrencyEvent event) async* {
-    if (event is CurrencyInitialEvent){
-      yield CurrencyInitial();
-    }else  if (event is CurrencyChangeEvent){
-    yield* _mapFetchCurrencyChangeEventToState(state, event, event.firstCurrencyType, event.ChangeCurrencyType, event.price);
-  }
   }
 
-  Stream<CurrencyState> _mapFetchCurrencyChangeEventToState(
-      CurrencyState state, CurrencyEvent event,String firstcurrency,String currencyToChange, var price) async* {
-    yield CurrencyLoading();
+
+
+  void mapEventToState(CurrencyEvent event,Emitter<CurrencyState> emit) async {
+    emit(CurrencyInitial());
+
+  }
+
+void _mapFetchCurrencyChangeEventToState(
+       CurrencyEvent event,Emitter<CurrencyState> emit,String firstcurrency,String currencyToChange, var price) async {
+    emit(CurrencyLoading());
     try {
      final Currency currency = await currencyApi.getChangedCurrency(firstcurrency, currencyToChange, price);
-     print('inside currency bloc'+ firstcurrency+currencyToChange);
-     print("changed currency value  "+ currency.result.toString());
+
      this.ChangedPrice = currency.result;
-      yield CurrencyChanged(price: currency.result);
+      emit(CurrencyChanged(price: currency.result));
     } catch (e) {
-      print("error in loading product>>>>>>>>>>>" + e.toString());
-      yield CurrencyChangedErrorState();
+
+      emit(CurrencyChangedErrorState());
     }
   }
 

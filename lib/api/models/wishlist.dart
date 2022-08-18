@@ -1,7 +1,7 @@
 class Wishlist{
-  int wishlistId;
-  String username;
-  String wishlist;
+  int? wishlistId;
+  String? username;
+  String? wishlist;
 
   Wishlist();
   @override
@@ -23,9 +23,9 @@ class Wishlist{
     if(wishlist !=null) json['wishlist']= wishlist;
     return json;
   }
-  static List<Wishlist> listFromJson(List<dynamic> json){
+  static List<Wishlist> listFromJson(List<dynamic>? json){
     return json == null
-    ? List<Wishlist>()
+    ? []
     : json.map((value) => Wishlist.fromJson(value)).toList();
   }
 }

@@ -15,15 +15,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class WishlistCard extends StatefulWidget {
   final CustomerWishlist wishlist;
-  final VoidCallback onDelete;
-  WishlistCard({Key key, @required this.wishlist, this.onDelete})
+  final VoidCallback? onDelete;
+  WishlistCard({Key? key, required this.wishlist, this.onDelete})
       : super(key: key);
   @override
   WishlistCardState createState() => WishlistCardState();
 }
 
 class WishlistCardState extends State<WishlistCard> {
-  String contact;
+  String? contact;
   bool _isFavorited = true;
 
   void _toggleFavorite() {
@@ -31,8 +31,8 @@ class WishlistCardState extends State<WishlistCard> {
       _isFavorited = !_isFavorited;
     });
   }
-  String country;
-  String currency;
+  String? country;
+  String? currency;
   getCountry() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -79,7 +79,7 @@ class WishlistCardState extends State<WishlistCard> {
                       image: DecorationImage(
                         image: NetworkImage(widget.wishlist == null
                             ? ''
-                            : productImage + widget.wishlist.productImage),
+                            : productImage + widget.wishlist.productImage!),
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -98,7 +98,7 @@ class WishlistCardState extends State<WishlistCard> {
                               child: Text(
                                   widget.wishlist == null
                                       ? ''
-                                      : widget.wishlist.productName,
+                                      : widget.wishlist.productName!,
 
                                   maxLines: 2,
                                   // softWrap: false,
@@ -126,7 +126,7 @@ class WishlistCardState extends State<WishlistCard> {
                                   currency != null ? Container(
 
                                       child:Text(
-                                          currency +
+                                          currency! +
                                               ' ' +
                                               widget.wishlist.productPrice.toStringAsFixed(2),
                                           style: (TextStyle(
@@ -147,7 +147,7 @@ class WishlistCardState extends State<WishlistCard> {
                                   currency != null ?Container(
 
                                       child:Text(
-                                          currency +
+                                          currency! +
                                               ' ' +
                                               widget.wishlist.productPriceOffer.toStringAsFixed(2),
                                           style: (TextStyle(
@@ -281,7 +281,7 @@ class WishlistCardState extends State<WishlistCard> {
 
                         _toggleFavorite();
                         if (state is RemoveProductFromWishlistLoadingState)
-                          return (Center(child: CircularProgressIndicator(),));
+                       Center(child: CircularProgressIndicator(),);
                       }
                     } else if (_isFavorited == false) {
 
@@ -300,9 +300,9 @@ class WishlistCardState extends State<WishlistCard> {
 
                           if (state
                           is AddProductToWishlistLoadingState) {
-                            return (Center(
+                           Center(
                               child: CircularProgressIndicator(),
-                            ));
+                            );
                           }
                         });
                       } else {

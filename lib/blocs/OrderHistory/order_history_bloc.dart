@@ -12,7 +12,7 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
   OrderHistoryBloc(this.orderApi) : super(OrderHistoryInitial());
 
   OrderApi orderApi;
-  OrderHistoryModel orderHistoryModel;
+  OrderHistoryModel? orderHistoryModel;
   @override
   Stream<OrderHistoryState> mapEventToState(
     OrderHistoryEvent event,
@@ -23,7 +23,7 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
   }
 
   Stream<OrderHistoryState> _mapGetOrderHistoryToState(OrderHistoryEvent event,
-      OrderHistoryState state, String customerID) async* {
+      OrderHistoryState state, String? customerID) async* {
     yield OrderHistoryLoading();
     try {
       orderHistoryModel = await orderApi.getOrderHistory(customerID);

@@ -17,17 +17,17 @@ import '../constants.dart';
 import 'login_page_new.dart';
 
 class MobileCollectionsFullPage extends StatefulWidget {
-  String Currency;
-  MobileCollectionsFullPage({Key key,this.Currency}) : super(key: key);
+  String? Currency;
+  MobileCollectionsFullPage({Key? key,this.Currency}) : super(key: key);
 
   @override
   _MobileCollectionsFullPageState createState() => _MobileCollectionsFullPageState();
 }
 
 class _MobileCollectionsFullPageState extends State<MobileCollectionsFullPage> {
-  List<Product> mobileList;
+  List<Product>? mobileList;
   TextEditingController tcontroller = TextEditingController();
-  int cartcount = 0;
+  int? cartcount = 0;
   checkCartCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.containsKey('cartcount')){
@@ -143,7 +143,7 @@ class _MobileCollectionsFullPageState extends State<MobileCollectionsFullPage> {
                                     hintText: "Search Product, brands and more",
                                     suffixIcon: IconButton(
                                       icon: Icon(Icons.search),
-                                      padding: EdgeInsets.only(right: 20),
+                                      padding: EdgeInsets.only(right: 20), onPressed: null,
                                     ),
                                     hintStyle:
                                     Theme.of(context).inputDecorationTheme.hintStyle),
@@ -165,7 +165,7 @@ class _MobileCollectionsFullPageState extends State<MobileCollectionsFullPage> {
                 child: GridView.builder(
 
                     shrinkWrap: true,
-                    itemCount: mobileList.length,
+                    itemCount: mobileList!.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: .60,
@@ -173,7 +173,7 @@ class _MobileCollectionsFullPageState extends State<MobileCollectionsFullPage> {
                       crossAxisSpacing: 5,
                     ),
                     itemBuilder: (context, index) {
-                      return ProductCard(product: mobileList[index],currency: widget.Currency,rrating: 3.9+ rnd.nextDouble());
+                      return ProductCard(product: mobileList![index],currency: widget.Currency,rrating: 3.9+ rnd.nextDouble());
                     }),
               ),
             ),

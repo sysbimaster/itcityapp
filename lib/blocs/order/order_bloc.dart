@@ -8,76 +8,78 @@ import 'package:itcity_online_store/api/services/services.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
-  OrderBloc(this.orderApi) : super(OrderInitial());
   OrderApi orderApi;
-  OrderStatusNew orderStatusNew;
-  OrderDetails orderDetails;
-  ProductOrderDetails productOrderDetails;
+  OrderStatusNew? orderStatusNew;
+  OrderDetails? orderDetails;
+  ProductOrderDetails? productOrderDetails;
+
+  OrderBloc(this.orderApi) : super(OrderInitial()){
+    on<CreateOrderEvent>((event, emit) => _mapCreateOrderToState(event,emit,event.order));
+    on<FetchOrderStatusEvent>((event, emit) => _mapFetchOrderStatusToState(event,emit,event.orderStatusId));
+    on<CreatePurchaseForOrderEvent>((event, emit) => _mapCreatePurchaseForOrderToState(event,emit,event.userId,event.subTotal,event.currency));
+    on<GetOrderDetailsEvent>((event, emit) => _mapCreateOrderDetailsToState(event,emit,event.orderId));
+  }
+
 
   @override
   Stream<OrderState> mapEventToState(
     OrderEvent event,
   ) async* {
-    if (event is CreateOrderEvent) {
-      yield* _mapCreateOrderToState(event, state, event.order);
-    }
-    if (event is FetchOrderStatusEvent) {
-      yield* _mapFetchOrderStatusToState(event, state, event.orderStatusId);
-    }
-    if (event is CreatePurchaseForOrderEvent) {
-      yield* _mapCreatePurchaseForOrderToState(event, state,event.userId,event.subTotal,event.currency);
-    }
-    if(event is GetOrderDetailsEvent){
-      yield* _mapCreateOrderDetailsToState(event,state,event.orderId);
-    }
+    // if (event is CreateOrderEvent) {
+    //   yield* _mapCreateOrderToState(event, state, event.order);
+    // }
+    // if (event is FetchOrderStatusEvent) {
+    //   yield* _mapFetchOrderStatusToState(event, state, event.orderStatusId);
+    // }
+    // if (event is CreatePurchaseForOrderEvent) {
+    //   yield* _mapCreatePurchaseForOrderToState(event, state,event.userId,event.subTotal,event.currency);
+    // }
+    // if(event is GetOrderDetailsEvent){
+    //   yield* _mapCreateOrderDetailsToState(event,state,event.orderId);
+    // }
   }
-  Stream<OrderState> _mapCreateOrderDetailsToState(
-      OrderEvent event, OrderState state, int orderId) async* {
-    yield GetOrderDetailsLoadingState();
+void _mapCreateOrderDetailsToState(
+      OrderEvent event, Emitter<OrderState> emit, int? orderId) async {
+    emit(GetOrderDetailsLoadingState());
     try {
       orderDetails = await orderApi.getPurchaseDetailsByOrderId(orderId);
       productOrderDetails = await orderApi.getPurchaseProductDetailsByOrderId(orderId);
 
 
-      if(orderDetails!=null){
-        print("data>>>"+productOrderDetails.data.length.toString());
-        print(orderDetails.data[0].products);
-      }
-      yield GetOrderDetailsLoadedState(orderDetails);
+
+      emit(GetOrderDetailsLoadedState(orderDetails));
     } catch (e) {
-      print("order trace>>"+e.toString());
+
       GetOrderDetailsErrorState();
     }
   }
-  Stream<OrderState> _mapCreateOrderToState(
-      OrderEvent event, OrderState state, Order order) async* {
-    yield CreateOrderLoadingState();
+void _mapCreateOrderToState(
+      OrderEvent event, Emitter<OrderState> emit, Order order) async {
+    emit(CreateOrderLoadingState());
     try {
       orderStatusNew = await orderApi.createOrder(order);
 
-      if(orderStatusNew!=null){
-        print(orderStatusNew.customerEmail);
-      }
 
-      yield CreateOrderSuccessState(this.orderStatusNew);
+
+     emit(CreateOrderSuccessState(this.orderStatusNew));
     } catch (e) {
-      yield CreateOrderErrorState();
+      emit(CreateOrderErrorState());
       print(e.toString());
     }
   }
 
-  Stream<OrderState> _mapFetchOrderStatusToState(
-      OrderEvent event, OrderState state, var orderStatusId) async* {
+  void _mapFetchOrderStatusToState(
+      OrderEvent event,Emitter<OrderState> emit, var orderStatusId) async {
     try {} catch (e) {}
   }
 
-  Stream<OrderState> _mapCreatePurchaseForOrderToState(
-      OrderEvent event, OrderState state,String userId  , double subTotal,String currency) async* {
+void _mapCreatePurchaseForOrderToState(
+      OrderEvent event, Emitter<OrderState> emit,String? userId  , double subTotal,String? currency) async {
     try {
       //  final bool cartStatus = await cartApi.addProductToCart(cartInfo);
       var json = await this.orderApi.createPurchase(userId,subTotal,currency);
       Purchase purchase = Purchase.fromJson(json);
-      yield CreatePurchaseSuccessState(purchase);
+      emit( CreatePurchaseSuccessState(purchase));
     } catch (e) {
 
     }

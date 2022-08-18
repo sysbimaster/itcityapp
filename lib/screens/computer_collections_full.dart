@@ -18,15 +18,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ComputerCollectionsFull extends StatefulWidget {
-  String currency;
- ComputerCollectionsFull({Key key,this.currency}) : super(key: key);
+  String? currency;
+ ComputerCollectionsFull({Key? key,this.currency}) : super(key: key);
 
   @override
   _ComputerCollectionsFullState createState() => _ComputerCollectionsFullState();
 }
 
 class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
-  List<Product> computerCollectionsList;
+  List<Product>? computerCollectionsList;
   TextEditingController tcontroller = TextEditingController();
 
   bool _isFavorited = false;
@@ -37,7 +37,7 @@ class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
   }
   Random rnd = new Random();
   
-  int cartcount = 0;
+  int? cartcount = 0;
   checkCartCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.containsKey('cartcount')){
@@ -146,7 +146,7 @@ class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
                                     hintText: "Search Product, brands and more",
                                     suffixIcon: IconButton(
                                       icon: Icon(Icons.search),
-                                      padding: EdgeInsets.only(right: 20),
+                                      padding: EdgeInsets.only(right: 20), onPressed: null,
                                     ),
                                     hintStyle:
                                     Theme.of(context).inputDecorationTheme.hintStyle),
@@ -168,7 +168,7 @@ class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
                 child: GridView.builder(
 
                     shrinkWrap: true,
-                    itemCount: computerCollectionsList.length,
+                    itemCount: computerCollectionsList!.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: .65,
@@ -176,7 +176,7 @@ class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
                       crossAxisSpacing: 0,
                     ),
                     itemBuilder: (context, index) {
-                      return ProductCard(product: computerCollectionsList[index],currency: widget.currency,rrating: 3.9+ rnd.nextDouble());
+                      return ProductCard(product: computerCollectionsList![index],currency: widget.currency,rrating: 3.9+ rnd.nextDouble());
                     }),
               ),
             ),

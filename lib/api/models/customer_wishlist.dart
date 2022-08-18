@@ -1,25 +1,25 @@
 class CustomerWishlist{
-  int wishlistId;
-  String username;
-  String wishlist;
-  int id;
-  String productId;
-  int sortOrder;
-  String categoryId;
-  String productSlug;
-  String productName;
-  String productNameArabic;
-  String productBrand;
-  String productImage;
-  String productDesc;
-  String productDescArabic;
+  int? wishlistId;
+  String? username;
+  String? wishlist;
+  int? id;
+  String? productId;
+  int? sortOrder;
+  String? categoryId;
+  String? productSlug;
+  String? productName;
+  String? productNameArabic;
+  String? productBrand;
+  String? productImage;
+  String? productDesc;
+  String? productDescArabic;
   var productPrice;
-  String productPriceArabic;
-  int productQty;
-  int minPurQty;
+  String? productPriceArabic;
+  int? productQty;
+  int? minPurQty;
   var productPriceOffer;
-  String productPriceOfferArabic;
-  int status;
+  String? productPriceOfferArabic;
+  int? status;
 
   CustomerWishlist();
   @override
@@ -92,9 +92,9 @@ class CustomerWishlist{
     if (status != null) json['status'] = status;
     return json;
   }
-  static List<CustomerWishlist> listFromJson(List<dynamic> json){
+  static List<CustomerWishlist> listFromJson(List<dynamic>? json){
     return json == null
-    ? List<CustomerWishlist>()
+    ? []
     : json.map((value) => CustomerWishlist.fromJson(value)).toList();
   }
 }

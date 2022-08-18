@@ -1,28 +1,28 @@
 class DealOfTheDay {
-  int dealId;
-  String productId;
-  String startDate;
-  String endDate;
-  String amountDiscount;
-  int id;
-  int sortOrder;
-  String categoryId;
-  String productSlug;
-  String productName;
-  String productNameArabic;
-  String productBrand;
-  String productImage;
-  String productDesc;
-  String productDescArabic;
+  int? dealId;
+  String? productId;
+  String? startDate;
+  String? endDate;
+  String? amountDiscount;
+  int? id;
+  int? sortOrder;
+  String? categoryId;
+  String? productSlug;
+  String? productName;
+  String? productNameArabic;
+  String? productBrand;
+  String? productImage;
+  String? productDesc;
+  String? productDescArabic;
   var productPrice;
   var productPriceConvert;
-  String productPriceArabic;
-  int productQty;
-  int minPurQty;
+  String? productPriceArabic;
+  int? productQty;
+  int? minPurQty;
   var productPriceOffer;
   var productPriceOfferConvert;
-  String productPriceOfferArabic;
-  int status;
+  String? productPriceOfferArabic;
+  int? status;
 
   DealOfTheDay();
   @override
@@ -106,9 +106,9 @@ class DealOfTheDay {
     return json;
   }
 
-  static List<DealOfTheDay> listFromJson(List<dynamic> json) {
+  static List<DealOfTheDay> listFromJson(List<dynamic>? json) {
     return json == null
-        ? List<DealOfTheDay>()
+        ? []
         : json.map((value) => DealOfTheDay.fromJson(value)).toList();
   }
 }

@@ -10,24 +10,27 @@ part 'search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
     final ProductApi productApi;
-  SearchBloc(this.productApi) : super(SearchInitial());
 
-  @override
-  Stream<SearchState> mapEventToState(
-    SearchEvent event,
-  ) async* {
-    if(event is SearchTermEvent) {
-      yield* this.search(event);
-    } else if(event is SearchReset) {
-      yield SearchInitial();
-    }
+  SearchBloc(this.productApi) : super(SearchInitial()){
+    on<SearchTermEvent>((event, emit) => search(event,emit));
   }
 
-  Stream<SearchState> search(SearchTermEvent event) async* {
-      yield SearchLoadingState();
+  // @override
+  // Stream<SearchState> mapEventToState(
+  //   SearchEvent event,
+  // ) async* {
+  //   if(event is SearchTermEvent) {
+  //     yield* this.search(event);
+  //   } else if(event is SearchReset) {
+  //     yield SearchInitial();
+  //   }
+  // }
+
+void search(SearchTermEvent event,Emitter<SearchState> emit) async {
+      emit(SearchLoadingState());
     try {
-      List<Product> product = await productApi.search(event.term,event.currency);
-      yield SearchSuccessState(product);
+      List<Product> product = await (productApi.search(event.term,event.currency) as FutureOr<List<Product>>);
+      emit (SearchSuccessState(product));
     } catch (e) {
       print("error in fetching all product>>>>>>>" + e.toString());
     }

@@ -1,10 +1,10 @@
 class SellOnItcity{
-  String sellId;
-  String sellName;
-  String sellCompanyName;
-  String sellMobile;
-  String sellProduct;
-  String sellEmail;
+  String? sellId;
+  String? sellName;
+  String? sellCompanyName;
+  String? sellMobile;
+  String? sellProduct;
+  String? sellEmail;
   
 
   SellOnItcity();
@@ -13,7 +13,7 @@ class SellOnItcity{
     return toJson().toString();
   }
 
-  SellOnItcity.fromJson(Map<String, dynamic> json) {
+  SellOnItcity.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;
     sellId = json['sell_id'] == null ? null : json['sell_id'];
     sellName = json['sell_name'] == null ? null : json['sell_name'];
@@ -38,7 +38,7 @@ class SellOnItcity{
 
   static List<SellOnItcity> listFromJson(List<dynamic> json) {
     return json == null
-        ? List<SellOnItcity>()
+        ? []
         : json.map((value) => SellOnItcity.fromJson(value)).toList();
   }
 

@@ -8,7 +8,7 @@ class ForgetPasswordPage extends StatefulWidget {
 }
 
 class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
-  String _email;
+  String? _email;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Widget _buildEmail() {
     return TextFormField(
@@ -18,8 +18,8 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
           hintText: "Email",
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-      validator: (String value) {
-        if (value.isEmpty) {
+      validator: (String? value) {
+        if (value!.isEmpty) {
           return 'Email is Required';
         }
 
@@ -31,7 +31,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
 
         return null;
       },
-      onSaved: (String value) {
+      onSaved: (String? value) {
         _email = value;
       },
     );
@@ -112,11 +112,11 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                               padding:
                                   EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                               onPressed: () {
-                                if (!_formKey.currentState.validate()) {
+                                if (!_formKey.currentState!.validate()) {
                                   return;
                                 }
 
-                                _formKey.currentState.save();
+                                _formKey.currentState!.save();
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
                                   return ResetPasswordPage();

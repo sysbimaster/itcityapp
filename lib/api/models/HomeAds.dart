@@ -1,9 +1,9 @@
 class HomeAds {
-  int addId;
-  String page;
-  String image;
-  String url;
-  String createdAt;
+  int? addId;
+  String? page;
+  String? image;
+  String? url;
+  String? createdAt;
 
   HomeAds({this.addId, this.page, this.image, this.url, this.createdAt});
 
@@ -24,9 +24,9 @@ class HomeAds {
     data['created_at'] = this.createdAt;
     return data;
   }
-  static List<HomeAds> listFromJson(List<dynamic> json) {
+  static List<HomeAds> listFromJson(List<dynamic>? json) {
     return json == null
-        ? List<HomeAds>()
+        ?[]
         : json.map((value) => HomeAds.fromJson(value)).toList();
   }
 }

@@ -18,7 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 
 class FeaturedProduct extends StatefulWidget {
-  const FeaturedProduct({Key key}) : super(key: key);
+  const FeaturedProduct({Key? key}) : super(key: key);
 
   @override
   _FeaturedProductState createState() => _FeaturedProductState();
@@ -32,8 +32,8 @@ class _FeaturedProductState extends State<FeaturedProduct> {
     BlocProvider.of<HomeBloc>(context).add(FetchFeaturedProduct(prefs.getString('currency')));
 
   }
-  String country;
-  String currency;
+  String? country;
+  String? currency;
   getCountry() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {

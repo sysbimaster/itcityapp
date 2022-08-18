@@ -16,10 +16,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 
 class ProductCard extends StatefulWidget {
-  Product product;
-  String currency;
-  double rrating;
-   ProductCard({Key key,this.product,this.currency,this.rrating}) : super(key: key);
+  Product? product;
+  String? currency;
+  double? rrating;
+   ProductCard({Key? key,this.product,this.currency,this.rrating}) : super(key: key);
 
   @override
   _ProductCardState createState() => _ProductCardState();
@@ -27,7 +27,7 @@ class ProductCard extends StatefulWidget {
 
 class _ProductCardState extends State<ProductCard> {
   bool _isFavorited = false;
-  double rating;
+  double? rating;
   void _toggleFavorite() {
     setState(() {
       _isFavorited = !_isFavorited;
@@ -75,7 +75,7 @@ class _ProductCardState extends State<ProductCard> {
                     image: DecorationImage(
                       image: NetworkImage(widget.product == null
                           ? ''
-                          : productImage + widget.product.productImage),
+                          : productImage + widget.product!.productImage!),
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -94,7 +94,7 @@ class _ProductCardState extends State<ProductCard> {
                             child: Text(
                                 widget.product == null
                                     ? ''
-                                    : widget.product.productName,
+                                    : widget.product!.productName!,
 
                                 maxLines: 2,
                                 // softWrap: false,
@@ -122,9 +122,9 @@ class _ProductCardState extends State<ProductCard> {
                                 widget.currency != null ? Container(
 
                                     child:Text(
-                                        widget.currency +
+                                        widget.currency! +
                                             ' ' +
-                                            widget.product.productPrice.toStringAsFixed(2),
+                                            widget.product!.productPrice.toStringAsFixed(2),
                                         style: (TextStyle(
                                           fontFamily: 'Arial',
                                           // fontFamily: 'RobotoSlab',
@@ -143,9 +143,9 @@ class _ProductCardState extends State<ProductCard> {
                                 widget.currency != null ?Container(
 
                                     child:Text(
-                                        widget.currency +
+                                        widget.currency! +
                                             ' ' +
-                                            widget.product.productPriceOffer.toStringAsFixed(2),
+                                            widget.product!.productPriceOffer.toStringAsFixed(2),
                                         style: (TextStyle(
                                           fontFamily: 'Arial',
                                           // fontFamily: 'RobotoSlab',
@@ -184,12 +184,12 @@ class _ProductCardState extends State<ProductCard> {
                                           Cart cart = Cart();
                                           cart.cartData = widget.product == null
                                               ? ''
-                                              :  widget.product.productId.toString();
+                                              :  widget.product!.productId.toString();
                                           cart.userId = prefs.getString('customerId');
                                           cart.productCount = 1;
                                           cart.productPrice =
-                                          widget.product.productPrice != null
-                                              ? double.parse(widget.product.productPrice.toString())
+                                          widget.product!.productPrice != null
+                                              ? double.parse(widget.product!.productPrice.toString())
                                               : 0.0;
                                           cart.currency = widget.currency;
                                           BlocProvider.of<CartBloc>(context)
@@ -270,7 +270,7 @@ class _ProductCardState extends State<ProductCard> {
                   SharedPreferences prefs = await SharedPreferences.getInstance();
                   if (_isFavorited == true) {
                     Wishlist wish = Wishlist();
-                    wish.wishlist = widget.product.productId;
+                    wish.wishlist = widget.product!.productId;
                     if(prefs.containsKey('email')) {
                       wish.username = prefs.getString('email');
                       BlocProvider.of<WishlistBloc>(context)
@@ -278,7 +278,7 @@ class _ProductCardState extends State<ProductCard> {
 
                       _toggleFavorite();
                       if (state is RemoveProductFromWishlistLoadingState)
-                        return (Center(child: CircularProgressIndicator(),));
+                        Center(child: CircularProgressIndicator(),);
                     }
                   } else if (_isFavorited == false) {
 
@@ -287,7 +287,7 @@ class _ProductCardState extends State<ProductCard> {
                     if(prefs.containsKey('email')){
                       setState(() {
                         Wishlist wish = Wishlist();
-                        wish.wishlist = widget.product.productId;
+                        wish.wishlist = widget.product!.productId;
 
                         wish.username = prefs.getString('email');
 
@@ -297,9 +297,9 @@ class _ProductCardState extends State<ProductCard> {
 
                         if (state
                         is AddProductToWishlistLoadingState) {
-                          return (Center(
+                          Center(
                             child: CircularProgressIndicator(),
-                          ));
+                          );
                         }
                       });
                     } else {
@@ -341,7 +341,7 @@ class _ProductCardState extends State<ProductCard> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(Icons.star,color: AppColors.LOGO_ORANGE,size: 20,),
-                          Text(widget.rrating!= null?  widget.rrating.toStringAsFixed(1):rating.toStringAsFixed(1),style: TextStyle(
+                          Text(widget.rrating!= null?  widget.rrating!.toStringAsFixed(1):rating!.toStringAsFixed(1),style: TextStyle(
                             fontFamily: 'Arial',
                             // fontFamily: 'RobotoSlab',
                             fontSize: 14,
@@ -378,7 +378,7 @@ class _ProductCardState extends State<ProductCard> {
   }
   void navigateDetailsPage() {
     Route route = MaterialPageRoute(builder: (context) => ProductDetailsNew(
-      productId: widget.product.productId,
+      productId: widget.product!.productId,
     ));
     Navigator.push(context, route).then(onGoBacktwo);
 

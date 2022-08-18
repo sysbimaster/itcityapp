@@ -18,8 +18,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class DealsFullPage extends StatefulWidget {
-  String currency;
-   DealsFullPage({Key key,this.currency}) : super(key: key);
+  String? currency;
+   DealsFullPage({Key? key,this.currency}) : super(key: key);
 
   @override
   _DealsFullPageState createState() => _DealsFullPageState();
@@ -27,9 +27,9 @@ class DealsFullPage extends StatefulWidget {
 
 
 class _DealsFullPageState extends State<DealsFullPage> {
-  List<DealOfTheDay> dealsList;
+  List<DealOfTheDay>? dealsList;
   TextEditingController tcontroller = TextEditingController();
-  int cartcount = 0;
+  int? cartcount = 0;
   checkCartCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.containsKey('cartcount')){
@@ -157,7 +157,7 @@ class _DealsFullPageState extends State<DealsFullPage> {
                                   hintText: "Search Product, brands and more",
                                   suffixIcon: IconButton(
                                     icon: Icon(Icons.search),
-                                    padding: EdgeInsets.only(right: 20),
+                                    padding: EdgeInsets.only(right: 20), onPressed: null,
                                   ),
                                   hintStyle:
                                   Theme.of(context).inputDecorationTheme.hintStyle),
@@ -179,7 +179,7 @@ class _DealsFullPageState extends State<DealsFullPage> {
                 child: GridView.builder(
 
                     shrinkWrap: true,
-                    itemCount: dealsList.length,
+                    itemCount: dealsList!= null ?dealsList!.length:0,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: .65,
@@ -187,7 +187,7 @@ class _DealsFullPageState extends State<DealsFullPage> {
                       crossAxisSpacing: 0,
                     ),
                     itemBuilder: (context, index) {
-                      return DealsCardNew(deal: dealsList[index],rrating: 3.9+ rnd.nextDouble());
+                      return DealsCardNew(deal: dealsList![index],rrating: 3.9+ rnd.nextDouble());
                     }),
               ),
             ),

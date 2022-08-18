@@ -40,7 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Please enter your Email';
         }
         return null;
@@ -56,7 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Please enter your mobile number';
         }
         return null;
@@ -79,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Please enter your password';
         }
         return null;
@@ -111,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return WillPopScope(
       onWillPop: (){
         Navigator.pushNamed(context, '/home');
-      },
+      } as Future<bool> Function()?,
       child: Scaffold(
           bottomNavigationBar: RegisterButton(
               formKey: _formKey,
@@ -190,11 +190,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
 class RegisterButton extends StatefulWidget {
   const RegisterButton({
-    Key key,
-    @required GlobalKey<FormState> formKey,
-    @required TextEditingController email,
-    @required TextEditingController mobile,
-    @required TextEditingController confirmPass,
+    Key? key,
+    required GlobalKey<FormState> formKey,
+    required TextEditingController email,
+    required TextEditingController mobile,
+    required TextEditingController confirmPass,
   })  : _formKey = formKey,
         _email = email,
         _mobile = mobile,
@@ -211,10 +211,10 @@ class RegisterButton extends StatefulWidget {
 }
 
 class _RegisterButtonState extends State<RegisterButton> {
-  bool status;
+  bool? status;
   //FlutterSecureStorage _flutterSecureStorage = new FlutterSecureStorage();
 
-  String email;
+  String? email;
   @override
   Widget build(BuildContext context) {
     return BlocListener<UserBloc, UserState>(
@@ -233,7 +233,7 @@ class _RegisterButtonState extends State<RegisterButton> {
           BlocProvider.of<UserBloc>(context)
               .add(CustomerLoginEvent(customerRegistration));
         } else if (state is CheckEmailStatusLoadedState) {
-          if (!state.emailUsed) {
+          if (!state.emailUsed!) {
             CustomerRegistration customer = CustomerRegistration();
             customer.customerEmail = widget._email.text;
             customer.password = widget._confirmPass.text;
@@ -279,7 +279,7 @@ class _RegisterButtonState extends State<RegisterButton> {
             padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             onPressed: () {
               setState(() {
-                if (widget._formKey.currentState.validate()) {
+                if (widget._formKey.currentState!.validate()) {
                   print("Checking Email Status");
                   BlocProvider.of<UserBloc>(context)
                       .add(CheckEmailStatusEvent(widget._email.value.text));

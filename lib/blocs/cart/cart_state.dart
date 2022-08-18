@@ -9,7 +9,7 @@ class TaxDetailsLoading extends CartState {}
 
 class TaxDetailsLoaded extends CartState {
   final List<Tax> tax;
-  TaxDetailsLoaded({@required this.tax}) : assert(tax != null);
+  TaxDetailsLoaded({required this.tax}) : assert(tax != null);
 }
 
 class TaxDetailsErrorState extends CartState {}

@@ -13,13 +13,13 @@ class FetchOrderStatusEvent extends OrderEvent {
 }
 
 class CreatePurchaseForOrderEvent extends OrderEvent{
-  String userId;
+  String? userId;
   double subTotal;
-  String currency;
+  String? currency;
   CreatePurchaseForOrderEvent(this.userId,this.subTotal,this.currency);
 }
 
 class GetOrderDetailsEvent extends OrderEvent {
-  int orderId;
+  int? orderId;
   GetOrderDetailsEvent(this.orderId);
 }

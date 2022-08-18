@@ -15,16 +15,16 @@ import 'package:share_plus/share_plus.dart';
 import 'edit_profile_page.dart';
 
 class ProfilePageNew extends StatefulWidget {
-  const ProfilePageNew({Key key}) : super(key: key);
+  const ProfilePageNew({Key? key}) : super(key: key);
 
   @override
   _ProfilePageNewState createState() => _ProfilePageNewState();
 }
 
 class _ProfilePageNewState extends State<ProfilePageNew> {
-  CustomerRegistration customerInfo;
-  String email;
-  Future<String> getEmail() async {
+  CustomerRegistration? customerInfo;
+  String? email;
+  Future<String?> getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     email =  await prefs.getString('email');;
     return email;
@@ -35,7 +35,7 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
     super.initState();
     getEmail().then((value) {
       if(value!= null){
-        print("Current User Email" + email);
+        print("Current User Email" + email!);
         BlocProvider.of<UserBloc>(context)
             .add(FetchCustomerInformationEvent(value));
       }
@@ -94,16 +94,16 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
                             children: [
                               Text(state is CustomerInformationLoadedState
                                   ? state.customerlist.customerName != null
-                                  ? state.customerlist.customerName
+                                  ? state.customerlist.customerName!
                                   : 'Customer'
                                   : 'Customer',style: TextStyle(
                                 fontSize: 35,
                                 color: AppColors.WHITE
                               ),),
                               state is CustomerInformationLoadedState
-                              ?Text(customerInfo.customerEmail == null
-                                  ? email
-                                  : customerInfo.customerEmail,style: TextStyle(
+                              ?Text(customerInfo!.customerEmail == null
+                                  ? email!
+                                  : customerInfo!.customerEmail!,style: TextStyle(
                                   fontSize: 20,
                                   color: AppColors.WHITE
                               )):TextButton(
@@ -173,10 +173,10 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
                         ),
                         GestureDetector(
                           onTap: (){
-                            if(customerInfo.customerId != null ){
+                            if(customerInfo!.customerId != null ){
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                    return OrderHistoryPage(custId: customerInfo.customerId.toString(),);
+                                    return OrderHistoryPage(custId: customerInfo!.customerId.toString(),);
                                   }));
                             }
 

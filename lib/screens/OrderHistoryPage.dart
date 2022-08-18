@@ -5,15 +5,15 @@ import 'package:itcity_online_store/blocs/OrderHistory/order_history_bloc.dart';
 import 'package:itcity_online_store/screens/OrderHistoryDetailsPage.dart';
 
 class OrderHistoryPage extends StatefulWidget {
-  OrderHistoryPage({Key key,this.custId}) : super(key: key);
-  String custId;
+  OrderHistoryPage({Key? key,this.custId}) : super(key: key);
+  String? custId;
 
   @override
   State<OrderHistoryPage> createState() => _OrderHistoryPageState();
 }
 
 class _OrderHistoryPageState extends State<OrderHistoryPage> {
-  OrderHistoryModel orderHistoryModel;
+  OrderHistoryModel? orderHistoryModel;
   @override
   void initState() {
     if(widget.custId !=null){
@@ -36,10 +36,10 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
               orderHistoryModel =
                   BlocProvider.of<OrderHistoryBloc>(context).orderHistoryModel;
               return ListView.builder(
-                itemCount: orderHistoryModel.data.length,
+                itemCount: orderHistoryModel!.data!.length,
                   itemBuilder: (context, index) {
                   String status = '';
-                  switch(int.parse(orderHistoryModel.data[index].orderStatusId)){
+                  switch(int.parse(orderHistoryModel!.data![index].orderStatusId!)){
                     case 1 : status = 'Processing';
                     break;
                     case 2 : status = 'Shipped';
@@ -88,10 +88,10 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(orderHistoryModel.data[index].orderNumber,style: TextStyle(fontSize: 20),),
-                                  Text(orderHistoryModel.data[index].createdAt,style: TextStyle(fontSize: 15),),
+                                  Text(orderHistoryModel!.data![index].orderNumber!,style: TextStyle(fontSize: 20),),
+                                  Text(orderHistoryModel!.data![index].createdAt!,style: TextStyle(fontSize: 15),),
                                   Text('Order Status : '+status,style: TextStyle(fontSize: 15),),
-                                  Text('Total Amount : '+ orderHistoryModel.data[index].totalAmnt,style: TextStyle(fontSize: 15),)
+                                  Text('Total Amount : '+ orderHistoryModel!.data![index].totalAmnt!,style: TextStyle(fontSize: 15),)
 
 
 

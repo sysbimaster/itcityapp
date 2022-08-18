@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:grouped_buttons/grouped_buttons.dart';
+
+
 import 'package:itcity_online_store/components/address_checkout.dart';
 import 'package:itcity_online_store/components/order_summary.dart';
 import 'package:itcity_online_store/resources/values.dart';
-import 'package:itcity_online_store/screens/OrderSuccessPage.dart';
+
 import 'package:itcity_online_store/screens/edit_profile_page.dart';
 import 'package:itcity_online_store/screens/order_successpage_new.dart';
-import 'package:itcity_online_store/screens/screens.dart';
+
 import 'package:itcity_online_store/components/components.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum PaymentMethod { ktet, card, cod }
 
 class CheckOutNew extends StatefulWidget {
-  const CheckOutNew({Key key}) : super(key: key);
+  const CheckOutNew({Key? key}) : super(key: key);
 
   @override
   _CheckOutNewState createState() => _CheckOutNewState();
@@ -27,8 +27,8 @@ class CheckOutNew extends StatefulWidget {
 class _CheckOutNewState extends State<CheckOutNew> {
   PaymentMethod _paymentMethod = PaymentMethod.cod;
   TextEditingController _textEditingController = TextEditingController();
-  String country;
-  String currency = ' ';
+  String? country;
+  String? currency = ' ';
   getCountry() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -165,7 +165,7 @@ class _CheckOutNewState extends State<CheckOutNew> {
                           Radio(
                             value: PaymentMethod.ktet,
                             groupValue: _paymentMethod,
-                            onChanged: (PaymentMethod value) {},
+                            onChanged: (PaymentMethod? value) {},
                           ),
                           Padding(
                               padding: EdgeInsets.only(left: 15),
@@ -193,7 +193,7 @@ class _CheckOutNewState extends State<CheckOutNew> {
                             Radio(
                               value: PaymentMethod.card,
                               groupValue: _paymentMethod,
-                              onChanged: (PaymentMethod value) {},
+                              onChanged: (PaymentMethod? value) {},
                             ),
                             Padding(
                                 padding: EdgeInsets.only(left: 15),
@@ -224,7 +224,7 @@ class _CheckOutNewState extends State<CheckOutNew> {
                               groupValue: _paymentMethod,
                               autofocus: true,
                               activeColor: Colors.green,
-                              onChanged: (PaymentMethod value) {},
+                              onChanged: (PaymentMethod? value) {},
                             ),
                             Padding(
                                 padding: EdgeInsets.only(left: 15),
@@ -301,7 +301,7 @@ class _CheckOutNewState extends State<CheckOutNew> {
                                             userState.customerlist.customerId;
                                         order.currency = currency;
                                         order.remarks = this._textEditingController.value.text;
-                                        order.totalAmount = state.purchase.productSubTotal.toStringAsFixed(2);
+                                        order.totalAmount = state.purchase.productSubTotal!.toStringAsFixed(2);
                                         BlocProvider.of<OrderBloc>(context)
                                             .add(CreateOrderEvent(order));
                                       } : () {
@@ -317,7 +317,9 @@ class _CheckOutNewState extends State<CheckOutNew> {
                                       )),
                                 ),
                               );
-                            }},
+                            }
+                            return Container();
+                            },
                         );
                       }
                       return Container(
@@ -426,7 +428,7 @@ class CheckoutPageTest extends StatelessWidget {
                                                             .customerAddress !=
                                                         null
                                                     ? state.customerlist
-                                                            .customerAddress +
+                                                            .customerAddress! +
                                                         ","
                                                     : "No Address Available"
                                                 : '',
@@ -438,7 +440,7 @@ class CheckoutPageTest extends StatelessWidget {
                                                             .customerDistrict !=
                                                         null
                                                     ? state.customerlist
-                                                            .customerDistrict +
+                                                            .customerDistrict! +
                                                         ","
                                                     : ""
                                                 : '',
@@ -450,7 +452,7 @@ class CheckoutPageTest extends StatelessWidget {
                                                             .customerState !=
                                                         null
                                                     ? state.customerlist
-                                                            .customerState +
+                                                            .customerState! +
                                                         ","
                                                     : ""
                                                 : '',
@@ -490,7 +492,7 @@ class CheckoutPageTest extends StatelessWidget {
                               "Change / Update Address",
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline6
+                                  .headline6!
                                   .copyWith(color: Colors.white),
                             ),
                           ),

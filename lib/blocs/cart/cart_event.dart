@@ -14,20 +14,20 @@ class AddProductToCart extends CartEvent {
 }
 
 class RemoveAllProductFromCartEvent extends CartEvent {
-  final String userid;
+  final String? userid;
   RemoveAllProductFromCartEvent(this.userid);
 }
 
 class RemoveProductFromCartEvent extends CartEvent {
-  final String cartdata;
-  final String userId;
-  final String productId;
+  final String? cartdata;
+  final String? userId;
+  final String? productId;
   final String productCount;
   RemoveProductFromCartEvent(this.cartdata,this.userId,this.productId,this.productCount);
 }
 
 class FetchCartDetailsEvent extends CartEvent {
-  final String userId;
+  final String? userId;
   FetchCartDetailsEvent(this.userId);
 }
 class FetchCartRefreshEvent extends CartEvent {
@@ -36,6 +36,6 @@ class FetchCartRefreshEvent extends CartEvent {
 }
 
 class FetchCartAddRefreshEvent extends CartEvent {
-  final String userId;
+  final String? userId;
   FetchCartAddRefreshEvent(this.userId);
 }

@@ -4,9 +4,9 @@
 
 class PostReviewModel {
   PostReviewModel({
-      int data, 
-      bool success, 
-      List<String> messages,}){
+      int? data, 
+      bool? success, 
+      List<String>? messages,}){
     _data = data;
     _success = success;
     _messages = messages;
@@ -17,13 +17,13 @@ class PostReviewModel {
     _success = json['success'];
     _messages = json['messages'] != null ? json['messages'].cast<String>() : [];
   }
-  int _data;
-  bool _success;
-  List<String> _messages;
+  int? _data;
+  bool? _success;
+  List<String>? _messages;
 
-  int get data => _data;
-  bool get success => _success;
-  List<String> get messages => _messages;
+  int? get data => _data;
+  bool? get success => _success;
+  List<String>? get messages => _messages;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

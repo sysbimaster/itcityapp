@@ -1,7 +1,7 @@
 class WhatsappMobile {
-  String id;
-  String mobile;
-  String ip;
+  String? id;
+  String? mobile;
+  String? ip;
 
   WhatsappMobile();
   @override
@@ -26,7 +26,7 @@ class WhatsappMobile {
 
   static List<WhatsappMobile> listFromJson(List<dynamic> json) {
     return json == null
-        ? List<WhatsappMobile>()
+        ?[]
         : json.map((value) => WhatsappMobile.fromJson(value)).toList();
   }
 }

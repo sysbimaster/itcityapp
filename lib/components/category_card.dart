@@ -14,7 +14,7 @@ class CategoryCard extends StatefulWidget {
 }
 
 class _CategoryCardState extends State<CategoryCard> {
-  List<Category> categoryList =[];
+  List<Category>? categoryList =[];
   @override
   void initState() {
     super.initState();
@@ -42,7 +42,7 @@ class _CategoryCardState extends State<CategoryCard> {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
 
-            itemCount: categoryList == null ? 0 : categoryList.length,
+            itemCount: categoryList == null ? 0 : categoryList!.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -52,10 +52,10 @@ class _CategoryCardState extends State<CategoryCard> {
                       return ProductByCategoryPage(
                         categoryId: categoryList == null
                             ? 0
-                            : categoryList[index].categoryId,
+                            : categoryList![index].categoryId,
                         categoryName: categoryList == null
                             ? ''
-                            : categoryList[index].categoryName,
+                            : categoryList![index].categoryName,
                       );
                     }));
                   },
@@ -77,7 +77,7 @@ class _CategoryCardState extends State<CategoryCard> {
                               image: NetworkImage(categoryList == null
                                   ? ''
                                   : categoryImage +
-                                  categoryList[index].categoryImage),
+                                  categoryList![index].categoryImage!),
                               fit: BoxFit.contain,
                             ),
                           )),
@@ -88,7 +88,7 @@ class _CategoryCardState extends State<CategoryCard> {
                           child: Text(
                               categoryList == null
                                   ? ''
-                                  : categoryList[index].categoryName,
+                                  : categoryList![index].categoryName!,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               style: (TextStyle(

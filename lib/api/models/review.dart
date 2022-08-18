@@ -1,10 +1,10 @@
 class Review{
-  int reviewId;
-  String authorName;
-  String productId;
-  String text;
-  String rating;
-  int reviewStatus;
+  int? reviewId;
+  String? authorName;
+  String? productId;
+  String? text;
+  String? rating;
+  int? reviewStatus;
   
 
   Review();
@@ -36,9 +36,9 @@ class Review{
     return json;
   }
 
-  static List<Review> listFromJson(List<dynamic> json) {
+  static List<Review> listFromJson(List<dynamic>? json) {
     return json == null
-        ? List<Review>()
+        ? []
         : json.map((value) => Review.fromJson(value)).toList();
   }
 }

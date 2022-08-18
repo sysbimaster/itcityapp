@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
+
 import 'package:itcity_online_store/api/models/models.dart';
-import 'package:itcity_online_store/api/models/models.dart';
+
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
-import 'package:itcity_online_store/screens/screens.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomNavigationProductNew extends StatefulWidget {
-  final Product product;
-  int quantity;
+  final Product? product;
+  int? quantity;
   BottomNavigationProductNew({this.product, this.quantity});
 
   @override
@@ -21,9 +21,9 @@ class BottomNavigationProductNew extends StatefulWidget {
 
 class _BottomNavigationProductNewState
     extends State<BottomNavigationProductNew> {
-  String userId ;
-  String token = '';
-  String currency;
+  String? userId ;
+  String? token = '';
+  String? currency;
   bool buyNowPressed = false;
   void getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -58,7 +58,7 @@ class _BottomNavigationProductNewState
                           ),
                           onPressed: () {
                             if (userId != null) {
-                              if(widget.quantity != null || widget.quantity > 0 ){
+                              if(widget.quantity != null || widget.quantity! > 0 ){
                                 print("widget quantity" + widget.quantity.toString());
                                 addProductToCart();
                                 this.buyNowPressed = true;
@@ -89,7 +89,7 @@ class _BottomNavigationProductNewState
                           ),
                           onPressed: () {
                             if (userId != null) {
-                              if(widget.quantity != null || widget.quantity > 0 ){
+                              if(widget.quantity != null || widget.quantity! > 0 ){
 
                                 addProductToCart();
 
@@ -115,7 +115,7 @@ class _BottomNavigationProductNewState
                           child: Container(
                             color: Colors.black,
                             child: IconButton(
-                              icon: Icon(Icons.shopping_cart_outlined,color: AppColors.LOGO_ORANGE,size: 20,),
+                              icon: Icon(Icons.shopping_cart_outlined,color: AppColors.LOGO_ORANGE,size: 20,), onPressed: null,
                             ),
                           ))
                     ],
@@ -128,12 +128,12 @@ class _BottomNavigationProductNewState
     Cart cart = Cart();
     cart.cartData = widget.product == null
         ? ''
-        : widget.product.productId.toString();
+        : widget.product!.productId.toString();
     cart.userId = userId;
     cart.productCount = 1;
     cart.productPrice =
-    widget.product.productPrice != null
-        ? widget.product.productPrice.toDouble()
+    widget.product!.productPrice != null
+        ? widget.product!.productPrice.toDouble()
         : 0.0;
     cart.currency = this.currency;
     BlocProvider.of<CartBloc>(context)

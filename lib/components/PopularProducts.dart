@@ -20,7 +20,7 @@ import '../constants.dart';
 import 'components.dart';
 
 class PopularProducts extends StatefulWidget {
-  const PopularProducts({Key key}) : super(key: key);
+  const PopularProducts({Key? key}) : super(key: key);
 
   @override
   _PopularProductsState createState() => _PopularProductsState();
@@ -39,8 +39,8 @@ class _PopularProductsState extends State<PopularProducts> {
     // }
 
   }
-  String country;
-  String currency;
+  String? country;
+  String? currency;
   getCountry() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {

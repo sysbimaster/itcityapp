@@ -5,31 +5,31 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:itcity_online_store/api/models/cart.dart';
+
 import 'package:itcity_online_store/api/models/product.dart';
-import 'package:itcity_online_store/api/models/wishlist.dart';
+
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/components/product_card.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
-import 'package:itcity_online_store/screens/product_details_new.dart';
+
 import 'package:itcity_online_store/screens/search_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 
 class PopularProductsFull extends StatefulWidget {
-  String currency;
-  PopularProductsFull({Key key,this.currency}) : super(key: key);
+  String? currency;
+  PopularProductsFull({Key? key,this.currency}) : super(key: key);
 
   @override
   _PopularProductsFullState createState() => _PopularProductsFullState();
 }
 
 class _PopularProductsFullState extends State<PopularProductsFull> {
-  List<Product> popularProductFullList;
+  List<Product>? popularProductFullList;
   TextEditingController tcontroller = TextEditingController();
-  int cartcount = 0;
+  int? cartcount = 0;
   checkCartCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.containsKey('cartcount')){
@@ -82,7 +82,7 @@ class _PopularProductsFullState extends State<PopularProductsFull> {
         }
         if(state is PopularProductFullLoadedState|| state is ProductByProductIdLoadedState||state is RelatedProductByProductBrandLoadedState){
           popularProductFullList = BlocProvider.of<ProductBloc>(context).popularProductsFull;
-          print('deallist length'+popularProductFullList.length.toString());
+          print('deallist length'+popularProductFullList!.length.toString());
           return Scaffold(
             backgroundColor: AppColors.WHITE,
             appBar: AppBar(
@@ -144,7 +144,7 @@ class _PopularProductsFullState extends State<PopularProductsFull> {
                                     hintText: "Search Product, brands and more",
                                     suffixIcon: IconButton(
                                       icon: Icon(Icons.search),
-                                      padding: EdgeInsets.only(right: 20),
+                                      padding: EdgeInsets.only(right: 20), onPressed: null,
                                     ),
                                     hintStyle:
                                     Theme.of(context).inputDecorationTheme.hintStyle),
@@ -166,7 +166,7 @@ class _PopularProductsFullState extends State<PopularProductsFull> {
                 child: GridView.builder(
 
                     shrinkWrap: true,
-                    itemCount: popularProductFullList.length,
+                    itemCount: popularProductFullList!.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: .60,
@@ -174,7 +174,7 @@ class _PopularProductsFullState extends State<PopularProductsFull> {
                       crossAxisSpacing: 5,
                     ),
                     itemBuilder: (context, index) {
-                      return ProductCard(currency: widget.currency,product: popularProductFullList[index],rrating: 3.9+ rnd.nextDouble());
+                      return ProductCard(currency: widget.currency,product: popularProductFullList![index],rrating: 3.9+ rnd.nextDouble());
                     }),
               ),
             ),

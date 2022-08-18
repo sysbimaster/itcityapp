@@ -1,10 +1,10 @@
 class Currency {
-  bool success;
-  String terms;
-  String privacy;
-  Query query;
-  Info info;
-  double result;
+  bool? success;
+  String? terms;
+  String? privacy;
+  Query? query;
+  Info? info;
+  double? result;
 
   Currency(
       {this.success,
@@ -29,10 +29,10 @@ class Currency {
     data['terms'] = this.terms;
     data['privacy'] = this.privacy;
     if (this.query != null) {
-      data['query'] = this.query.toJson();
+      data['query'] = this.query!.toJson();
     }
     if (this.info != null) {
-      data['info'] = this.info.toJson();
+      data['info'] = this.info!.toJson();
     }
     data['result'] = this.result;
     return data;
@@ -40,9 +40,9 @@ class Currency {
 }
 
 class Query {
-  String from;
-  String to;
-  double amount;
+  String? from;
+  String? to;
+  double? amount;
 
   Query({this.from, this.to, this.amount});
 
@@ -62,8 +62,8 @@ class Query {
 }
 
 class Info {
-  int timestamp;
-  double quote;
+  int? timestamp;
+  double? quote;
 
   Info({this.timestamp, this.quote});
 

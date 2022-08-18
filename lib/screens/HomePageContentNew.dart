@@ -38,8 +38,8 @@ class _HomePageContentNewState extends State<HomePageContentNew> {
   List<Product> popularproducts = [];
   List<CustomerWishlist> wishlist = [];
   List<Product> mobileCollections = [];
-  List<HomeAds> homeAdImages;
-  SharedPreferences prefs;
+  List<HomeAds>? homeAdImages;
+  late SharedPreferences prefs;
 
   bool isCommon = false;
   void initPref() async {
@@ -89,7 +89,7 @@ class _HomePageContentNewState extends State<HomePageContentNew> {
     } else if (state is AddProductToCartSuccessState) {
       Loader.hide();
 
-      if(BlocProvider.of<CartBloc>(context).page.compareTo('cartpage') ==1 ){
+      if(BlocProvider.of<CartBloc>(context).page!.compareTo('cartpage') ==1 ){
         showModalBottomSheet(
             context: context,
             builder: (context) {
@@ -260,14 +260,14 @@ class _HomePageContentNewState extends State<HomePageContentNew> {
                   imageAds: homeAdImages,
                 ),
                 MobileCollections(),
-                homeAdImages.length >= 3?
+                homeAdImages!.length >= 3?
                 HomeAdsBanner(
                   index: 2,
                   imageAds: homeAdImages,
                 ):Container(),
 
                 PopularProducts(),
-                homeAdImages.length >= 4?
+                homeAdImages!.length >= 4?
                 HomeAdsBanner(
                   index: 3,
                   imageAds: homeAdImages,
@@ -277,7 +277,7 @@ class _HomePageContentNewState extends State<HomePageContentNew> {
 
 
                 ComputerCollections(),
-                homeAdImages.length >= 5?
+                homeAdImages!.length >= 5?
                   HomeAdsBanner(
                     index: 4,
                     imageAds: homeAdImages,
@@ -313,7 +313,7 @@ class _TimerAppState extends State<TimerApp> {
   static const duration = const Duration(seconds: 1);
   int timeDiff = eventTime.difference(DateTime.now()).inSeconds;
   bool isActive = false;
-  Timer timer;
+  Timer? timer;
   @override
   void initState() {
     super.initState();
@@ -383,8 +383,8 @@ class _TimerAppState extends State<TimerApp> {
 class LabelText extends StatelessWidget {
   LabelText({this.label, this.value});
 
-  final String label;
-  final String value;
+  final String? label;
+  final String? value;
 
   @override
   Widget build(BuildContext context) {

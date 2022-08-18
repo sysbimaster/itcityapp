@@ -19,8 +19,8 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   
 
-    String userId = '';
-    String currency ;
+    String? userId = '';
+    String? currency ;
   void getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() async {

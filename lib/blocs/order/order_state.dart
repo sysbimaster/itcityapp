@@ -10,7 +10,7 @@ class OrderInitial extends OrderState {}
 class CreateOrderLoadingState extends OrderState {}
 
 class CreateOrderSuccessState extends OrderState {
-  OrderStatusNew orderStatusNew;
+  OrderStatusNew? orderStatusNew;
   CreateOrderSuccessState (this.orderStatusNew);
 }
 
@@ -26,7 +26,7 @@ class CreatePurchaseSuccessState extends OrderState {
 class CreatePurchaseErrorState extends OrderState {}
 class GetOrderDetailsLoadingState extends OrderState{}
 class GetOrderDetailsLoadedState extends OrderState{
-  OrderDetails orderDetails;
+  OrderDetails? orderDetails;
   GetOrderDetailsLoadedState(this.orderDetails);
 }
 class GetOrderDetailsErrorState extends OrderState{}

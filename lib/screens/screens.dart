@@ -15,7 +15,7 @@ export './forget_password_page.dart';
 
 export './register_page.dart';
 export './sell_on_itcity_page.dart';
-export './verify_number_page.dart';
+
 
 export './rating_and_review_page.dart';
 export './reset_password_page.dart';

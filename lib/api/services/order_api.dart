@@ -26,7 +26,7 @@ class OrderApi {
     return OrderStatusNew.fromJson(jsonDecode(response.body)['data']);
   }
 
-  Future createPurchase(String userId,double subtotal,String currency) async  {
+  Future createPurchase(String? userId,double subtotal,String? currency) async  {
       Response response =
         await _apiclient.invokeAPI(_createPurchasePath+"?user_id=$userId&product_sub_total=$subtotal&cur=$currency", 'POST_', {});
 
@@ -38,7 +38,7 @@ class OrderApi {
         _getOrderStatusPath, 'GET', orderStatusId.toJson());
     return OrderStatus.fromJson(jsonDecode(response.body)['data']);
   }
-  Future<OrderDetails> getPurchaseDetailsByOrderId(int orderId) async {
+  Future<OrderDetails> getPurchaseDetailsByOrderId(int? orderId) async {
     String url = _getPurchaseDetails+"?order_id=$orderId";
     print('orderid in orderapi'+orderId.toString()+" "+url);
     Response response =
@@ -46,7 +46,7 @@ class OrderApi {
 
     return OrderDetails.fromJson(jsonDecode(response.body));
   }
-  Future<ProductOrderDetails> getPurchaseProductDetailsByOrderId(int orderId) async {
+  Future<ProductOrderDetails> getPurchaseProductDetailsByOrderId(int? orderId) async {
     String url = _getProductPurchase+"?order_id=$orderId";
     print('orderid in orderapi'+orderId.toString()+" "+url);
     Response response =
@@ -56,7 +56,7 @@ class OrderApi {
     return ProductOrderDetails.fromJson(jsonDecode(response.body));
   }
 
-  Future<OrderHistoryModel> getOrderHistory(String CustId) async {
+  Future<OrderHistoryModel> getOrderHistory(String? CustId) async {
     String url = _getOrderHistoryPath+"?customer_id=${CustId}";
     Response response = await _apiclient.invokeAPI(url, 'GET', {});
 

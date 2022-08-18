@@ -9,10 +9,10 @@ class FetchReview extends RandomReviewEvent{
 
 
 class PostReview extends RandomReviewEvent{
-  String authorName;
-  String productId;
-  String text;
-  int rating;
+  String? authorName;
+  String? productId;
+  String? text;
+  int? rating;
   PostReview({this.productId,this.rating,this.authorName,this.text});
 
 }

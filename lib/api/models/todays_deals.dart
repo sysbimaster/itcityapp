@@ -1,9 +1,9 @@
 class TodaysDeals {
-  int dealId;
-  String productId;
-  String startDate;
-  String endDate;
-  String amountDiscount;
+  int? dealId;
+  String? productId;
+  String? startDate;
+  String? endDate;
+  String? amountDiscount;
 
   TodaysDeals();
   @override
@@ -33,7 +33,7 @@ class TodaysDeals {
 
   static List<TodaysDeals> listFromJson(List<dynamic> json) {
     return json == null
-        ? List<TodaysDeals>()
+        ? []
         : json.map((value) => TodaysDeals.fromJson(value)).toList();
   }
 }

@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';
 import 'package:itcity_online_store/resources/values.dart';
-import 'package:itcity_online_store/screens/login_page_new.dart';
+
 import 'package:itcity_online_store/screens/product_details_new.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 
 class MobileCollectionsCard extends StatefulWidget {
-  Product product;
-  String currency;
-  double rrating;
- MobileCollectionsCard({Key key,this.currency,this.product,this.rrating}) : super(key: key);
+  Product? product;
+  String? currency;
+  double? rrating;
+ MobileCollectionsCard({Key? key,this.currency,this.product,this.rrating}) : super(key: key);
 
   @override
   _MobileCollectionsCardState createState() => _MobileCollectionsCardState();
@@ -26,7 +24,7 @@ class MobileCollectionsCard extends StatefulWidget {
 
 class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
   bool _isFavorited = false;
-  double rating;
+  double? rating;
 
   void _toggleFavorite() {
     setState(() {
@@ -41,7 +39,7 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
           onTap: (){
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return ProductDetailsNew(
-                productId: widget.product.productId,
+                productId: widget.product!.productId,
               );
             }));
           },
@@ -68,7 +66,7 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
                             image: DecorationImage(
                               image: NetworkImage(widget.product == null
                                   ? ''
-                                  : productImage + widget.product.productImage,),
+                                  : productImage + widget.product!.productImage!,),
                               fit: BoxFit.contain,
                             ),
                           ),
@@ -78,7 +76,7 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
                             child: Text(
                               widget.product == null
                                   ? ''
-                                  : widget.product.productName,
+                                  : widget.product!.productName!,
                               maxLines: 2,
                               // softWrap: false,
                               // overflow: TextOverflow.fade,
@@ -100,9 +98,9 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
                            widget.currency != null ? Container(
                                 padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                                 child: Text(
-                                    widget.currency +
+                                    widget.currency! +
                                         ' ' +
-                                        widget.product.productPriceOffer.toStringAsFixed(2),
+                                        widget.product!.productPriceOffer.toStringAsFixed(2),
                                     style: (TextStyle(
                                       fontFamily: 'Arial',
                                       // fontFamily: 'RobotoSlab',
@@ -129,7 +127,7 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
                       if (_isFavorited == true) {
                         Wishlist wish = Wishlist();
 
-                        wish.wishlist =  widget.product.productId;
+                        wish.wishlist =  widget.product!.productId;
                         if (prefs.containsKey('email')) {
                           wish.username = prefs.getString('email');
                           BlocProvider.of<WishlistBloc>(context)
@@ -137,9 +135,9 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
 
                           _toggleFavorite();
                           if (state is RemoveProductFromWishlistLoadingState)
-                            return (Center(
+                            Center(
                               child: CircularProgressIndicator(),
-                            ));
+                            );
                         }
                       } else if (_isFavorited == false) {
 
@@ -148,7 +146,7 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
                         if (prefs.containsKey('email')) {
                           setState(() {
                             Wishlist wish = Wishlist();
-                            wish.wishlist =  widget.product.productId;
+                            wish.wishlist =  widget.product!.productId;
 
                             wish.username = prefs.getString('email');
 
@@ -157,9 +155,9 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
                             _toggleFavorite();
 
                             if (state is AddProductToWishlistLoadingState) {
-                              return (Center(
+                              Center(
                                 child: CircularProgressIndicator(),
-                              ));
+                              );
                             }
                           });
                         } else {
@@ -205,7 +203,7 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Icon(Icons.star,color: AppColors.LOGO_ORANGE,size: 20,),
-                              Text(widget.rrating!= null?  widget.rrating.toStringAsFixed(1):rating.toStringAsFixed(1),style: TextStyle(
+                              Text(widget.rrating!= null?  widget.rrating!.toStringAsFixed(1):rating!.toStringAsFixed(1),style: TextStyle(
                                 fontFamily: 'Arial',
 
                                 fontSize: 14,

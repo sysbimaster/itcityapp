@@ -4,9 +4,9 @@
 
 class MultipleImageModel {
   MultipleImageModel({
-      List<Data> data,
-      bool success,
-      List<dynamic> messages,}){
+      List<Data>? data,
+      bool? success,
+      List<dynamic>? messages,}){
     _data = data;
     _success = success;
     _messages = messages;
@@ -28,13 +28,13 @@ class MultipleImageModel {
       });
     }
   }
-  List<Data> _data;
-  bool _success;
-  List<dynamic> _messages;
+  List<Data>? _data;
+  bool? _success;
+  List<dynamic>? _messages;
 
-  List<Data> get data => _data;
-  bool get success => _success;
-  List<dynamic> get messages => _messages;
+  List<Data>? get data => _data;
+  bool? get success => _success;
+  List<dynamic>? get messages => _messages;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -57,10 +57,10 @@ class MultipleImageModel {
 
 class Data {
   Data({
-      int imageId,
-      String productId,
-      String images,
-      String createdAt,}){
+      int? imageId,
+      String? productId,
+      String? images,
+      String? createdAt,}){
     _imageId = imageId;
     _productId = productId;
     _images = images;
@@ -73,15 +73,15 @@ class Data {
     _images = json['images'];
     _createdAt = json['created_at'];
   }
-  int _imageId;
-  String _productId;
-  String _images;
-  String _createdAt;
+  int? _imageId;
+  String? _productId;
+  String? _images;
+  String? _createdAt;
 
-  int get imageId => _imageId;
-  String get productId => _productId;
-  String get images => _images;
-  String get createdAt => _createdAt;
+  int? get imageId => _imageId;
+  String? get productId => _productId;
+  String? get images => _images;
+  String? get createdAt => _createdAt;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

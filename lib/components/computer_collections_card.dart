@@ -15,11 +15,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 
 class ComputerCollectionsCard extends StatefulWidget {
-  Product product;
-  String currency;
-  double rrating;
+  Product? product;
+  String? currency;
+  double? rrating;
 
- ComputerCollectionsCard({Key key,this.product,this.currency,this.rrating}) : super(key: key);
+ ComputerCollectionsCard({Key? key,this.product,this.currency,this.rrating}) : super(key: key);
 
   @override
   _ComputerCollectionsCardState createState() => _ComputerCollectionsCardState();
@@ -27,7 +27,7 @@ class ComputerCollectionsCard extends StatefulWidget {
 
 class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
   bool _isFavorited = false;
-  double rating;
+  double? rating;
   void _toggleFavorite() {
     setState(() {
       _isFavorited = !_isFavorited;
@@ -48,7 +48,7 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
       onTap: (){
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return ProductDetailsNew(
-            productId: widget.product.productId,
+            productId: widget.product!.productId,
           );
         }));
       },
@@ -77,7 +77,7 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                           image: DecorationImage(
                             image: NetworkImage(widget.product== null
                                 ? ''
-                                : productImage + widget.product.productImage,),
+                                : productImage + widget.product!.productImage!,),
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -106,7 +106,7 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                           child: Text(
                             widget.product == null
                                 ? ''
-                                : widget.product.productName,
+                                : widget.product!.productName!,
                             maxLines: 2,
                             // softWrap: false,
                             // overflow: TextOverflow.fade,
@@ -127,9 +127,9 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                           widget.currency != null ? Container(
                               padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                               child:Text(
-                                  widget.currency +
+                                  widget.currency! +
                                       ' ' +
-                                      widget.product.productPriceOffer.toStringAsFixed(2),
+                                      widget.product!.productPriceOffer.toStringAsFixed(2),
                                   style: (TextStyle(
                                     // fontFamily: 'RobotoSlab',
                                     fontSize: 14,
@@ -170,15 +170,15 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                                   Cart cart = Cart();
                                   cart.cartData = widget.product == null
                                       ? ''
-                                      : widget.product.productId
+                                      : widget.product!.productId
                                       .toString();
                                   cart.userId =
                                       prefs.getString('customerId');
                                   cart.productCount = 1;
-                                  cart.productPrice = widget.product.productPrice !=
+                                  cart.productPrice = widget.product!.productPrice !=
                                       null
                                       ?
-                                  widget.product.productPrice
+                                  widget.product!.productPrice
                                       : 0.0;
                                   cart.currency = widget.currency;
                                   BlocProvider.of<CartBloc>(context)
@@ -269,7 +269,7 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                     if (_isFavorited == true) {
                       Wishlist wish = Wishlist();
 
-                      wish.wishlist =  widget.product.productId;
+                      wish.wishlist =  widget.product!.productId;
                       if (prefs.containsKey('email')) {
                         wish.username = prefs.getString('email');
                         BlocProvider.of<WishlistBloc>(context)
@@ -277,9 +277,9 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
 
                         _toggleFavorite();
                         if (state is RemoveProductFromWishlistLoadingState)
-                          return (Center(
+                          Center(
                             child: CircularProgressIndicator(),
-                          ));
+                          );
                       }
                     } else if (_isFavorited == false) {
 
@@ -289,7 +289,7 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                       if (prefs.containsKey('email')) {
                         setState(() {
                           Wishlist wish = Wishlist();
-                          wish.wishlist =  widget.product.productId;
+                          wish.wishlist =  widget.product!.productId;
 
                           wish.username = prefs.getString('email');
 
@@ -298,9 +298,9 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                           _toggleFavorite();
 
                           if (state is AddProductToWishlistLoadingState) {
-                            return (Center(
+                            Center(
                               child: CircularProgressIndicator(),
-                            ));
+                            );
                           }
                         });
                       } else {
@@ -346,7 +346,7 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(Icons.star,color: AppColors.LOGO_ORANGE,size: 20,),
-                            Text(widget.rrating!= null?  widget.rrating.toStringAsFixed(1):rating.toStringAsFixed(1),style: TextStyle(
+                            Text(widget.rrating!= null?  widget.rrating!.toStringAsFixed(1):rating!.toStringAsFixed(1),style: TextStyle(
                               fontFamily: 'Arial',
                               // fontFamily: 'RobotoSlab',
                               fontSize: 14,

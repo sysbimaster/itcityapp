@@ -93,7 +93,7 @@ class CheckEmailStatusEvent extends UserEvent{
   List<Object> get props => throw UnimplementedError();
 }
 class FetchCustomerInformationEvent extends UserEvent{
-  final String customerEmail;
+  final String? customerEmail;
   FetchCustomerInformationEvent(this.customerEmail);
 
   @override

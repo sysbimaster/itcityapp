@@ -2,10 +2,6 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:itcity_online_store/api/models/cart.dart';
-import 'package:itcity_online_store/api/models/cart.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/components/CartCardNew.dart';
 import 'package:itcity_online_store/resources/values.dart';
@@ -27,7 +23,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int cartcount = 0;
+  int? cartcount = 0;
   @override
   void initState() {
    // checkCartCount();
@@ -45,9 +41,11 @@ class _MainPageState extends State<MainPage> {
       });
     }
   }
+
+
   @override
   Widget build(BuildContext context) {
-    FlutterStatusbarcolor.setStatusBarColor(AppColors.LOGO_DARK_ORANGE);
+
     return BlocListener<CartBloc, CartState>(
       listener: (context, state) {
         if(state is CartDetailsLoadedState || state is CartAddRefreshLoadedState){
@@ -60,8 +58,8 @@ class _MainPageState extends State<MainPage> {
         // TODO: implement listener
       },
       child: WillPopScope(
-        onWillPop: (){
-          showDialog(
+        onWillPop: () async {
+          final shouldPop = await showDialog<bool>(
               context: context,
               builder: (context) {
                 TextEditingController walletcontroller =
@@ -89,13 +87,14 @@ class _MainPageState extends State<MainPage> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pop(context,false);
                         },
                         child: Text('No'),
                       )
                     ]);
               });
-        },
+          return shouldPop!;
+        } ,
         child: Scaffold(
           body: DefaultTabController(
             initialIndex: widget.selectedPage,

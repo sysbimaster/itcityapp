@@ -8,7 +8,7 @@ import 'package:itcity_online_store/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/product_details_new.dart';
-import 'package:itcity_online_store/screens/screens.dart';
+
 
 class BannerList extends StatefulWidget {
   @override
@@ -16,6 +16,7 @@ class BannerList extends StatefulWidget {
 }
 
 class _BannerListState extends State<BannerList> {
+
   List<HomeImages> image = [];
   @override
   void initState() {
@@ -27,7 +28,7 @@ class _BannerListState extends State<BannerList> {
   Widget build(BuildContext context) {
 
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
-      image = BlocProvider.of<HomeBloc>(context).image;
+
       if (state is HomeImagesLoadingState) {
 
         return Center(
@@ -45,79 +46,83 @@ class _BannerListState extends State<BannerList> {
             child: Icon(Icons.refresh)),
         );
       }
-      return Container(
+      if(state is HomeImagesLoadedState){
+        image = BlocProvider.of<HomeBloc>(context).image;
+        return Container(
 
-        height: MediaQuery.of(context).size.width /2 ,
+          height: MediaQuery.of(context).size.width /2 ,
           width: MediaQuery.of(context).size.width,
-        color: AppColors.WHITE,
-        child: Stack(
-          children: [
-            Container(
+          color: AppColors.WHITE,
+          child: Stack(
+            children: [
+              Container(
 
-              child: CarouselSlider(
-                items: image
-                    .map((item) =>
+                child: CarouselSlider(
+                  items: image
+                      .map((item) =>
 
-                        GestureDetector(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return ProductDetailsNew(
-                                productId: item.url,
-                              );
-                            }));
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width  ,
-                            child: Image.network(
-                                item == null ? '' : homeImage + item.imageName,fit: BoxFit.fitWidth,),
-                          ),
-                        ))
-                    .toList(),
-                options: CarouselOptions(
-                    autoPlay: true,
-                    autoPlayInterval: Duration(seconds: 3),
-                    autoPlayAnimationDuration: Duration(milliseconds: 250),
-                   autoPlayCurve: Curves.ease,
-                    // enlargeCenterPage: true,
-                    viewportFraction: 1,
-                   aspectRatio: 2.0,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        _current = index;
-                      });
-                    }),
-              ),
-            ),
-            Align(
-             // heightFactor:,
-              widthFactor: 1,
-             alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-
-                  children: image.map((url) {
-                    int index = image.indexOf(url);
-                    return Container(
-                      width: 25.0,
-                      height:3.0,
-                      margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 2.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        shape: BoxShape.rectangle,
-                        color: _current == index
-                            ? AppColors.LOGO_ORANGE
-                            : AppColors.WHITE,
-                      ),
-                    );
-                  }).toList(),
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return ProductDetailsNew(
+                              productId: item.url,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width  ,
+                          child: Image.network(
+                            item == null ? '' : homeImage + item.imageName!,fit: BoxFit.fitWidth,),
+                        ),
+                      ))
+                      .toList(),
+                  options: CarouselOptions(
+                      autoPlay: true,
+                      autoPlayInterval: Duration(seconds: 3),
+                      autoPlayAnimationDuration: Duration(milliseconds: 250),
+                      autoPlayCurve: Curves.ease,
+                      // enlargeCenterPage: true,
+                      viewportFraction: 1,
+                      aspectRatio: 2.0,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          _current = index;
+                        });
+                      }),
                 ),
               ),
-            ),
-          ],
-        ),
-      );
+              Align(
+                // heightFactor:,
+                widthFactor: 1,
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: image.map((url) {
+                      int index = image.indexOf(url);
+                      return Container(
+                        width: 25.0,
+                        height:3.0,
+                        margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 2.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          shape: BoxShape.rectangle,
+                          color: _current == index
+                              ? AppColors.LOGO_ORANGE
+                              : AppColors.WHITE,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+      return Container();
     });
   }
 }

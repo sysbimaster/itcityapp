@@ -28,7 +28,7 @@ class BottomNavigation extends StatelessWidget {
                 builder: (context, cartState) {
                   if (cartState is CartDetailsLoadedState) {
                     total =
-                        orderState.purchase.productSubTotal.toStringAsFixed(2);
+                        orderState.purchase.productSubTotal!.toStringAsFixed(2);
 
                     return Container(
                       color: Colors.white,
@@ -50,6 +50,7 @@ class BottomNavigation extends StatelessWidget {
                       ),
                     );
                   }
+                  return Container();
                 },
               ),
               BlocBuilder<UserBloc, UserState>(
@@ -84,6 +85,7 @@ class BottomNavigation extends StatelessWidget {
                       ),
                     );
                   }
+                  return Container();
                 },
               ),
             ],

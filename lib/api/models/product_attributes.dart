@@ -1,11 +1,11 @@
 class ProductAttributes{
-  String productsAttributesId;
-  String productId;
-  String attributeType;
-  String attributeValue;
-  String attributePrice;
-  String attributeImage;
-  String availableQuantity;
+  String? productsAttributesId;
+  String? productId;
+  String? attributeType;
+  String? attributeValue;
+  String? attributePrice;
+  String? attributeImage;
+  String? availableQuantity;
 
   ProductAttributes();
   @override
@@ -13,7 +13,7 @@ class ProductAttributes{
     return toJson().toString();
   }
 
-  ProductAttributes.fromJson(Map<String, dynamic> json) {
+  ProductAttributes.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;
     productsAttributesId = json['products_attributes_id'] == null ? null : json['products_attributes_id'];
     productId = json['product_id'] == null ? null : json['product_id'];
@@ -37,9 +37,9 @@ class ProductAttributes{
    
     return json;
   }
-  static List<ProductAttributes> listFromJson(List<dynamic> json){
+  static List<ProductAttributes> listFromJson(List<dynamic>? json){
     return json == null
-    ? List<ProductAttributes>()
+    ? []
     : json.map((value) => ProductAttributes.fromJson(value)).toList();
   }
 }

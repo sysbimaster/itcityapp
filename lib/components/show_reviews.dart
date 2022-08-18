@@ -7,8 +7,8 @@ import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';
 import 'package:itcity_online_store/resources/values.dart';
 
 class ShowReviews extends StatefulWidget {
-  String productId;
-  ShowReviews({Key key, this.productId}) : super(key: key);
+  String? productId;
+  ShowReviews({Key? key, this.productId}) : super(key: key);
 
   @override
   _ShowReviewsState createState() => _ShowReviewsState();
@@ -16,7 +16,7 @@ class ShowReviews extends StatefulWidget {
 
 class _ShowReviewsState extends State<ShowReviews> {
   bool isReview = false;
-  GetReviewModel getReviewModel;
+  GetReviewModel? getReviewModel;
 
   @override
   void initState() {
@@ -71,7 +71,7 @@ class _ShowReviewsState extends State<ShowReviews> {
                   shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     padding: const EdgeInsets.all(8),
-                    itemCount: getReviewModel.data.length,
+                    itemCount: getReviewModel!.data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
                         decoration: BoxDecoration(
@@ -85,13 +85,13 @@ class _ShowReviewsState extends State<ShowReviews> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(getReviewModel.data[index].authorName.compareTo('null') !=0 ?getReviewModel.data[index].authorName : ''  ),
+                                  Text(getReviewModel!.data![index].authorName!.compareTo('null') !=0 ?getReviewModel!.data![index].authorName! : ''  ),
                                   Padding(
                                     padding: const EdgeInsets.all(4.0),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Text(getReviewModel.data[index].rating,style: TextStyle(
+                                        Text(getReviewModel!.data![index].rating!,style: TextStyle(
                                           fontFamily: 'Arial',
                                           // fontFamily: 'RobotoSlab',
                                           fontSize: 14,
@@ -111,7 +111,7 @@ class _ShowReviewsState extends State<ShowReviews> {
 
                             Padding(
                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: Text(getReviewModel.data[index].text.compareTo('null') != 0 ? getReviewModel.data[index].text:''),
+                              child: Text(getReviewModel!.data![index].text!.compareTo('null') != 0 ? getReviewModel!.data![index].text!:''),
                             )
 
                           ],

@@ -11,50 +11,40 @@ part 'random_review_state.dart';
 
 class RandomReviewBloc extends Bloc<RandomReviewEvent, RandomReviewState> {
   final ProductApi productApi;
-  PostReviewModel postReviewModel;
-  double ratingReview;
-  GetReviewModel getReviewModel;
-  RandomReviewBloc({this.productApi})
-      : assert(productApi != null),
-        super(null);
-
-  @override
-  Stream<RandomReviewState> mapEventToState(
-    RandomReviewEvent event,
-  ) async* {
-    if (event is FetchReview) {
-      yield* _mapFetchReviewToState(state, event);
-    }
-    if(event is PostReview){
-      yield* _mapPostReviewToState(state, event,event.productId,event.authorName,event.text,event.rating);
-    }
-
-    // TODO: implement mapEventToState
+  PostReviewModel? postReviewModel;
+  double? ratingReview;
+  GetReviewModel? getReviewModel;
+  RandomReviewBloc({required this.productApi})
+      :super(RandomReviewInitial()){
+    on<FetchReview>((event, emit) => _mapFetchReviewToState(event,emit));
+    on<PostReview>((event, emit) => _mapPostReviewToState(event,emit,event.productId,event.authorName,event.text,event.rating));
   }
 
-  Stream<RandomReviewState> _mapFetchReviewToState(
-      RandomReviewState state, RandomReviewEvent event) async* {
-    yield RandomReviewLoading();
+
+
+ void _mapFetchReviewToState(
+       RandomReviewEvent event,Emitter<RandomReviewState> emit) async {
+    emit( RandomReviewLoading());
     try {
       final double review = await productApi.getRandomReview();
       ratingReview = review;
-      yield RandomReviewLoaded();
+      emit(RandomReviewLoaded());
     } catch (e) {
       print("error in loading product>>>>>>>>>>>" + e.toString());
-      yield RandomReviewError();
+      emit(RandomReviewError());
     }
   }
 
-  Stream<RandomReviewState> _mapPostReviewToState(
-      RandomReviewState state, PostReview event, String productId, String authorName, String text, int rating) async* {
-    yield PostReviewLoading();
+void _mapPostReviewToState(
+       PostReview event,Emitter<RandomReviewState> emit, String? productId, String? authorName, String? text, int? rating) async {
+  emit( PostReviewLoading());
     try {
      postReviewModel = await productApi.PostRandomReview(authorName, productId, text, rating);
 
-     yield PostReviewLoaded();
+     emit( PostReviewLoaded());
     } catch (e) {
       print("error in loading product>>>>>>>>>>>" + e.toString());
-      yield PostReviewError();
+      emit(PostReviewError());
     }
   }
 

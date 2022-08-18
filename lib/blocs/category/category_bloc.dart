@@ -2,24 +2,25 @@ import 'package:itcity_online_store/blocs/category/category.dart';
 import 'package:itcity_online_store/api/services/services.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:bloc/bloc.dart';
-import 'dart:async';
+
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final ProductApi productApi;
-  CategoryBloc({this.productApi})
-      : assert(productApi != null),
-        super(null);
-  List<Category> categoryList;
+  CategoryBloc({required this.productApi})
+      : super(CategoryInitialState()){
+    on<FetchCategory>((event, emit) => mapEventToState(event,emit));
+  }
+  List<Category>? categoryList;
   @override
-  Stream<CategoryState> mapEventToState(CategoryEvent event) async* {
+ void mapEventToState(CategoryEvent event,Emitter<CategoryState> emit) async {
     if (event is FetchCategory) {
-      yield CategoryLoadingState();
+      emit(CategoryLoadingState());
       try {
         final List<Category> category = await productApi.getCategory();
         categoryList = category;
-        yield CategoryLoadedState(category: category);
+        emit(CategoryLoadedState(category: category));
       } catch (e) {
-        print('error in fetching category>>>>>>>>>>>' + e.toString());
+
         print(e);
       }
     }
