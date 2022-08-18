@@ -358,6 +358,14 @@ class _SearchPageState extends State<SearchPage> {
   },
   child: Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.LOGO_ORANGE,
+        title: Image.asset(
+          'assets/images/logo_home.png',
+          width: 130,
+          height: 55,
+          fit: BoxFit.contain,
+        ),
+        centerTitle: true,
         leading: SizedBox.shrink(),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(40),
@@ -443,8 +451,8 @@ class _SearchPageState extends State<SearchPage> {
 
           } else if (state is SearchLoadingState) {
             return SpinKitRing(
-              color: Colors.black,
-              size: 20,
+              color: AppColors.LOGO_ORANGE,
+
             );
           }
           return Container();

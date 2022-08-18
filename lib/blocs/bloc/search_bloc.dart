@@ -12,7 +12,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     final ProductApi productApi;
 
   SearchBloc(this.productApi) : super(SearchInitial()){
-    on<SearchTermEvent>((event, emit) => search(event,emit));
+    on<SearchTermEvent>((event, emit) => search(event,emit,event.term,event.currency.toString()));
   }
 
   // @override
@@ -26,11 +26,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   //   }
   // }
 
-void search(SearchTermEvent event,Emitter<SearchState> emit) async {
+void search(SearchEvent event,Emitter<SearchState> emit,String term,String currency) async {
       emit(SearchLoadingState());
     try {
-      List<Product> product = await (productApi.search(event.term,event.currency) as FutureOr<List<Product>>);
-      emit (SearchSuccessState(product));
+      List<Product> product = await productApi.search(term,currency) ;
+      emit(SearchSuccessState(product));
     } catch (e) {
       print("error in fetching all product>>>>>>>" + e.toString());
     }

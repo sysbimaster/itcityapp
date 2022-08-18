@@ -109,9 +109,11 @@ class _RegisterPageState extends State<RegisterPage> {
     );
 
     return WillPopScope(
-      onWillPop: (){
+      onWillPop: ()async {
         Navigator.pushNamed(context, '/home');
-      } as Future<bool> Function()?,
+        return true;
+
+      } ,
       child: Scaffold(
           bottomNavigationBar: RegisterButton(
               formKey: _formKey,

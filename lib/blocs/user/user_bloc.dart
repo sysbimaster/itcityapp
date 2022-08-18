@@ -25,6 +25,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<ForgotPasswordEvent>((event, emit) => _mapForgotPasswordToState(event,emit,event.email));
     on<FetchCustomerInformationEvent>((event, emit) => _mapFetchCustomerInformationToState(event,emit,event.customerEmail));
     on<UpdateCustomerEvent>((event, emit) => _mapFetchCustomerInformationUpdatedToState(event,emit,event.customerRegistration.customerEmail));
+    on<CustomerLoginEvent>((event, emit) => _mapCustomerLoginToState(event, emit, event.customer));
+    on<CheckEmailStatusEvent>((event, emit) => _mapCheckEmailStatusToState(event, emit, event.mail));
   }
   // @override
   // Stream<UserState> mapEventToState(
@@ -169,15 +171,15 @@ void _mapCustomerLoginToState(
     } catch (e) {}
   }
 
-  Stream<UserState> _mapCheckEmailStatusToState(
-      UserEvent event, UserState state, String mail) async* {
+  void _mapCheckEmailStatusToState(
+      UserEvent event,Emitter<UserState> emit, String mail) async {
        
-    yield CheckEmailStatusLoadingState();
+    emit(CheckEmailStatusLoadingState());
     try {
       final bool status = await userApi.checkEmailStatus(mail);
       emailStatus = status;
       print("Email Status is" + emailStatus.toString());
-      yield CheckEmailStatusLoadedState(emailStatus);
+      emit(CheckEmailStatusLoadedState(emailStatus));
     } catch (e) {
       print(e);
     }
