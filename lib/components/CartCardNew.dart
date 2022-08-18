@@ -17,16 +17,16 @@ String image =
     'https://www.itcityonlinestore.com/uploads/product/single-product/';
 
 class CartCardNew extends StatefulWidget {
-  CartCardNew({Key key}) : super(key: key);
+  CartCardNew({Key? key}) : super(key: key);
 
   @override
   _CartCardNewState createState() => _CartCardNewState();
 }
 
 class _CartCardNewState extends State<CartCardNew> {
-  double total;
-  String CustomerId;
-  String currency;
+  double? total;
+  String? CustomerId;
+  String? currency;
 
   int cartcount= 0;
 
@@ -164,7 +164,7 @@ class _CartCardNewState extends State<CartCardNew> {
                                                     border: Border.all(color: AppColors.GREY_TEXT,width: 1.5),
                                                     boxShadow: []),
                                                 child: Image.network(
-                                                  image + cartItems[index].productImage,fit: BoxFit.fitWidth,
+                                                  image + cartItems[index].productImage!,fit: BoxFit.fitWidth,
                                                 ),
                                               ),
                                             ),
@@ -180,7 +180,7 @@ class _CartCardNewState extends State<CartCardNew> {
                                                   Container(
                                                     width :MediaQuery.of(context).size.width ,
                                                     child: Text(
-                                                     cartItems[index].productName,
+                                                     cartItems[index].productName!,
                                                       overflow: TextOverflow.ellipsis,
                                                       maxLines: 2,
                                                       style: (TextStyle(
@@ -197,7 +197,7 @@ class _CartCardNewState extends State<CartCardNew> {
                                                       Container(
                                                         alignment: Alignment.bottomLeft,
                                                         child: Text(currency!=null ?
-                                                        currency + " "+
+                                                        currency! + " "+
                                                             cartItems[index].productPrice
                                                                 .toString(): cartItems[index].productPrice
                                                             .toString(),
@@ -369,7 +369,7 @@ class CounterNew extends StatefulWidget {
 
   _CounterNewState createState() => _CounterNewState();
 
-  CounterNew({@required this.cart,@required this.currency});
+  CounterNew({required this.cart,required this.currency});
 }
 
 class _CounterNewState extends State<CounterNew> {
@@ -380,7 +380,7 @@ class _CounterNewState extends State<CounterNew> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    this._itemCount = widget.cart.productCount;
+    this._itemCount = widget.cart.productCount!.toInt();
   }
 
   @override
@@ -408,12 +408,12 @@ class _CounterNewState extends State<CounterNew> {
           children: <Widget>[
             _itemCount != 0
                 ? IconButton(
-                icon:widget.cart.productCount > 1 ? Icon(Icons.remove) :Icon(Icons.delete_outline),
+                icon:widget.cart.productCount! > 1 ? Icon(Icons.remove) :Icon(Icons.delete_outline),
                 iconSize: 20,
                 onPressed: () {
 
                   // widget.cart.productCount--;
-                  if (widget.cart.productCount <= 1) {
+                  if (widget.cart.productCount! <= 1) {
                     // Remove From Cart
 
                     BlocProvider.of<CartBloc>(context)
@@ -495,11 +495,11 @@ class _CounterNewState extends State<CounterNew> {
 class CounterTest extends StatefulWidget {
   @override
   Cart cart;
-  String currency;
+  String? currency;
 
   _CounterTestState createState() => _CounterTestState();
 
-  CounterTest({@required this.cart,@required this.currency});
+  CounterTest({required this.cart,required this.currency});
 }
 
 class _CounterTestState extends State<CounterTest> {
@@ -510,7 +510,7 @@ class _CounterTestState extends State<CounterTest> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    this._itemCount = widget.cart.productCount;
+    this._itemCount = widget.cart.productCount!.toInt();
   }
 
   @override

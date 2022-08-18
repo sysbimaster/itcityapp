@@ -6,9 +6,9 @@ import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/constants.dart';
 class HomeAdsBanner extends StatefulWidget {
-  int index;
-  List<HomeAds> imageAds = [];
-   HomeAdsBanner({Key key,this.index,this.imageAds}) : super(key: key);
+  int? index;
+  List<HomeAds>? imageAds = [];
+   HomeAdsBanner({Key? key,this.index,this.imageAds}) : super(key: key);
 
   @override
   _HomeAdsBannerState createState() => _HomeAdsBannerState();
@@ -48,12 +48,12 @@ class _HomeAdsBannerState extends State<HomeAdsBanner> {
                 child: Icon(Icons.refresh)),
           );
         }
-        return widget.imageAds.isNotEmpty ? Container(
+        return widget.imageAds!.isNotEmpty ? Container(
 
           height: MediaQuery.of(context).size.width * .40,
           width: MediaQuery.of(context).size.width,
 
-          child: Image.network(widget.imageAds[widget.index]==null ? " " : homeAds + widget.imageAds[widget.index].image,fit: BoxFit.contain,),
+          child: Image.network(widget.imageAds![widget.index!]==null ? " " : homeAds + widget.imageAds![widget.index!].image!,fit: BoxFit.contain,),
 
         ): Container(
 

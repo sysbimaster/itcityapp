@@ -1,23 +1,22 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:itcity_online_store/components/components.dart';
+
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/components/product_card.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/search_page.dart';
-import 'package:share/share.dart';
-import 'package:itcity_online_store/constants.dart';
+
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductByCategoryPage extends StatefulWidget {
-  final int categoryId;
-  final String categoryName;
+  final int? categoryId;
+  final String? categoryName;
   ProductByCategoryPage(
-      {Key key, @required this.categoryId, @required this.categoryName,})
+      {Key? key, required this.categoryId, required this.categoryName,})
       : super(key: key);
   @override
   _ProductByCategoryPageState createState() => _ProductByCategoryPageState();
@@ -25,7 +24,7 @@ class ProductByCategoryPage extends StatefulWidget {
 
 class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
   TextEditingController tcontroller = TextEditingController();
-  int cartcount = 0;
+  int? cartcount = 0;
   checkCartCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.containsKey('cartcount')){
@@ -116,7 +115,7 @@ checkCartCount();
                                 hintText: "Search Product, brands and more",
                                 suffixIcon: IconButton(
                                   icon: Icon(Icons.search),
-                                  padding: EdgeInsets.only(right: 20),
+                                  padding: EdgeInsets.only(right: 20), onPressed: null,
                                 ),
                                 hintStyle:
                                 Theme.of(context).inputDecorationTheme.hintStyle),
@@ -137,7 +136,7 @@ checkCartCount();
 }
 
 class ProductListByCategory extends StatefulWidget {
-  final int categoryId;
+  final int? categoryId;
 
   ProductListByCategory(this.categoryId);
   @override
@@ -145,8 +144,8 @@ class ProductListByCategory extends StatefulWidget {
 }
 
 class _ProductListByCategoryState extends State<ProductListByCategory> {
-  String country;
-  String currency;
+  String? country;
+  String? currency;
   getCountry() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -181,7 +180,7 @@ class _ProductListByCategoryState extends State<ProductListByCategory> {
     } else if (state is AddProductToCartSuccessState) {
       Loader.hide();
 
-      if(BlocProvider.of<CartBloc>(context).page.compareTo('cartpage') ==1 ){
+      if(BlocProvider.of<CartBloc>(context).page!.compareTo('cartpage') ==1 ){
         showModalBottomSheet(
             context: context,
             builder: (context) {

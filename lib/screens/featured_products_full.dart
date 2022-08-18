@@ -18,17 +18,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class FeaturedProductsFull extends StatefulWidget {
-  String currency;
-  FeaturedProductsFull({Key key,this.currency}) : super(key: key);
+  String? currency;
+  FeaturedProductsFull({Key? key,this.currency}) : super(key: key);
 
   @override
   _FeaturedProductsFullState createState() => _FeaturedProductsFullState();
 }
 
 class _FeaturedProductsFullState extends State<FeaturedProductsFull> {
-  List<Product> featuredProductFullList;
+  List<Product>? featuredProductFullList;
   TextEditingController tcontroller = TextEditingController();
-  int cartcount = 0;
+  int? cartcount = 0;
   checkCartCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.containsKey('cartcount')){
@@ -74,7 +74,7 @@ Random rnd = new Random();
         }
         if(state is FeaturedProductFullLoadedState|| state is ProductByProductIdLoadedState||state is RelatedProductByProductBrandLoadedState){
           featuredProductFullList = BlocProvider.of<ProductBloc>(context).featuredProductsFull;
-          print('deallist length'+ featuredProductFullList.length.toString());
+          print('deallist length'+ featuredProductFullList!.length.toString());
           return Scaffold(
             backgroundColor: AppColors.WHITE,
             appBar: AppBar(
@@ -134,7 +134,7 @@ Random rnd = new Random();
                                     hintText: "Search Product, brands and more",
                                     suffixIcon: IconButton(
                                       icon: Icon(Icons.search),
-                                      padding: EdgeInsets.only(right: 20),
+                                      padding: EdgeInsets.only(right: 20), onPressed: null,
                                     ),
                                     hintStyle:
                                     Theme.of(context).inputDecorationTheme.hintStyle),
@@ -156,7 +156,7 @@ Random rnd = new Random();
                 child: GridView.builder(
 
                     shrinkWrap: true,
-                    itemCount: featuredProductFullList.length,
+                    itemCount: featuredProductFullList!.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: .60,
@@ -165,7 +165,7 @@ Random rnd = new Random();
                     ),
                     itemBuilder: (context, index) {
 
-                      return ProductCard(product: featuredProductFullList[index],currency: widget.currency,rrating: 3.9+ rnd.nextDouble());
+                      return ProductCard(product: featuredProductFullList![index],currency: widget.currency,rrating: 3.9+ rnd.nextDouble());
                     }),
               ),
             ),

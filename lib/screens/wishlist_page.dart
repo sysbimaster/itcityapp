@@ -7,7 +7,7 @@ import 'package:itcity_online_store/components/components.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
-import 'package:itcity_online_store/constants.dart';
+
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,10 +57,10 @@ class WishlistSection extends StatefulWidget {
 }
 
 class _WishlistSectionState extends State<WishlistSection> {
-  String email;
-  String currency;
+  String? email;
+  String? currency;
   List<CustomerWishlist> wishlist = [];
-  Future<String> getEmail() async {
+  Future<String?> getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     email = await  prefs.getString('email');;
     currency = await prefs.getString('currency');
@@ -71,7 +71,7 @@ class _WishlistSectionState extends State<WishlistSection> {
     super.initState();
     getEmail().then((value) {
       if(value!=null){
-        print("Current User Email" + email);
+        print("Current User Email" + email!);
 
 
         BlocProvider.of<WishlistBloc>(context).add(FetchWishlistEvent(value,this.currency),);
@@ -163,10 +163,10 @@ showDialogCart(context);
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
                   return WishlistCard(
-                      wishlist: wishlist == null ? '' : wishlist[index],
+                      wishlist: wishlist == null ? '' as CustomerWishlist : wishlist[index],
                       onDelete: () => removeItem(index));
                 },
-                childCount: wishlist == null ? '' : wishlist.length,
+                childCount: wishlist == null ? '' as int? : wishlist.length,
               ),
             ),
           )

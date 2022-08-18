@@ -11,9 +11,9 @@ import 'package:itcity_online_store/screens/main_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfilePage extends StatefulWidget {
-  Function function;
+  Function? function;
   bool isAddressUpdate;
-  EditProfilePage({Key key, this.function, this.isAddressUpdate = false})
+  EditProfilePage({Key? key, this.function, this.isAddressUpdate = false})
       : super(key: key);
 
   @override
@@ -21,9 +21,9 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  String email = "";
-  String customerIdtest;
-  UserBloc userBloc;
+  String? email = "";
+  String? customerIdtest;
+  late UserBloc userBloc;
   TextEditingController emailController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController distController = TextEditingController();
@@ -33,16 +33,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController nameController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  int customerId;
-  StreamSubscription subscription;
+  int? customerId;
+  StreamSubscription? subscription;
 
-  Future<String> getEmail() async {
+  Future<String?> getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
   email = await prefs.getString("email");
     customerIdtest = await prefs.getString('customerId');
 
     this.email = email;
-    emailController.text = this.email;
+    emailController.text = this.email!;
     userBloc = BlocProvider.of<UserBloc>(context);
     return email;
   }
@@ -71,7 +71,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           prefs.remove('isRegistered');
           if (widget.function != null) {
             BlocProvider.of<UserBloc>(context).add(FetchCustomerInformationEvent(email));
-            widget.function();
+            widget.function!();
 
           } else {
             Navigator.pushAndRemoveUntil(context,
@@ -92,7 +92,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     minWidth: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                     onPressed: () {
-                      if (this._formKey.currentState.validate()) {
+                      if (this._formKey.currentState!.validate()) {
                         // Delete this after the information has been saved
                         CustomerRegistration customerRegistration =
                             CustomerRegistration();
@@ -133,8 +133,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 if (this.customerId == null) {
                   customerId = state.customerlist.customerId;
                   mobileNumberController.text =
-                      state.customerlist.customerMobile;
-                  nameController.text = state.customerlist.customerName;
+                      state.customerlist.customerMobile!;
+                  nameController.text = state.customerlist.customerName!;
                   distController.text =
                       state.customerlist.customerDistrict ?? "";
                   stateController.text = state.customerlist.customerState ?? "";
@@ -166,7 +166,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0))),
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return "Name is Requred";
                             }
                           },
@@ -183,7 +183,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0))),
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return "Email is Requred";
                             }
                           },
@@ -199,7 +199,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0))),
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return "Mobile Number is Requred";
                             }
                           },
@@ -215,7 +215,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0))),
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return "Address is Requred";
                             }
                           },
@@ -231,7 +231,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0))),
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return "Place / Area is Required";
                             }
                           },
@@ -247,7 +247,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0))),
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return "Country is Requred";
                             }
                           },
@@ -264,7 +264,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0))),
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return "Pincode is Requred";
                             }
                           },

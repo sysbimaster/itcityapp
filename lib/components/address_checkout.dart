@@ -11,14 +11,14 @@ import 'package:itcity_online_store/screens/edit_profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddressCheckout extends StatefulWidget {
-  const AddressCheckout({Key key}) : super(key: key);
+  const AddressCheckout({Key? key}) : super(key: key);
 
   @override
   _AddressCheckoutState createState() => _AddressCheckoutState();
 }
 
 class _AddressCheckoutState extends State<AddressCheckout> {
-  String CustomerId;
+  String? CustomerId;
   getUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     CustomerId = await prefs.getString("email");
@@ -37,7 +37,7 @@ class _AddressCheckoutState extends State<AddressCheckout> {
       builder: (context, state) {
 
     if(state is CustomerInformationLoadedState){
-      CustomerRegistration customer = BlocProvider.of<UserBloc>(context).customer;
+      CustomerRegistration customer = BlocProvider.of<UserBloc>(context).customer!;
      return customer.customerAddress == null?  Container(
         color: AppColors.WHITE,
         height: MediaQuery.of(context).size.height * .25,
@@ -115,11 +115,11 @@ class _AddressCheckoutState extends State<AddressCheckout> {
                ],
              ),
              SizedBox(height: 5,),
-             Text(customer.customerAddress,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20),),
-             Text(customer.customerDistrict,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20)),
-             Text(customer.customerState,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20)),
-             Text(customer.customerPincode,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20)),
-             Text("mob: "+customer.customerMobile,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20)),
+             Text(customer.customerAddress!,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20),),
+             Text(customer.customerDistrict!,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20)),
+             Text(customer.customerState!,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20)),
+             Text(customer.customerPincode!,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20)),
+             Text("mob: "+customer.customerMobile!,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20)),
 
 
            ],

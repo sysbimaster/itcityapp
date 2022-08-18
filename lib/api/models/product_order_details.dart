@@ -1,15 +1,15 @@
 class ProductOrderDetails {
-  List<Data> data;
-  bool success;
-  List<Null> messages;
+  List<Data>? data;
+  bool? success;
+  List<Null>? messages;
 
   ProductOrderDetails({this.data, this.success, this.messages});
 
   ProductOrderDetails.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<Data>();
+      data =  [];
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
     success = json['success'];
@@ -24,7 +24,7 @@ class ProductOrderDetails {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     data['success'] = this.success;
     // if (this.messages != null) {
@@ -35,11 +35,11 @@ class ProductOrderDetails {
 }
 
 class Data {
-  String id;
-  String name;
-  int qty;
-  double price;
-  double subtotal;
+  String? id;
+  String? name;
+  int? qty;
+  double? price;
+  double? subtotal;
 
   Data({this.id, this.name, this.qty, this.price, this.subtotal});
 

@@ -9,7 +9,7 @@ class CategoryLoadingState extends CategoryState {}
 
 class CategoryLoadedState extends CategoryState {
   final List<Category> category;
-  CategoryLoadedState({@required this.category})
+  CategoryLoadedState({required this.category})
       : assert(category != null);
 }
 class CategoryErrorState extends CategoryState {}

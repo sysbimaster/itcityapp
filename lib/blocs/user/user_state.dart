@@ -17,7 +17,7 @@ class UserRegistrationLoadingState extends UserState {
 }
 
 class UserRegistrationSuccessState extends UserState {
-  final CustomerRegistration customerRegistration;
+  final CustomerRegistration? customerRegistration;
   UserRegistrationSuccessState({this.customerRegistration});
 
   @override
@@ -191,7 +191,7 @@ class CustomerLoginFailedState extends UserState {
 
 
 class CheckEmailStatusLoadedState extends UserState {
-  bool emailUsed;
+  bool? emailUsed;
   CheckEmailStatusLoadedState(this.emailUsed);
 
   @override
@@ -213,7 +213,7 @@ class CustomerInformationLoadingState extends UserState {
 
 class CustomerInformationLoadedState extends UserState {
   final CustomerRegistration customerlist;
-  CustomerInformationLoadedState({@required this.customerlist})
+  CustomerInformationLoadedState({required this.customerlist})
       : assert(customerlist != null);
 
   @override
@@ -223,7 +223,7 @@ class CustomerInformationLoadedState extends UserState {
 
 class CustomerInformationUpdatedState extends CustomerInformationLoadedState{
    final CustomerRegistration customerlist;
-  CustomerInformationUpdatedState({@required this.customerlist}):
+  CustomerInformationUpdatedState({required this.customerlist}):
         super(customerlist:customerlist);
         
 }

@@ -8,17 +8,17 @@ import 'package:itcity_online_store/resources/values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectCountryPage extends StatefulWidget {
-  const SelectCountryPage({Key key}) : super(key: key);
+  const SelectCountryPage({Key? key}) : super(key: key);
 
   @override
   _SelectCountryPageState createState() => _SelectCountryPageState();
 }
 
 class _SelectCountryPageState extends State<SelectCountryPage> {
-  String userId ;
-  String token = '';
-  String currency;
-  String country;
+  String? userId ;
+  String? token = '';
+  String? currency;
+  String? country;
   void getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userId = await prefs.getString("customerId");

@@ -1,30 +1,30 @@
 class Order{
-  int orderId;
-  String orderNumber;
-  int customerId;
-  int purchaseId;
-  int customerGroupId;
-  String customerName;
-  String customerEmail;
-  String customerMobile;
-  String paymentName;
-  String paymentAddress;
-  String paymentRegionId;
-  String paymentZoneId;
-  String paymentZoneName;
-  String paymentMethod;
-  String paymentCode;
-  String shippingAddress;
-  String shippingName;
-  String shippingRegionId;
-  String shippingZoneId;
-  String shippingMethod;
-  String orderStatusId;
-  String totalAmount;
-  String ipAddress;
-  String userAgent;
-  String remarks;
-  String currency;
+  int? orderId;
+  String? orderNumber;
+  int? customerId;
+  int? purchaseId;
+  int? customerGroupId;
+  String? customerName;
+  String? customerEmail;
+  String? customerMobile;
+  String? paymentName;
+  String? paymentAddress;
+  String? paymentRegionId;
+  String? paymentZoneId;
+  String? paymentZoneName;
+  String? paymentMethod;
+  String? paymentCode;
+  String? shippingAddress;
+  String? shippingName;
+  String? shippingRegionId;
+  String? shippingZoneId;
+  String? shippingMethod;
+  String? orderStatusId;
+  String? totalAmount;
+  String? ipAddress;
+  String? userAgent;
+  String? remarks;
+  String? currency;
 
   Order();
    @override
@@ -94,7 +94,7 @@ class Order{
   }
   static List<Order> listFromJson(List<dynamic> json){
     return json == null
-    ? List<Order>()
+    ? []
     : json.map((value) => Order.fromJson(value)).toList();
   }
 }

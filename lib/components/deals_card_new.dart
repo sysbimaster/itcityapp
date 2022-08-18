@@ -20,19 +20,19 @@ import '../constants.dart';
 
 class DealsCardNew extends StatefulWidget {
   DealOfTheDay deal;
-  double rrating;
-  DealsCardNew({Key key, @required this.deal,this.rrating}) : super(key: key);
+  double? rrating;
+  DealsCardNew({Key? key, required this.deal,this.rrating}) : super(key: key);
   @override
   _DealsCardNewState createState() => _DealsCardNewState();
 }
 
 class _DealsCardNewState extends State<DealsCardNew> {
   final CurrencyApi currencyApi = CurrencyApi();
-  String country;
-  String currency;
+  String? country;
+  String? currency;
   Currency currencyList = Currency();
   String changedProductPrice = '';
-  double rating;
+  double? rating;
   bool _isFavorited = false;
   void _toggleFavorite() {
     setState(() {
@@ -112,7 +112,7 @@ class _DealsCardNewState extends State<DealsCardNew> {
                         image: DecorationImage(
                           image: NetworkImage(widget.deal == null
                               ? ''
-                              : productImage + widget.deal.productImage),
+                              : productImage + widget.deal.productImage!),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -130,7 +130,7 @@ class _DealsCardNewState extends State<DealsCardNew> {
                                 child: Text(
                                     widget.deal == null
                                         ? ''
-                                        : widget.deal.productName,
+                                        : widget.deal.productName!,
                                     maxLines: 2,
                                     // softWrap: false,
                                     // overflow: TextOverflow.fade,
@@ -154,7 +154,7 @@ class _DealsCardNewState extends State<DealsCardNew> {
                                     currency != null ? Container(
 
                                         child:Text(
-                                            currency +
+                                            currency! +
                                                 ' ' +
                                                 widget.deal.productPrice.toStringAsFixed(2),
                                             style: (TextStyle(
@@ -175,7 +175,7 @@ class _DealsCardNewState extends State<DealsCardNew> {
                                     currency != null ?Container(
 
                                         child:  Text(
-                                            currency +
+                                            currency! +
                                                 ' ' +
                                                 widget.deal.productPriceOffer.toStringAsFixed(2),
                                             style: (TextStyle(
@@ -330,9 +330,9 @@ class _DealsCardNewState extends State<DealsCardNew> {
 
                           _toggleFavorite();
                           if (state is RemoveProductFromWishlistLoadingState)
-                            return (Center(
+                            Center(
                               child: CircularProgressIndicator(),
-                            ));
+                            );
                         }
                       } else if (_isFavorited == false) {
 
@@ -351,9 +351,9 @@ class _DealsCardNewState extends State<DealsCardNew> {
                             _toggleFavorite();
 
                             if (state is AddProductToWishlistLoadingState) {
-                              return (Center(
+                              Center(
                                 child: CircularProgressIndicator(),
-                              ));
+                              );
                             }
                           });
                         } else {
@@ -399,7 +399,7 @@ class _DealsCardNewState extends State<DealsCardNew> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Icon(Icons.star,color: AppColors.LOGO_ORANGE,size: 20,),
-                              Text(widget.rrating!= null?  widget.rrating.toStringAsFixed(1):rating.toStringAsFixed(1),style: TextStyle(
+                              Text(widget.rrating!= null?  widget.rrating!.toStringAsFixed(1):rating!.toStringAsFixed(1),style: TextStyle(
                                 fontFamily: 'Arial',
                                 // fontFamily: 'RobotoSlab',
                                 fontSize: 14,

@@ -19,9 +19,9 @@ extension on Availability {
 
 
 class OrderSucessNew extends StatefulWidget {
-  final OrderStatusNew orderStatusNew;
-  String currency;
-  OrderSucessNew({Key key, this.orderStatusNew, this.currency})
+  final OrderStatusNew? orderStatusNew;
+  String? currency;
+  OrderSucessNew({Key? key, this.orderStatusNew, this.currency})
       : super(key: key);
 
   @override
@@ -29,7 +29,7 @@ class OrderSucessNew extends StatefulWidget {
 }
 
 class _OrderSucessNewState extends State<OrderSucessNew> {
-  OrderApi orderApi;
+  OrderApi? orderApi;
   final InAppReview _inAppReview = InAppReview.instance;
   String _appStoreId = '';
   String _microsoftStoreId = '';
@@ -58,11 +58,12 @@ class _OrderSucessNewState extends State<OrderSucessNew> {
 
   void _setMicrosoftStoreId(String id) => _microsoftStoreId = id;
 
-  Future<void> _requestReview() {
+   _requestReview() {
     _inAppReview.requestReview();
     setState(() {
       goHomePressed = true;
     });
+
   }
 
   Future<void> _openStoreListing() => _inAppReview.openStoreListing(
@@ -75,7 +76,7 @@ class _OrderSucessNewState extends State<OrderSucessNew> {
     return WillPopScope(
       onWillPop: () {
         Navigator.pushReplacementNamed(context, '/home');
-      },
+      } as Future<bool> Function()?,
       child: Scaffold(
         backgroundColor: AppColors.WHITE,
         appBar: AppBar(
@@ -114,10 +115,10 @@ class _OrderSucessNewState extends State<OrderSucessNew> {
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Text(
-                            widget.orderStatusNew.customerName == null
+                            widget.orderStatusNew!.customerName == null
                                 ? "THANK YOU FOR YOUR ORDER!"
                                 : "THANK YOU FOR YOUR ORDER , " +
-                                    widget.orderStatusNew.customerName
+                                    widget.orderStatusNew!.customerName!
                                         .toUpperCase(),
                             style: TextStyle(
                                 fontSize: 22,
@@ -152,7 +153,7 @@ class _OrderSucessNewState extends State<OrderSucessNew> {
                           padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                           child: Text(
                             'Your order id is #' +
-                                widget.orderStatusNew.orderId.toString(),
+                                widget.orderStatusNew!.orderId.toString(),
                             style: TextStyle(
                               fontSize: 20,
                               color: AppColors.GREY_TEXT,
@@ -164,7 +165,7 @@ class _OrderSucessNewState extends State<OrderSucessNew> {
                       ],
                     )),
                 OrderDetailsSection(
-                  orderId: widget.orderStatusNew.orderId,
+                  orderId: widget.orderStatusNew!.orderId,
                 ),
             Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -197,7 +198,7 @@ class _OrderSucessNewState extends State<OrderSucessNew> {
                     SizedBox(height: 5,),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      child: Text(widget.orderStatusNew.paymentAddress,style: TextStyle(color: AppColors.GREY_TEXT,fontSize: 22),)),
+                      child: Text(widget.orderStatusNew!.paymentAddress!,style: TextStyle(color: AppColors.GREY_TEXT,fontSize: 22),)),
             // Text(widget.orderStatusNe,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20)),
             // Text(customer.customerState,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20)),
             // Text(customer.customerPincode,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20)),
@@ -260,17 +261,17 @@ class _OrderSucessNewState extends State<OrderSucessNew> {
 }
 
 class OrderDetailsSection extends StatefulWidget {
-  final int orderId;
+  final int? orderId;
 
-  const OrderDetailsSection({Key key, this.orderId}) : super(key: key);
+  const OrderDetailsSection({Key? key, this.orderId}) : super(key: key);
 
   @override
   _OrderDetailsSectionState createState() => _OrderDetailsSectionState();
 }
 
 class _OrderDetailsSectionState extends State<OrderDetailsSection> {
-  OrderDetails orderDetails;
-  ProductOrderDetails productOrderDetails;
+  OrderDetails? orderDetails;
+  ProductOrderDetails? productOrderDetails;
 
 
   @override
@@ -363,7 +364,7 @@ class _OrderDetailsSectionState extends State<OrderDetailsSection> {
                ListView.builder(
                  shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: productOrderDetails.data.length,
+                    itemCount: productOrderDetails!.data!.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
@@ -372,14 +373,14 @@ class _OrderDetailsSectionState extends State<OrderDetailsSection> {
                            children: [
                              Container(
                                width: MediaQuery.of(context).size.width * .55,
-                                 child: Text(productOrderDetails.data[index].name,style: TextStyle(
+                                 child: Text(productOrderDetails!.data![index].name!,style: TextStyle(
                                    fontSize: 15,
                                    color: AppColors.GREY_TEXT,
                                    fontFamily: 'Myriad-semi',
                                    fontWeight: FontWeight.w700,
                                  ),
                                    textAlign: TextAlign.left,)),
-                             Text(productOrderDetails.data[index].qty.toString() + " X "+orderDetails.data[0].country+ " " + productOrderDetails.data[index].price.toString(),style: TextStyle(
+                             Text(productOrderDetails!.data![index].qty.toString() + " X "+orderDetails!.data![0].country!+ " " + productOrderDetails!.data![index].price.toString(),style: TextStyle(
                                fontSize: 17,
                                color: AppColors.GREY_TEXT,
                                fontFamily: 'Myriad-semi',
@@ -408,8 +409,8 @@ class _OrderDetailsSectionState extends State<OrderDetailsSection> {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        orderDetails.data[0].country + ' '+
-                      orderDetails.data[0].productSubTotal ,
+                        orderDetails!.data![0].country! + ' '+
+                      orderDetails!.data![0].productSubTotal! ,
                         style: TextStyle(
                           fontSize: 20,
                           color: AppColors.GREY_TEXT,
@@ -434,8 +435,8 @@ class _OrderDetailsSectionState extends State<OrderDetailsSection> {
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      Text(orderDetails.data[0].country + ' '+
-                      orderDetails.data[0].shippingCharge,
+                      Text(orderDetails!.data![0].country! + ' '+
+                      orderDetails!.data![0].shippingCharge!,
                         style: TextStyle(
                           fontSize: 20,
                           color: AppColors.GREY_TEXT,
@@ -461,10 +462,10 @@ class _OrderDetailsSectionState extends State<OrderDetailsSection> {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        orderDetails.data[0].country + ' '+
-                            (double.parse(orderDetails.data[0].productSubTotal) +
+                        orderDetails!.data![0].country! + ' '+
+                            (double.parse(orderDetails!.data![0].productSubTotal!) +
                                 double.parse(
-                                    orderDetails.data[0].shippingCharge))
+                                    orderDetails!.data![0].shippingCharge!))
                                 .toStringAsFixed(2),
                         style: TextStyle(
                           fontSize: 20,

@@ -4,9 +4,9 @@
 
 class OrderHistoryModel {
   OrderHistoryModel({
-      List<Data> data, 
-      bool success, 
-      List<dynamic> messages,}
+      List<Data>? data, 
+      bool? success, 
+      List<dynamic>? messages,}
       ){
     _data = data;
     _success = success;
@@ -17,7 +17,7 @@ class OrderHistoryModel {
     if (json['data'] != null) {
       _data = [];
       json['data'].forEach((v) {
-        _data.add(Data.fromJson(v));
+        _data!.add(Data.fromJson(v));
       });
     }
     _success = json['success'];
@@ -28,22 +28,22 @@ class OrderHistoryModel {
     //   });
     // }
   }
-  List<Data> _data;
-  bool _success;
-  List<dynamic> _messages;
+  List<Data>? _data;
+  bool? _success;
+  List<dynamic>? _messages;
 
-  List<Data> get data => _data;
-  bool get success => _success;
-  List<dynamic> get messages => _messages;
+  List<Data>? get data => _data;
+  bool? get success => _success;
+  List<dynamic>? get messages => _messages;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (_data != null) {
-      map['data'] = _data.map((v) => v.toJson()).toList();
+      map['data'] = _data!.map((v) => v.toJson()).toList();
     }
     map['success'] = _success;
     if (_messages != null) {
-      map['messages'] = _messages.map((v) => v.toJson()).toList();
+      map['messages'] = _messages!.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -82,34 +82,34 @@ class OrderHistoryModel {
 
 class Data {
   Data({
-      int orderId, 
-      String orderNumber, 
-      int customerId, 
-      int purchaseId, 
+      int? orderId, 
+      String? orderNumber, 
+      int? customerId, 
+      int? purchaseId, 
       dynamic customerGroupId, 
-      String customerName, 
-      String customerEmail, 
-      String customerMob, 
-      String paymentName, 
-      String paymentAddress, 
-      String paymentRegionId, 
+      String? customerName, 
+      String? customerEmail, 
+      String? customerMob, 
+      String? paymentName, 
+      String? paymentAddress, 
+      String? paymentRegionId, 
       dynamic paymentZoneId, 
       dynamic paymentZoneName, 
-      String paymentMethod, 
+      String? paymentMethod, 
       dynamic paymentCode, 
-      String shippingAddress, 
-      String shippingName, 
-      String shippingRegionId, 
-      String shippingZoneId, 
+      String? shippingAddress, 
+      String? shippingName, 
+      String? shippingRegionId, 
+      String? shippingZoneId, 
       dynamic shippingMethod, 
-      String orderStatusId, 
-      String totalAmnt, 
+      String? orderStatusId, 
+      String? totalAmnt, 
       dynamic ipAddress, 
       dynamic userAgent, 
-      String remarks, 
-      String currency, 
-      String mode, 
-      String createdAt, 
+      String? remarks, 
+      String? currency, 
+      String? mode, 
+      String? createdAt, 
       dynamic updatedAt,}){
     _orderId = orderId;
     _orderNumber = orderNumber;
@@ -173,64 +173,64 @@ class Data {
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
   }
-  int _orderId;
-  String _orderNumber;
-  int _customerId;
-  int _purchaseId;
+  int? _orderId;
+  String? _orderNumber;
+  int? _customerId;
+  int? _purchaseId;
   dynamic _customerGroupId;
-  String _customerName;
-  String _customerEmail;
-  String _customerMob;
-  String _paymentName;
-  String _paymentAddress;
-  String _paymentRegionId;
+  String? _customerName;
+  String? _customerEmail;
+  String? _customerMob;
+  String? _paymentName;
+  String? _paymentAddress;
+  String? _paymentRegionId;
   dynamic _paymentZoneId;
   dynamic _paymentZoneName;
-  String _paymentMethod;
+  String? _paymentMethod;
   dynamic _paymentCode;
-  String _shippingAddress;
-  String _shippingName;
-  String _shippingRegionId;
-  String _shippingZoneId;
+  String? _shippingAddress;
+  String? _shippingName;
+  String? _shippingRegionId;
+  String? _shippingZoneId;
   dynamic _shippingMethod;
-  String _orderStatusId;
-  String _totalAmnt;
+  String? _orderStatusId;
+  String? _totalAmnt;
   dynamic _ipAddress;
   dynamic _userAgent;
-  String _remarks;
-  String _currency;
-  String _mode;
-  String _createdAt;
+  String? _remarks;
+  String? _currency;
+  String? _mode;
+  String? _createdAt;
   dynamic _updatedAt;
 
-  int get orderId => _orderId;
-  String get orderNumber => _orderNumber;
-  int get customerId => _customerId;
-  int get purchaseId => _purchaseId;
+  int? get orderId => _orderId;
+  String? get orderNumber => _orderNumber;
+  int? get customerId => _customerId;
+  int? get purchaseId => _purchaseId;
   dynamic get customerGroupId => _customerGroupId;
-  String get customerName => _customerName;
-  String get customerEmail => _customerEmail;
-  String get customerMob => _customerMob;
-  String get paymentName => _paymentName;
-  String get paymentAddress => _paymentAddress;
-  String get paymentRegionId => _paymentRegionId;
+  String? get customerName => _customerName;
+  String? get customerEmail => _customerEmail;
+  String? get customerMob => _customerMob;
+  String? get paymentName => _paymentName;
+  String? get paymentAddress => _paymentAddress;
+  String? get paymentRegionId => _paymentRegionId;
   dynamic get paymentZoneId => _paymentZoneId;
   dynamic get paymentZoneName => _paymentZoneName;
-  String get paymentMethod => _paymentMethod;
+  String? get paymentMethod => _paymentMethod;
   dynamic get paymentCode => _paymentCode;
-  String get shippingAddress => _shippingAddress;
-  String get shippingName => _shippingName;
-  String get shippingRegionId => _shippingRegionId;
-  String get shippingZoneId => _shippingZoneId;
+  String? get shippingAddress => _shippingAddress;
+  String? get shippingName => _shippingName;
+  String? get shippingRegionId => _shippingRegionId;
+  String? get shippingZoneId => _shippingZoneId;
   dynamic get shippingMethod => _shippingMethod;
-  String get orderStatusId => _orderStatusId;
-  String get totalAmnt => _totalAmnt;
+  String? get orderStatusId => _orderStatusId;
+  String? get totalAmnt => _totalAmnt;
   dynamic get ipAddress => _ipAddress;
   dynamic get userAgent => _userAgent;
-  String get remarks => _remarks;
-  String get currency => _currency;
-  String get mode => _mode;
-  String get createdAt => _createdAt;
+  String? get remarks => _remarks;
+  String? get currency => _currency;
+  String? get mode => _mode;
+  String? get createdAt => _createdAt;
   dynamic get updatedAt => _updatedAt;
 
   Map<String, dynamic> toJson() {

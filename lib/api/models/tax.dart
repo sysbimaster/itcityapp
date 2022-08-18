@@ -1,7 +1,7 @@
 class Tax{
-  String taxId;
-  String taxName;
-  String taxPercentage;
+  String? taxId;
+  String? taxName;
+  String? taxPercentage;
 
   Tax();
   @override
@@ -23,9 +23,9 @@ class Tax{
     if(taxPercentage !=null) json['tax_percentage']= taxPercentage;
     return json;
   }
-  static List<Tax> listFromJson(List<dynamic> json){
+  static List<Tax> listFromJson(List<dynamic>? json){
     return json == null
-    ? List<Tax>()
+    ? []
     : json.map((value) => Tax.fromJson(value)).toList();
   }
 }

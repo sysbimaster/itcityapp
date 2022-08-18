@@ -32,7 +32,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Please enter your username';
         }
         return null;
@@ -47,7 +47,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Please enter your email';
         }
         return null;
@@ -70,7 +70,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Please enter your password';
         }
         return null;
@@ -93,7 +93,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       validator: (value) {
-        if (value.isEmpty) return 'Please enter your password';
+        if (value!.isEmpty) return 'Please enter your password';
         if (value != _pass.text) return "Not match";
         return null;
       },

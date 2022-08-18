@@ -7,7 +7,7 @@ import 'package:itcity_online_store/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ReviewList extends StatefulWidget {
-  final String productId;
+  final String? productId;
   ReviewList({this.productId});
   @override
   _ReviewListState createState() => _ReviewListState();
@@ -42,9 +42,9 @@ class _ReviewListState extends State<ReviewList> {
 
 class ListOfReview extends StatelessWidget {
   ListOfReview({
-    Key key,
-    @required this.review,
-    @required bool isVertical,
+    Key? key,
+    required this.review,
+    required bool isVertical,
   })  : _isVertical = isVertical,
         super(key: key);
 
@@ -88,7 +88,7 @@ class ListOfReview extends StatelessWidget {
                         Container(
                              padding: EdgeInsets.all(8),
                           child: Text(
-                            (review == null) ? '' : review[index].authorName,
+                            (review == null) ? '' : review[index].authorName!,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -110,7 +110,7 @@ class ListOfReview extends StatelessWidget {
                                             Container(
                       padding: EdgeInsets.all(8),
                       alignment: Alignment.topLeft,
-                      child: Text((review == null) ? '' : review[index].text),
+                      child: Text((review == null) ? '' : review[index].text!),
                     )
 
                       ],

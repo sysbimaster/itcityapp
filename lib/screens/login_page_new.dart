@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:itcity_online_store/screens/screens.dart';
@@ -28,8 +27,8 @@ class _LoginPageNewState extends State<LoginPageNew> {
   final _formKey = GlobalKey<FormState>();
   final _email = TextEditingController();
   final _password = TextEditingController();
-  String _passValue = '';
-  String _emailValue = '';
+  String? _passValue = '';
+  String? _emailValue = '';
 
   void _toggle() {
     setState(() {
@@ -45,7 +44,7 @@ class _LoginPageNewState extends State<LoginPageNew> {
 
   @override
   Widget build(BuildContext context) {
-    FlutterStatusbarcolor.setStatusBarColor(Colors.orange[600]);
+
 
     final emailField = TextFormField(
       controller: _email,
@@ -53,7 +52,7 @@ class _LoginPageNewState extends State<LoginPageNew> {
       obscureText: false,
      cursorColor: Colors.white,
      style: TextStyle(color: Colors.white),
-      onSaved: (String value) {
+      onSaved: (String? value) {
         _emailValue = value;
       },
       decoration: InputDecoration(
@@ -75,7 +74,7 @@ class _LoginPageNewState extends State<LoginPageNew> {
           // OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
         ),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Please enter your email';
         }
         return null;
@@ -86,7 +85,7 @@ class _LoginPageNewState extends State<LoginPageNew> {
       controller: _password,
       cursorColor: Colors.white,
       style: TextStyle(color: Colors.white),
-      onSaved: (String value) {
+      onSaved: (String? value) {
         _passValue = value;
       },
       keyboardType: TextInputType.visiblePassword,
@@ -116,7 +115,7 @@ class _LoginPageNewState extends State<LoginPageNew> {
           // OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
           ),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Please enter your password';
         }
         return null;
@@ -403,12 +402,12 @@ class _LoginPageNewState extends State<LoginPageNew> {
 
 class LoginButton extends StatefulWidget {
   LoginButton({
-    Key key,
-    @required GlobalKey<FormState> formKey,
-    @required TextEditingController email,
-    @required TextEditingController password,
-    @required this.pass,
-    @required this.mail,
+    Key? key,
+    required GlobalKey<FormState> formKey,
+    required TextEditingController email,
+    required TextEditingController password,
+    required this.pass,
+    required this.mail,
   })  : _formKey = formKey,
         _email = email,
         _password = password,
@@ -417,8 +416,8 @@ class LoginButton extends StatefulWidget {
   final GlobalKey<FormState> _formKey;
   final TextEditingController _email;
   final TextEditingController _password;
-  final String pass;
-  final String mail;
+  final String? pass;
+  final String? mail;
   @override
   _LoginButtonState createState() => _LoginButtonState();
 }
@@ -441,7 +440,7 @@ class _LoginButtonState extends State<LoginButton> {
     // await _flutterSecureStorage.write(key: "customerId", value: customerId);
     // print("Customer ID " +customerId);
 
-    Navigator.of(widget._formKey.currentContext).pop(true);
+    Navigator.of(widget._formKey.currentContext!).pop(true);
   }
 
   @override
@@ -450,7 +449,7 @@ class _LoginButtonState extends State<LoginButton> {
       if (state is CustomerLoginSuccessState) {
         print(
             'email>>>>>>${widget._email.text} & password >>>>>>>>${widget._password.text}');
-        String token = BlocProvider.of<UserBloc>(context).token;
+        String? token = BlocProvider.of<UserBloc>(context).token;
 
         // String customerId = BlocProvider.of<UserBloc>(context).customer.customerId.toString();
 
@@ -461,25 +460,31 @@ class _LoginButtonState extends State<LoginButton> {
           print(token);
           _saveAndRedirectToHome(token);
         } else {
-          return AlertDialog(
-            title: const Text('Login failed'),
-            content: new Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text("try again"),
-              ],
-            ),
-            actions: <Widget>[
-              new FlatButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                textColor: Theme.of(context).primaryColor,
-                child: const Text('Close'),
-              ),
-            ],
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Login failed'),
+                content: new Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("try again"),
+                  ],
+                ),
+                actions: <Widget>[
+                  new FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    textColor: Theme.of(context).primaryColor,
+                    child: const Text('Close'),
+                  ),
+                ],
+              );
+            },
           );
+
         }
       } else if (state is CustomerLoginFailedState) {
         Scaffold.of(context).showSnackBar(SnackBar(
@@ -516,7 +521,7 @@ class _LoginButtonState extends State<LoginButton> {
 
             //  setState(() {
             //print('user state>>>>>>>>>>>' + state.toString());
-            if (widget._formKey.currentState.validate()) {
+            if (widget._formKey.currentState!.validate()) {
               CustomerRegistration customer = CustomerRegistration();
               customer.customerEmail = widget._email.text;
               customer.password = widget._password.text;

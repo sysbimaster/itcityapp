@@ -5,12 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:itcity_online_store/api/models/MultipleImageModel.dart';
 import 'package:itcity_online_store/api/models/models.dart';
-import 'package:itcity_online_store/blocs/bloc/search_bloc.dart';
+
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';
 import 'package:itcity_online_store/components/CartCardNew.dart';
@@ -26,14 +25,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'cart_page.dart';
 
 class ProductDetailsNew extends StatefulWidget {
-  final String productId;
+  final String? productId;
   bool isFavorited = true;
-  Function onFavourite;
+  Function? onFavourite;
 
 
   ProductDetailsNew(
-      {Key key,
-        @required this.productId,
+      {Key? key,
+        required this.productId,
         this.isFavorited = false,
         this.onFavourite})
       : super(key: key) {
@@ -48,14 +47,14 @@ class ProductDetailsNew extends StatefulWidget {
 
 class _ProductDetailsNewState extends State<ProductDetailsNew> {
   TextEditingController tcontroller = TextEditingController();
-  TabController controller;
-  Product product;
+  TabController? controller;
+  Product? product;
   int productQuantity = 0;
   int selected = 0;
-  String userId = '';
-  MultipleImageModel multipleImageModel;
+  String? userId = '';
+  MultipleImageModel? multipleImageModel;
 
-  int cartcount = 0;
+  int? cartcount = 0;
   checkCartCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.containsKey('cartcount')){
@@ -77,9 +76,9 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
     // TODO: implement dispose
     super.dispose();
   }
-  String country;
-  String currency;
-  double rating;
+  String? country;
+  String? currency;
+  double? rating;
   getCountry() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -112,7 +111,7 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
   @override
   Widget build(BuildContext context) {
 
-    int value = 0;
+    int? value = 0;
   //  FlutterStatusbarcolor.setStatusBarColor(Colors.white);
     return BlocListener<CartBloc, CartState>(
   listener: (context, state) {
@@ -294,7 +293,7 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
         product =
             product ?? BlocProvider.of<ProductBloc>(context).currentProduct;
         value = BlocProvider.of<CartBloc>(context)
-            .productCount[product.productId];
+            .productCount[product!.productId!];
         print("This is the value" + value.toString());
         print("This is the value" +
             BlocProvider.of<CartBloc>(context).productCount.toString());
@@ -400,7 +399,7 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                                 hintText: "Search Product, brands and more",
                                 suffixIcon: IconButton(
                                   icon: Icon(Icons.search),
-                                  padding: EdgeInsets.only(right: 20),
+                                  padding: EdgeInsets.only(right: 20), onPressed: null,
                                 ),
                                 hintStyle:
                                 Theme.of(context).inputDecorationTheme.hintStyle),
@@ -416,7 +415,7 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
           ),
         ),
         bottomNavigationBar: BottomNavigationProductNew(product: product,quantity: BlocProvider.of<CartBloc>(context)
-            .productCount[widget.productId] ??
+            .productCount[widget.productId!] ??
             0,),
         body: LayoutBuilder(builder: (context, constraints){
           return SingleChildScrollView(
@@ -430,10 +429,10 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                       Container(
                         color: AppColors.WHITE,
                         child: Center(
-                          child:  multipleImageModel.data.length <= 1 ? Image.network(
+                          child:  multipleImageModel!.data!.length <= 1 ? Image.network(
                             product == null
                                 ? ''
-                                : image + product.productImage,
+                                : image + product!.productImage!,
                             fit: BoxFit.none,
                           ) : Container(
 
@@ -445,14 +444,14 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                                 Container(
 
                                   child: CarouselSlider(
-                                    items: multipleImageModel.data
+                                    items: multipleImageModel!.data!
                                         .map((item) =>
 
                                     Container(
                                       width: MediaQuery.of(context).size.width,
                                       child: Center(
                                         child: Image.network(
-                                          item == null ? '' : image + item.images,fit: BoxFit.none,),
+                                          item == null ? '' : image + item.images!,fit: BoxFit.none,),
                                       ),
                                     ))
                                         .toList(),
@@ -483,9 +482,9 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
 
-                                      children: multipleImageModel.data.map((item) {
+                                      children: multipleImageModel!.data!.map((item) {
                                         print(_current);
-                                        int index = multipleImageModel.data.indexOf(item);
+                                        int index = multipleImageModel!.data!.indexOf(item);
                                         return Container(
                                           width: 25.0,
                                           height:3.0,
@@ -521,14 +520,14 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
 
                                     if(state is RandomReviewLoaded){
                                       this.rating = BlocProvider.of<RandomReviewBloc>(context).ratingReview;
-                                      print('rating'+this.rating.toStringAsFixed(1));
+                                      print('rating'+this.rating!.toStringAsFixed(1));
                                       return Padding(
                                         padding: const EdgeInsets.all(0.0),
                                         child: Row(
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
                                             Icon(Icons.star,color: AppColors.LOGO_ORANGE,size: 20,),
-                                            Text(rating.toStringAsFixed(1),style: TextStyle(
+                                            Text(rating!.toStringAsFixed(1),style: TextStyle(
                                               fontFamily: 'Arial',
                                               // fontFamily: 'RobotoSlab',
                                               fontSize: 16,
@@ -549,7 +548,7 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                                 // Text(product.productBrand,style: TextStyle(color: AppColors.LOGO_ORANGE),),
                                 Container(
                                     alignment: Alignment.centerLeft,
-                                    child: product.productQty == 0
+                                    child: product!.productQty == 0
                                         ? Container(
                                       //margin: EdgeInsets.all(8),
                                       // padding: EdgeInsets.fromLTRB(10, 5, 20, 5),
@@ -581,7 +580,7 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                       child: Text(
                         product == null
                             ? ''
-                            : product.productName,
+                            : product!.productName!,
                         style: (TextStyle(
                           // fontFamily: 'YanoneKaffeesatz',
                           fontSize: 24,
@@ -601,21 +600,21 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                           //margin: EdgeInsets.all(8),
                             padding: EdgeInsets.fromLTRB(15, 5, 20, 5),
 
-                            child: Text(product.productId + '/' + product.productBrand,
+                            child: Text(product!.productId! + '/' + product!.productBrand!,
                               style: TextStyle(color: AppColors.LOGO_ORANGE,fontSize: 16),
                             )),
                         Container(
                           // margin: EdgeInsets.all(8),
                             padding: EdgeInsets.fromLTRB(10, 5, 15, 5),
 
-                            child:                             product.productPriceOffer ==
-                                product.productPrice
+                            child:                             product!.productPriceOffer ==
+                                product!.productPrice
                                 ?  currency != null ?Container(
 
                                 child: Text(
-                                    currency +
+                                    currency! +
                                         ' ' +
-                                        product.productPrice.toStringAsFixed(2),
+                                        product!.productPrice.toStringAsFixed(2),
                                     style: (TextStyle(
                                       // fontFamily: 'RobotoSlab',
                                       fontSize: 22,
@@ -633,9 +632,9 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                                 currency != null ? Container(
 
                                     child:Text(
-                                        currency +
+                                        currency! +
                                             ' ' +
-                                            product.productPrice.toStringAsFixed(2),
+                                            product!.productPrice.toStringAsFixed(2),
                                         style: (TextStyle(
                                           // fontFamily: 'RobotoSlab',
                                           fontSize: 16,
@@ -653,9 +652,9 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                                 currency != null ?Container(
 
                                     child: Text(
-                                        currency +
+                                        currency! +
                                             ' ' +
-                                            product.productPriceOffer.toStringAsFixed(2),
+                                            product!.productPriceOffer.toStringAsFixed(2),
                                         style: (TextStyle(
                                           // fontFamily: 'RobotoSlab',
                                           fontSize: 22,
@@ -722,7 +721,7 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                               },
                               data:product == null
                                   ? 'Loading'
-                                  : product.productDesc.toLowerCase(),
+                                  : product!.productDesc!.toLowerCase(),
                             )):Container(),
                         SizedBox(
                           height: 10,
@@ -735,9 +734,9 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                     height: 10,
                     width: MediaQuery.of(context).size.width,
                   ),
-                  ProductRatingNew(productId: product.productId,),
+                  ProductRatingNew(productId: product!.productId,),
 
-                  ShowReviews(productId: product.productId,),
+                  ShowReviews(productId: product!.productId,),
                   SizedBox(
                     height: 10,
                   ),
@@ -758,7 +757,7 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
                   Container(
                       color: AppColors.WHITE,
                       width: MediaQuery.of(context).size.width,
-                      child: RelatedProduct(productBrand: product.productBrand,currency: this.currency,))
+                      child: RelatedProduct(productBrand: product!.productBrand,currency: this.currency,))
                 ],
               ),
             ),

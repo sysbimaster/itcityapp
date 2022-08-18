@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:itcity_online_store/screens/login_page_new.dart';
 import 'package:itcity_online_store/screens/screens.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,8 +13,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 //FlutterSecureStorage _flutterSecureStorage = FlutterSecureStorage();
 
 class BottomNavigationProduct extends StatefulWidget {
-  final Product product;
-  int quantity;
+  final Product? product;
+  int? quantity;
   BottomNavigationProduct({this.product, this.quantity});
   @override
   _BottomNavigationProductState createState() =>
@@ -21,8 +22,8 @@ class BottomNavigationProduct extends StatefulWidget {
 }
 
 class _BottomNavigationProductState extends State<BottomNavigationProduct> {
-  String userId = '';
-  String token = '';
+  String? userId = '';
+  String? token = '';
   void getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userId = await prefs.getString("customerId");
@@ -41,8 +42,8 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
 
   @override
   Widget build(BuildContext context) {
-    int productQuantity =
-        widget.product == null ? 0 : widget.product.productQty;
+    int? productQuantity =
+        widget.product == null ? 0 : widget.product!.productQty;
     return BlocBuilder<OrderBloc, OrderState>(
         builder: (context, orderState) {
       return BlocBuilder<UserBloc, UserState>(
@@ -74,7 +75,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                               } else {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return LoginPage();
+                                  return LoginPageNew();
                                 }));
                               }
                             },
@@ -92,12 +93,12 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                               Cart cart = Cart();
                               cart.cartData = widget.product == null
                                   ? ''
-                                  : widget.product.id.toString();
+                                  : widget.product!.id.toString();
                               cart.userId = userId;
                               cart.productCount = 1;
                               cart.productPrice =
-                                  widget.product.productPrice != null
-                                      ? widget.product.productPrice
+                                  widget.product!.productPrice != null
+                                      ? widget.product!.productPrice
                                       : 0.0;
                               // BlocProvider.of<CartBloc>(context).add(
                               //     RemoveProductFromCartEvent(cart.cartData,
@@ -118,9 +119,9 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                 borderRadius: BorderRadius.circular(0)),
                             onPressed: () {
                               
-                              if (widget.product.productQty == 0 ||
+                              if (widget.product!.productQty == 0 ||
                                   widget.quantity ==
-                                      widget.product.productQty) {
+                                      widget.product!.productQty) {
                                 Scaffold.of(context).showSnackBar(SnackBar(
                                   backgroundColor: Colors.deepOrangeAccent,
                                   content: Text('Product is Out of Stock'),
@@ -129,25 +130,25 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                               } else {
                                 if (state is CustomerLoginSuccessState || state is CustomerInformationLoadedState) {
 
-                                  widget.quantity = widget.quantity + 1;
+                                  widget.quantity = widget.quantity! + 1;
                                 Cart cart = Cart();
                                 cart.cartData = widget.product == null
                                     ? ''
-                                    : widget.product.id.toString();
+                                    : widget.product!.id.toString();
                                 cart.userId = userId;
                                 cart.productCount = 1;
                                 cart.productPrice =
-                                    widget.product.productPrice != null
-                                        ? widget.product.productPrice
+                                    widget.product!.productPrice != null
+                                        ? widget.product!.productPrice
                                         : 0.0;
                                 BlocProvider.of<CartBloc>(context)
                                     .add(AddProductToCart(cart,"bottom nav product"));
                                 if (cartState is AddProductToCartLoadingState) {
-                                  return (Center(
+                                   Center(
                                     child: CircularProgressIndicator(),
-                                  ));
+                                  );
                                 }
-                                bool statusCart =
+                                bool? statusCart =
                                     BlocProvider.of<CartBloc>(context).status;
                                 bool value =
                                     statusCart == null ? false : statusCart;
@@ -182,35 +183,35 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                             textColor: Colors.red,
                             padding: EdgeInsets.all(8.0),
                             onPressed: () {
-                              if (widget.product.productQty == 0 ||
+                              if (widget.product!.productQty == 0 ||
                                   widget.quantity ==
-                                      widget.product.productQty) {
+                                      widget.product!.productQty) {
                                 Scaffold.of(context).showSnackBar(SnackBar(
                                   backgroundColor: Colors.deepOrangeAccent,
                                   content: Text('Product is Out of Stock'),
                                   duration: Duration(seconds: 3),
                                 ));
                               } else {
-                                widget.quantity = widget.quantity + 1;
+                                widget.quantity = widget.quantity! + 1;
                                 // this.widget.onQuantityChange(widget.quantity);
                                 Cart cart = Cart();
                                 cart.cartData = widget.product == null
                                     ? ''
-                                    : widget.product.id.toString();
+                                    : widget.product!.id.toString();
                                 cart.userId = userId;
                                 cart.productCount = 1;
                                 cart.productPrice =
-                                    widget.product.productPrice != null
-                                        ? widget.product.productPrice
+                                    widget.product!.productPrice != null
+                                        ? widget.product!.productPrice
                                         : 0.0;
                                 BlocProvider.of<CartBloc>(context)
                                     .add(AddProductToCart(cart,"bottom nav product"));
                                 if (cartState is AddProductToCartLoadingState) {
-                                  return (Center(
+                                  Center(
                                     child: CircularProgressIndicator(),
-                                  ));
+                                  );
                                 }
-                                bool statusCart =
+                                bool? statusCart =
                                     BlocProvider.of<CartBloc>(context).status;
                                 bool value =
                                     statusCart == null ? false : statusCart;
@@ -239,7 +240,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
     });
   }
   void navigateLoginPage() {
-    Route route = MaterialPageRoute(builder: (context) => LoginPage());
+    Route route = MaterialPageRoute(builder: (context) => LoginPageNew());
    // Navigator.push(context, route).then(onGoBack);
 
   }

@@ -19,7 +19,7 @@ class DailyDeals extends StatefulWidget {
 }
 
 class _DailyDealsState extends State<DailyDeals> {
-  String currency;
+  String? currency;
   getCategory() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     this.currency = prefs.getString('currency');

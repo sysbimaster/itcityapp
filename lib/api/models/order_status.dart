@@ -1,7 +1,7 @@
 class OrderStatus {
-  int data;
-  bool success;
-  List<String> messages;
+  int? data;
+  bool? success;
+  List<String>? messages;
 
   OrderStatus();
   @override
@@ -24,7 +24,7 @@ class OrderStatus {
 
   static List<OrderStatus> listFromJson(List<dynamic> json){
     return json == null
-    ? List<OrderStatus>()
+    ? []
     : json.map((value) => OrderStatus.fromJson(value)).toList();
   }
 }

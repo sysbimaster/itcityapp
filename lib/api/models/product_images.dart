@@ -1,7 +1,7 @@
 class ProductImages{
-  String imageId;
-  String productId;
-  String images;
+  String? imageId;
+  String? productId;
+  String? images;
 
   ProductImages();
   @override
@@ -23,9 +23,9 @@ class ProductImages{
     if(images !=null) json['images']= images;
     return json;
   }
-  static List<ProductImages> listFromJson(List<dynamic> json){
+  static List<ProductImages> listFromJson(List<dynamic>? json){
     return json == null
-    ? List<ProductImages>()
+    ? []
     : json.map((value) => ProductImages.fromJson(value)).toList();
   }
 

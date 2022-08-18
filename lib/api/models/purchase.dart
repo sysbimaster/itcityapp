@@ -1,14 +1,14 @@
 class Purchase {
-  String rowId;
-  int purchaseId;
-  int customerId;
-  int orderId;
-  String customerType;
-  String products;
-  double productSubTotal;
-  int productPurchaseId;
-  String purchaseDate;
-  double ShippingCharge;
+  String? rowId;
+  int? purchaseId;
+  int? customerId;
+  int? orderId;
+  String? customerType;
+  String? products;
+  double? productSubTotal;
+  int? productPurchaseId;
+  String? purchaseDate;
+  double? ShippingCharge;
 
   Purchase();
   @override
@@ -16,7 +16,7 @@ class Purchase {
     return toJson().toString();
   }
 
-  Purchase.fromJson(Map<String, dynamic> json) {
+  Purchase.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;
     purchaseId = json['purchase_id'] == null
         ? null
@@ -50,7 +50,7 @@ class Purchase {
 
   static List<Purchase> listFromJson(List<dynamic> json) {
     return json == null
-        ? List<Purchase>()
+        ? []
         : json.map((value) => Purchase.fromJson(value)).toList();
   }
 }

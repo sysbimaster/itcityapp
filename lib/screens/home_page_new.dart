@@ -24,16 +24,16 @@ import 'about_us_page.dart';
 import 'delivery_information_page.dart';
 
 class HomePageNew extends StatefulWidget {
-  const HomePageNew({Key key}) : super(key: key);
+  const HomePageNew({Key? key}) : super(key: key);
 
   @override
   _HomePageNewState createState() => _HomePageNewState();
 }
 
 class _HomePageNewState extends State<HomePageNew> {
-  String country;
-  String currency;
-  int cartcount = 0 ;
+  String? country;
+  String? currency;
+  int? cartcount = 0 ;
   TextEditingController controller = TextEditingController();
   getCountry() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -138,7 +138,7 @@ class _HomePageNewState extends State<HomePageNew> {
                       hintText: "Search Product, brands and more",
                       suffixIcon: IconButton(
                         icon: Icon(Icons.search),
-                        padding: EdgeInsets.only(right: 20),
+                        padding: EdgeInsets.only(right: 20), onPressed: null,
                       ),
                       hintStyle:
                           Theme.of(context).inputDecorationTheme.hintStyle),
@@ -196,7 +196,7 @@ class DrawerData extends StatelessWidget {
           return TermsPage();
         }));
       }),
-      DrawerItem('Return Policy', Icons.class__rounded, () {
+      DrawerItem('Return Policy', Icons.class_rounded, () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return ReturnPolicyPage();
         }));
@@ -235,7 +235,7 @@ class DrawerData extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 12, left: 12),
                           child: InkWell(
-                            onTap: drawer[index].onTap,
+                            onTap: drawer[index].onTap as void Function()?,
                             child: Container(
                               height: 48,
                               //width: double.infinity,

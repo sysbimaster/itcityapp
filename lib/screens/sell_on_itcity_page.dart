@@ -23,7 +23,7 @@ class _SellOnItcityPageState extends State<SellOnItcityPage> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Please enter your name';
         }
         return null;
@@ -38,7 +38,7 @@ class _SellOnItcityPageState extends State<SellOnItcityPage> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Please enter your company name';
         }
         return null;
@@ -53,7 +53,7 @@ class _SellOnItcityPageState extends State<SellOnItcityPage> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return 'Please enter your email';
         }
         return null;
@@ -68,7 +68,7 @@ class _SellOnItcityPageState extends State<SellOnItcityPage> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       validator: (value) {
-        if (value.isEmpty) return 'Please enter your contact number';
+        if (value!.isEmpty) return 'Please enter your contact number';
 
         return null;
       },

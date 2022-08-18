@@ -1,10 +1,10 @@
 class ProductPriceList{
-  String priceId;
-  String productId;
-  String normalPrice;
-  String offerPrice;
-  String taxPercentage;
-  String minQuantity;
+  String? priceId;
+  String? productId;
+  String? normalPrice;
+  String? offerPrice;
+  String? taxPercentage;
+  String? minQuantity;
 
   ProductPriceList();
   @override
@@ -35,9 +35,9 @@ class ProductPriceList{
    
     return json;
   }
-  static List<ProductPriceList> listFromJson(List<dynamic> json){
+  static List<ProductPriceList> listFromJson(List<dynamic>? json){
     return json == null
-    ? List<ProductPriceList>()
+    ? []
     : json.map((value) => ProductPriceList.fromJson(value)).toList();
   }
 

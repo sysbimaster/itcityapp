@@ -29,7 +29,7 @@ class ComputerCollectionLoadingState extends HomeState {}
 
 class TodaysDealsLoadedState extends HomeState {
   List<DealOfTheDay> deals;
-  TodaysDealsLoadedState({@required this.deals}) : assert(deals != null);
+  TodaysDealsLoadedState({required this.deals}) : assert(deals != null);
 }
 
 class TodaysDealsErrorState extends HomeState {}
@@ -38,7 +38,7 @@ class PopularProductLoadingState extends HomeState {}
 
 class PopularProductLoadedState extends HomeState {
   List<Product> popular;
-  PopularProductLoadedState({@required this.popular}) : assert(popular != null);
+  PopularProductLoadedState({required this.popular}) : assert(popular != null);
 }
 
 class PopularProductErrorState extends HomeState {}
@@ -47,7 +47,7 @@ class FeaturedProductLoadingState extends HomeState {}
 
 class FeaturedProductLoadedState extends HomeState {
   List<Product> featured;
-  FeaturedProductLoadedState({@required this.featured})
+  FeaturedProductLoadedState({required this.featured})
       : assert(featured != null);
 }
 class MobileCollectionLoadingState extends HomeState{}
@@ -55,12 +55,12 @@ class ComputerCollectionErrorState extends HomeState{}
 
 class MobileCollectionLoadedState extends HomeState {
   List<Product> mobileCollections;
-  MobileCollectionLoadedState({@required this.mobileCollections})
+  MobileCollectionLoadedState({required this.mobileCollections})
       : assert(mobileCollections != null);
 }
 class ComputerCollectionLoadedState extends HomeState {
   List<Product> computerCollections;
-  ComputerCollectionLoadedState({@required this.computerCollections})
+  ComputerCollectionLoadedState({required this.computerCollections})
       : assert(computerCollections != null);
 }
 
@@ -71,6 +71,6 @@ class DealProductByProductIdLoadingState extends HomeState {}
 
 class DealProductByProductIdLoadedState extends HomeState {
   final Product dealproduct;
-  DealProductByProductIdLoadedState({@required this.dealproduct})
+  DealProductByProductIdLoadedState({required this.dealproduct})
       : assert(dealproduct != null);
 }

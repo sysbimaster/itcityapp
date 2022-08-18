@@ -20,7 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 
 class ComputerCollections extends StatefulWidget {
-  const ComputerCollections({Key key}) : super(key: key);
+  const ComputerCollections({Key? key}) : super(key: key);
 
   @override
   _ComputerCollectionsState createState() => _ComputerCollectionsState();
@@ -38,8 +38,8 @@ class _ComputerCollectionsState extends State<ComputerCollections> {
     // }
 
   }
-  String country;
-  String currency;
+  String? country;
+  String? currency;
   getCountry() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {

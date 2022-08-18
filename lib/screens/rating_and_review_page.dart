@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 
 class RatingAndReviewPage extends StatefulWidget {
-  final String productId;
+  final String? productId;
   RatingAndReviewPage({this.productId});
   @override
   _RatingAndReviewPageState createState() => _RatingAndReviewPageState();
@@ -55,14 +55,14 @@ class _RatingAndReviewPageState extends State<RatingAndReviewPage> {
 }
 
 class ItemList extends StatefulWidget {
-  final String productId;
+  final String? productId;
   ItemList({this.productId});
   @override
   _ItemListState createState() => _ItemListState();
 }
 
 class _ItemListState extends State<ItemList> {
-  IconData _selectedIcon;
+  IconData? _selectedIcon;
   @override
   void initState() {
     super.initState();
@@ -151,7 +151,7 @@ class _ItemListState extends State<ItemList> {
 }
 
 class ReviewSection extends StatefulWidget {
-  final Review review;
+  final Review? review;
   ReviewSection({this.review});
   @override
   _ReviewSectionState createState() => _ReviewSectionState();
@@ -162,7 +162,7 @@ class _ReviewSectionState extends State<ReviewSection> {
 
   bool _isVertical = false;
 
-  IconData _selectedIcon;
+  IconData? _selectedIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +197,7 @@ class _ReviewSectionState extends State<ReviewSection> {
                             left: 4,
                           ),
                           child: Text(
-                            widget.review.authorName,
+                            widget.review!.authorName!,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -229,7 +229,7 @@ class _ReviewSectionState extends State<ReviewSection> {
               padding: EdgeInsets.all(10),
               alignment: Alignment.topLeft,
               child: Text(
-                (widget.review == null) ? 'oops' : (widget.review.text),
+                (widget.review == null) ? 'oops' : widget.review!.text!,
               ),
             )
           ],
@@ -240,7 +240,7 @@ class _ReviewSectionState extends State<ReviewSection> {
 }
 
 class AddReviewSection extends StatefulWidget {
-  final String productId;
+  final String? productId;
   AddReviewSection({this.productId});
   @override
   _AddReviewSectionState createState() => _AddReviewSectionState();

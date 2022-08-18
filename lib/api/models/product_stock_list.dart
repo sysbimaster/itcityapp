@@ -1,10 +1,10 @@
 class ProductStockList{
-  String stockId;
-  String productId;
-  String totalQuantity;
-  String remainingQuantity;
-  String addedDate;
-  String stockStatus;
+  String? stockId;
+  String? productId;
+  String? totalQuantity;
+  String? remainingQuantity;
+  String? addedDate;
+  String? stockStatus;
 
   ProductStockList();
    @override
@@ -35,9 +35,9 @@ class ProductStockList{
    
     return json;
   }
-  static List<ProductStockList> listFromJson(List<dynamic> json){
+  static List<ProductStockList> listFromJson(List<dynamic>? json){
     return json == null
-    ? List<ProductStockList>()
+    ? []
     : json.map((value) => ProductStockList.fromJson(value)).toList();
   }
 

@@ -1,16 +1,16 @@
 class CustomerRegistration{
-  int customerId;
-  String customerName;
-  String customerType;
-  String customerEmail;
-  String customerMobile;
-  int status;
-  String password;
-  String customerPincode;
-  String customerDistrict;
-  String customerState;
-  String customerAddress;
-  String remarks;
+  int? customerId;
+  String? customerName;
+  String? customerType;
+  String? customerEmail;
+  String? customerMobile;
+  int? status;
+  String? password;
+  String? customerPincode;
+  String? customerDistrict;
+  String? customerState;
+  String? customerAddress;
+  String? remarks;
 
   CustomerRegistration();
   @override
@@ -18,7 +18,7 @@ class CustomerRegistration{
     return toJson().toString();
   }
 
-  CustomerRegistration.fromJson(Map<String, dynamic> json) {
+  CustomerRegistration.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;
     customerId = json['customer_id'] == null ? null : json['customer_id'];
     customerName = json['customer_name'] == null ? null : json['customer_name'];
@@ -53,7 +53,7 @@ class CustomerRegistration{
 
   static List<CustomerRegistration> listFromJson(List<dynamic> json) {
     return json == null
-        ? List<CustomerRegistration>()
+        ? []
         : json.map((value) => CustomerRegistration.fromJson(value)).toList();
   }
 

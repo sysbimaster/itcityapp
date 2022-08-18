@@ -10,18 +10,18 @@ import 'package:itcity_online_store/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomNavigationCartNew extends StatefulWidget {
-  BottomNavigationCartNew({Key key,this.cartItems}) : super(key: key);
+  BottomNavigationCartNew({Key? key,this.cartItems}) : super(key: key);
 
 
-  List<Cart> cartItems;
+  List<Cart>? cartItems;
   @override
   _BottomNavigationCartNewState createState() => _BottomNavigationCartNewState();
 }
 
 class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
   double total=0;
-  String country;
-  String currency;
+  String? country;
+  String? currency;
 
   getCountry() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -41,9 +41,9 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
   Future updateCart() async{
     for(int i = 0;i<cartItemsOld.length;i++){
 
-      widget.cartItems[i].currency = this.currency;
-      await BlocProvider.of<CartBloc>(context)
-          .add(AddProductToCart( widget.cartItems[i],"cartpage"));
+      widget.cartItems![i].currency = this.currency;
+       BlocProvider.of<CartBloc>(context)
+          .add(AddProductToCart( widget.cartItems![i],"cartpage"));
 
     }
     return Future<bool>.value(true);
@@ -59,7 +59,7 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
       total = 0;
       state.cartItems.forEach((element) {
 
-        total =total + (element.productPrice * element.productCount);
+        total =total + (element.productPrice! * element.productCount!);
       });
     }
     if(state is CartAddRefreshLoadedState){
@@ -68,7 +68,7 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
       total = 0;
       state.cartItems.forEach((element) {
 
-        total =total + (element.productPrice * element.productCount);
+        total =total + (element.productPrice! * element.productCount!);
       });
     }
     // TODO: implement listener
@@ -120,7 +120,7 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
                               style: TextStyle(color: Colors.black,fontSize: 18,),
                             ),
                            total != null ? Text( currency != null?
-                            currency + " " + total.toStringAsFixed(2): 'KWD' + total.toStringAsFixed(2) ,
+                            currency! + " " + total.toStringAsFixed(2): 'KWD' + total.toStringAsFixed(2) ,
                               style: TextStyle(fontSize: 20, color: AppColors.LOGO_ORANGE),
                             ):CircularProgressIndicator()
                           ],
@@ -150,7 +150,7 @@ class _BottomNavigationCartNewState extends State<BottomNavigationCartNew> {
                         ),
                         onPressed: cartItemsOld.length == 0?null: () async {
 
-                              String userId =cartItemsOld[0].userId;
+                              String? userId =cartItemsOld[0].userId;
                               BlocProvider.of<OrderBloc>(context).add(CreatePurchaseForOrderEvent(userId,total,currency));
                               Navigator.push(context, MaterialPageRoute(builder: (context){
                                 return CheckOutNew();

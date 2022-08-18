@@ -8,29 +8,29 @@ class FetchHomeImages extends HomeEvent {}
 class FetchBrandDetails extends HomeEvent {}
 
 class FetchTodaysDealsByDate extends HomeEvent {
-  final String currency;
+  final String? currency;
   FetchTodaysDealsByDate(this.currency);
 }
 
 class FetchPopularProduct extends HomeEvent {
-  final String currencyp;
+  final String? currencyp;
   FetchPopularProduct(this.currencyp);
 }
 
 class FetchFeaturedProduct extends HomeEvent {
-  final String currencyf;
+  final String? currencyf;
   FetchFeaturedProduct(this.currencyf);
 }
 
 class FetchMobileCollections extends HomeEvent{
-  final String currencym;
+  final String? currencym;
   FetchMobileCollections(this.currencym);
 }
 
 class FetchHomeCollections extends HomeEvent{}
 
 class FetchComputerCollections extends HomeEvent {
-  final String currencyco;
+  final String? currencyco;
   FetchComputerCollections(this.currencyco);
 }
 

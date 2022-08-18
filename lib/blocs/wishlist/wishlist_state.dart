@@ -15,7 +15,7 @@ class WishlistLoadingState extends WishlistState {}
 
 class WishlistLoadedState extends WishlistState {
   final List<CustomerWishlist> wishlist;
-  const WishlistLoadedState({@required this.wishlist}) : assert(wishlist != null);
+  const WishlistLoadedState({required this.wishlist}) : assert(wishlist != null);
 }
 
 class WishlistErrorState extends WishlistState {}
@@ -24,7 +24,7 @@ class MoveProductFromWishlistToCartLoadingState extends WishlistState {}
 
 class MoveProductFromWishlistToCartSuccessState extends WishlistState {
   final List<Cart> cartlist;
-  const MoveProductFromWishlistToCartSuccessState({@required this.cartlist})
+  const MoveProductFromWishlistToCartSuccessState({required this.cartlist})
       : assert(cartlist != null);
 }
 
@@ -34,7 +34,7 @@ class MoveAllProductFromWishlistToCartLoadingState extends WishlistState {}
 
 class MoveAllProductFromWishlistToCartSuccessState extends WishlistState {
   final List<Cart> cart;
-  const MoveAllProductFromWishlistToCartSuccessState({@required this.cart})
+  const MoveAllProductFromWishlistToCartSuccessState({required this.cart})
       : assert(cart != null);
 }
 

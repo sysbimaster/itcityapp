@@ -6,7 +6,7 @@ abstract class OrderHistoryEvent {
 
 }
 class GetOrderHistory extends OrderHistoryEvent {
-String CustomerID;
+String? CustomerID;
 
 GetOrderHistory(this.CustomerID);
 

@@ -16,6 +16,6 @@ export './banner_list.dart';
 
 export './bottom_navigation_product.dart';
 export './related_product.dart';
-export './product_rating_review.dart';
+
 export './about_product.dart';
 

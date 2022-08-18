@@ -5,43 +5,43 @@ abstract class ProductEvent {}
 class FetchProduct extends ProductEvent {}
 
 class FetchDealsFull extends ProductEvent{
-  final String currency;
+  final String? currency;
   FetchDealsFull(this.currency);
 }
 
 class FetchMobileCollectionsFull extends ProductEvent {
-  final String currency;
+  final String? currency;
   FetchMobileCollectionsFull(this.currency);
 }
 
 class FetchComputerCollectionsFull extends ProductEvent{
-  final String currency;
+  final String? currency;
   FetchComputerCollectionsFull(this.currency);
 }
 class FetchPopularProductsFull extends ProductEvent {
-  final String currency;
+  final String? currency;
   FetchPopularProductsFull(this.currency);
 }
 
 class FetchFeaturedProductFull extends ProductEvent{
-  final String currency;
+  final String? currency;
   FetchFeaturedProductFull(this.currency);
 }
 
 
 class FetchProductByCategoryId extends ProductEvent {
-  final int id;
-  final String currency;
+  final int? id;
+  final String? currency;
   FetchProductByCategoryId(this.id,this.currency);
 }
 
 class FetchProductByProductId extends ProductEvent {
-  final String id;
-  final String currency;
+  final String? id;
+  final String? currency;
   FetchProductByProductId(this.id,this.currency);
 }
 class FetchMultiImageByProductId extends ProductEvent {
-  final String id;
+  final String? id;
 
   FetchMultiImageByProductId (this.id);
 }
@@ -67,7 +67,7 @@ class FetchProductAttributesByProductId extends ProductEvent {
 }
 
 class FetchProductReviewByProductId extends ProductEvent {
-  final String id;
+  final String? id;
   FetchProductReviewByProductId(this.id);
 }
 
@@ -98,7 +98,7 @@ class ShareProductByProductIdEvent extends ProductEvent {
 }
 
 class FetchRelatedProductByProductBrand extends ProductEvent {
-  final String brand;
-  final String currency;
+  final String? brand;
+  final String? currency;
   FetchRelatedProductByProductBrand(this.brand, this.currency);
 }

@@ -6,7 +6,7 @@ import 'package:itcity_online_store/resources/values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderSummary extends StatefulWidget {
-  const OrderSummary({Key key}) : super(key: key);
+  const OrderSummary({Key? key}) : super(key: key);
 
   @override
   _OrderSummaryState createState() => _OrderSummaryState();
@@ -16,8 +16,8 @@ class _OrderSummaryState extends State<OrderSummary> {
   dynamic total = 0;
 
   dynamic delivery = 1;
-  String country;
-  String currency = ' ';
+  String? country;
+  String? currency = ' ';
   getCountry() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -62,7 +62,7 @@ class _OrderSummaryState extends State<OrderSummary> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Subtotal',style: TextStyle(color: AppColors.GREY_TEXT,fontSize: 18,)),
-                            total != null? Text(currency+ ' ' + total.toStringAsFixed(2),style: TextStyle(color: AppColors.GREY_TEXT,fontSize: 18,)): Text(' ')
+                            total != null? Text(currency!+ ' ' + total.toStringAsFixed(2),style: TextStyle(color: AppColors.GREY_TEXT,fontSize: 18,)): Text(' ')
 
                           ],
                         )),
@@ -71,7 +71,7 @@ class _OrderSummaryState extends State<OrderSummary> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Shipping Charge',style: TextStyle(color: AppColors.GREY_TEXT,fontSize: 18,)),
-                            total != null? Text(currency+ ' '+delivery.toStringAsFixed(2),style: TextStyle(color: AppColors.GREY_TEXT,fontSize: 18,)): Text(' ')
+                            total != null? Text(currency!+ ' '+delivery.toStringAsFixed(2),style: TextStyle(color: AppColors.GREY_TEXT,fontSize: 18,)): Text(' ')
 
                           ],
                         )),
@@ -80,7 +80,7 @@ class _OrderSummaryState extends State<OrderSummary> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Total',style: TextStyle(color: AppColors.LOGO_ORANGE,fontSize: 22,)),
-                            total != null? Text(currency+ ' '+(total+delivery).toStringAsFixed(2),style: TextStyle(color: AppColors.GREY_TEXT,fontSize: 20,)): Text(' ')
+                            total != null? Text(currency!+ ' '+(total+delivery).toStringAsFixed(2),style: TextStyle(color: AppColors.GREY_TEXT,fontSize: 20,)): Text(' ')
 
                           ],
                         )),

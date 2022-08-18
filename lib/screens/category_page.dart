@@ -11,14 +11,14 @@ import 'package:itcity_online_store/screens/search_page.dart';
 import '../constants.dart';
 
 class CategoryPage extends StatefulWidget {
-  const CategoryPage({Key key}) : super(key: key);
+  const CategoryPage({Key? key}) : super(key: key);
 
   @override
   _CategoryPageState createState() => _CategoryPageState();
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-  List<Category> categoryList =[];
+  List<Category>? categoryList =[];
   TextEditingController tcontroller = TextEditingController();
   @override
   void initState() {
@@ -82,7 +82,7 @@ class _CategoryPageState extends State<CategoryPage> {
                               hintText: "Search Product, brands and more",
                               suffixIcon: IconButton(
                                 icon: Icon(Icons.search),
-                                padding: EdgeInsets.only(right: 20),
+                                padding: EdgeInsets.only(right: 20), onPressed: null,
                               ),
                               hintStyle:
                               Theme.of(context).inputDecorationTheme.hintStyle),
@@ -106,7 +106,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: GridView.builder(
-                        itemCount: categoryList.length,
+                        itemCount: categoryList!.length,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -122,10 +122,10 @@ class _CategoryPageState extends State<CategoryPage> {
                                   return ProductByCategoryPage(
                                     categoryId: categoryList == null
                                         ? 0
-                                        : categoryList[index].categoryId,
+                                        : categoryList![index].categoryId,
                                     categoryName: categoryList == null
                                         ? ''
-                                        : categoryList[index].categoryName,
+                                        : categoryList![index].categoryName,
                                   );
                                 }));
                               },
@@ -148,7 +148,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                             image: NetworkImage(categoryList == null
                                                 ? ''
                                                 : categoryImage +
-                                                categoryList[index].categoryImage),
+                                                categoryList![index].categoryImage!),
                                             fit: BoxFit.fitWidth,
                                           ),
                                         )),
@@ -159,7 +159,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                         child: Text(
                                           categoryList == null
                                               ? ''
-                                              : categoryList[index].categoryName,
+                                              : categoryList![index].categoryName!,
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
                                           style: (TextStyle(

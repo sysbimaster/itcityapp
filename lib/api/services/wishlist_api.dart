@@ -12,7 +12,7 @@ class WishlistApi {
   String _removeProductFromWishlistPath = '/removeProductFromWishlistByProductId';
   String _addProductToWishlistPath = '/createWishlist';
 
-  Future<List<CustomerWishlist>> fetchWishlist(String username,String currency) async {
+  Future<List<CustomerWishlist>> fetchWishlist(String? username,String? currency) async {
     Response response = await _apiclient.invokeAPI('$_wishlistPath?username=$username&cur=$currency', 'GET', null);
     return CustomerWishlist.listFromJson(jsonDecode(response.body)['data']);
   }

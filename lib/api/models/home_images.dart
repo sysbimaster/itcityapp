@@ -1,8 +1,8 @@
 class HomeImages {
-  int imageId;
-  String imageName;
-  String imageFor;
-  String url;
+  int? imageId;
+  String? imageName;
+  String? imageFor;
+  String? url;
 
   HomeImages();
   @override
@@ -27,9 +27,9 @@ class HomeImages {
     return json;
   }
 
-  static List<HomeImages> listFromJson(List<dynamic> json) {
+  static List<HomeImages> listFromJson(List<dynamic>? json) {
     return json == null
-        ? List<HomeImages>()
+        ? []
         : json.map((value) => HomeImages.fromJson(value)).toList();
   }
 }

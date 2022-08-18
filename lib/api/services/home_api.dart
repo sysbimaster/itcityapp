@@ -39,26 +39,26 @@ class HomeApi {
     print( "Deals test >>>>" +response.body.toString());
     return DealOfTheDay.listFromJson(jsonDecode(response.body)['data']);
   }
-  Future<List<Product>> fetchPopularProduct(String currency) async {
+  Future<List<Product>> fetchPopularProduct(String? currency) async {
     String url = '$_popularProductPath?cur=$currency';
     Response response =
     await _apiclient.invokeAPI(url, 'GET', null);
     return Product.listFromJson(jsonDecode(response.body)['data']);
   }
-  Future<List<Product>> fetchMobileCollections(String currency) async {
+  Future<List<Product>> fetchMobileCollections(String? currency) async {
     String url = '$_mobileCollectionsPath?cur=$currency';
     Response response =
         await _apiclient.invokeAPI(url, 'GET', null);
     return Product.listFromJson(jsonDecode(response.body)['data']);
   }
-  Future<List<Product>> fetchComputerCollections(String currency) async {
+  Future<List<Product>> fetchComputerCollections(String? currency) async {
     String url = '$_computerCollectionsPath?cur=$currency';
     Response response =
     await _apiclient.invokeAPI(url, 'GET', null);
     return Product.listFromJson(jsonDecode(response.body)['data']);
   }
 
-  Future<List<Product>> fetchFeaturedProduct(String currency) async {
+  Future<List<Product>> fetchFeaturedProduct(String? currency) async {
     String url = '$_featuredProductPath?cur=$currency';
     Response response =
         await _apiclient.invokeAPI(url, 'GET', null);

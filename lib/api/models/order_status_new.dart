@@ -1,30 +1,30 @@
 class OrderStatusNew{
-  int orderId;
+  int? orderId;
   Null orderNumber;
-  int customerId;
-  int purchaseId;
+  int? customerId;
+  int? purchaseId;
   Null customerGroupId;
-  String customerName;
-  String customerEmail;
-  String customerMob;
-  String paymentName;
-  String paymentAddress;
-  String paymentRegionId;
+  String? customerName;
+  String? customerEmail;
+  String? customerMob;
+  String? paymentName;
+  String? paymentAddress;
+  String? paymentRegionId;
   Null paymentZoneId;
   Null paymentZoneName;
-  String paymentMethod;
+  String? paymentMethod;
   Null paymentCode;
-  String shippingAddress;
-  String shippingName;
-  String shippingRegionId;
-  String shippingZoneId;
+  String? shippingAddress;
+  String? shippingName;
+  String? shippingRegionId;
+  String? shippingZoneId;
   Null shippingMethod;
-  String orderStatusId;
-  String totalAmnt;
+  String? orderStatusId;
+  String? totalAmnt;
   Null ipAddress;
   Null userAgent;
-  String remarks;
-  String createdAt;
+  String? remarks;
+  String? createdAt;
   Null updatedAt;
 
 OrderStatusNew();
@@ -94,7 +94,7 @@ OrderStatusNew();
   }
   static List<OrderStatusNew> listFromJson(List<dynamic> json){
     return json == null
-        ? List<OrderStatusNew>()
+        ? []
         : json.map((value) => OrderStatusNew.fromJson(value)).toList();
   }
 }

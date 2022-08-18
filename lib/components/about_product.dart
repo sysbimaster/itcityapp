@@ -15,7 +15,7 @@ class _AboutProductState extends State<AboutProduct> {
   @override
   Widget build(BuildContext context) {
 
-    String description = widget.product.productDesc;
+    String? description = widget.product.productDesc;
     return Card(
         shadowColor: Colors.grey,
         color: Colors.blueGrey[100],
@@ -43,7 +43,7 @@ class _AboutProductState extends State<AboutProduct> {
                   },
                   data: widget.product == null
                       ? 'Loading'
-                      : description.toLowerCase(),
+                      : description!.toLowerCase(),
                 )),
           ],
         ));

@@ -3,8 +3,8 @@ import 'package:itcity_online_store/api/models/models.dart';
 abstract class WishlistEvent {}
 
 class FetchWishlistEvent extends WishlistEvent {
-  final String username;
-  String currency;
+  final String? username;
+  String? currency;
   FetchWishlistEvent(this.username,this.currency);
 }
 
@@ -25,7 +25,7 @@ class RemoveAllProductFromWishlistEvent extends WishlistEvent {
 
 class RemoveProductFromWishlistEvent extends WishlistEvent {
   final Wishlist wishlist;
-  String currency;
+  String? currency;
   RemoveProductFromWishlistEvent(this.wishlist,this.currency);
 }
 

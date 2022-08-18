@@ -3,15 +3,15 @@ import 'package:itcity_online_store/resources/values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CurrencyBar extends StatefulWidget {
-  const CurrencyBar({Key key,String currency,String }) : super(key: key);
+  const CurrencyBar({Key? key,String? currency,String }) : super(key: key);
 
   @override
   _CurrencyBarState createState() => _CurrencyBarState();
 }
 
 class _CurrencyBarState extends State<CurrencyBar> {
-  String country ;
-  String currency ;
+  String? country ;
+  String? currency ;
   getCountry() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -48,7 +48,7 @@ class _CurrencyBarState extends State<CurrencyBar> {
 
               Padding(
                 padding: EdgeInsets.fromLTRB(18, 2, 5, 2),
-                child:this.currency != null ? Text("Country : " + this.country,style: TextStyle(
+                child:this.currency != null ? Text("Country : " + this.country!,style: TextStyle(
                   color:Colors.white,fontSize: 14
                 ), ): Text('Please select a country',style: TextStyle(
                     color:Colors.white,fontSize: 14

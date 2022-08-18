@@ -1,7 +1,7 @@
 class PaymentMethod{
-  String paymentMethodId;
-  String paymentName;
-  String status;
+  String? paymentMethodId;
+  String? paymentName;
+  String? status;
 
   PaymentMethod();
   @override
@@ -25,7 +25,7 @@ class PaymentMethod{
   }
   static List<PaymentMethod> listFromJson(List<dynamic> json){
     return json == null
-    ? List<PaymentMethod>()
+    ? []
     : json.map((value) => PaymentMethod.fromJson(value)).toList();
   }
 }

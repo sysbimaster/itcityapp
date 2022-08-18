@@ -18,8 +18,8 @@ class CartApi {
     return Tax.listFromJson(jsonDecode(response.body)['data']);
   }
 
-  Future<bool> addProductToCart(Cart cart) async {
-    int uid = int.parse(cart.userId);
+  Future<bool?> addProductToCart(Cart cart) async {
+    int uid = int.parse(cart.userId!);
     print(cart.userId);
     String cartJson =
         '{"user_id" : $uid,"cur" : "${cart.currency}" ,"cart_data" : "${cart.cartData}","prod_count" : ${cart.productCount},"prod_price" : "${cart.productPrice.toString()}"}';
@@ -40,7 +40,7 @@ class CartApi {
   }
 
   Future<List<Cart>> removeProductFromCart(
-      String userId, String cartData,String productCount) async {
+      String? userId, String? cartData,String productCount) async {
     String cartJson = '{"user_id" : $userId, "cart_data": $cartData,"prod_count":$productCount }';
     print(cartJson + "CartJson");
     Response response = await _apiclient.invokeAPI(

@@ -12,8 +12,8 @@ class ApiClient {
 
  // FlutterSecureStorage _flutterSecureStorage = FlutterSecureStorage();
 
-  Future<Response> invokeAPI(String path, String method, Object body,
-      {MultiPartRequestParam multiPartRequestParams}) async {
+  Future<Response> invokeAPI(String path, String method, Object? body,
+      {MultiPartRequestParam? multiPartRequestParams}) async {
     Map<String, String> headerParams = {
       
     };
@@ -26,7 +26,7 @@ class ApiClient {
     print(isLoggedIn.toString());
     if(isLoggedIn) {
 
-      String token = await prefs.getString('token');
+      String? token = await prefs.getString('token');
       headerParams = {'Authorization': 'Bearer $token'};
       print(token);
     }
@@ -50,9 +50,9 @@ class ApiClient {
       }
     } else {
       var request = MultipartRequest(method, Uri.parse(url));
-      request.fields.addAll(multiPartRequestParams.fields);
-      request.files.addAll(multiPartRequestParams.files);
-      request.headers.addAll(nullableHeaderParams);
+      request.fields.addAll(multiPartRequestParams.fields!);
+      request.files.addAll(multiPartRequestParams.files!);
+      request.headers.addAll(nullableHeaderParams!);
       StreamedResponse streamedResponse = await request.send();
       String responseBody = await streamedResponse.stream.bytesToString();
       response = Response(
@@ -75,7 +75,7 @@ class ApiClient {
     return response;
   }
 
-  String _decodeBodyBytes(Response response) {
+  String? _decodeBodyBytes(Response response) {
     var contentType = response.headers['content-type'];
     if (contentType != null && contentType.contains("application/json")) {
       return jsonDecode(response.body)['message'];
@@ -86,8 +86,8 @@ class ApiClient {
 }
 
 class MultiPartRequestParam {
-  final Map<String, String> fields;
-  final List<MultipartFile> files;
+  final Map<String, String>? fields;
+  final List<MultipartFile>? files;
 
   MultiPartRequestParam({this.fields, this.files});
 }

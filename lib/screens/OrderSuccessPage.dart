@@ -7,8 +7,8 @@ import '../constants.dart';
 
 class OrderSuccessPage extends StatefulWidget {
   final OrderStatusNew orderStatusNew;
-  String currency;
-   OrderSuccessPage({Key key,@required this.orderStatusNew,this.currency}) : super(key: key);
+  String? currency;
+   OrderSuccessPage({Key? key,required this.orderStatusNew,this.currency}) : super(key: key);
 
   @override
   _OrderSuccessPageState createState() => _OrderSuccessPageState();
@@ -20,7 +20,7 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
     return WillPopScope(
       onWillPop: (){
         Navigator.pushNamed(context, '/home');
-      },
+      } as Future<bool> Function()?,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
@@ -53,7 +53,7 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
                       size: 75,
                     ),
                     SizedBox(height:10),
-                    Text(widget.orderStatusNew.customerName== null?"Thank you for your order!":"Thank you, "+widget.orderStatusNew.customerName + " for your order." ,style:TextStyle(
+                    Text(widget.orderStatusNew.customerName== null?"Thank you for your order!":"Thank you, "+widget.orderStatusNew.customerName! + " for your order." ,style:TextStyle(
                       fontSize: 35,color: AppColors.GREY_TEXT,fontFamily: 'Myriad-semi'
                     ),textAlign: TextAlign.center,),
                     SizedBox(
@@ -100,7 +100,7 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
                               children: [
                                 Text("Payment Method : "  ,
                                   style: TextStyle(fontSize: 18),textAlign: TextAlign.left,),
-                                Text( widget.orderStatusNew.paymentMethod ,
+                                Text( widget.orderStatusNew.paymentMethod! ,
                                   style: TextStyle(fontSize: 18),textAlign: TextAlign.left,),
                               ],
                             ),
@@ -112,7 +112,7 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
                               children: [
                                 Text("Total Amount : "  ,
                                   style: TextStyle(fontSize: 18),textAlign: TextAlign.left,),
-                                Text( widget.currency+ " " + widget.orderStatusNew.totalAmnt ,
+                                Text( widget.currency!+ " " + widget.orderStatusNew.totalAmnt! ,
                                   style: TextStyle(fontSize: 18),textAlign: TextAlign.left,),
                               ],
                             ),
@@ -143,7 +143,7 @@ class _OrderSuccessPageState extends State<OrderSuccessPage> {
                         SizedBox(height: 5,),
                         Container(
                           width: MediaQuery.of(context).size.width * .60,
-                            child: Text(widget.orderStatusNew.paymentAddress,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 23),)),
+                            child: Text(widget.orderStatusNew.paymentAddress!,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 23),)),
                         // Text(widget.orderStatusNe,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20)),
                         // Text(customer.customerState,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20)),
                         // Text(customer.customerPincode,style: TextStyle(color: AppColors.LOGO_BLACK,fontSize: 20)),

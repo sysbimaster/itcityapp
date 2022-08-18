@@ -14,8 +14,8 @@ class CurrencyLoading extends CurrencyState{}
 
 class CurrencyChanged extends CurrencyState{
   var price ;
-  String CurrencyType;
-  CurrencyChanged({@required this.price, this.CurrencyType });
+  String? CurrencyType;
+  CurrencyChanged({required this.price, this.CurrencyType });
 }
 class CurrencyChangedErrorState extends CurrencyState{}
 

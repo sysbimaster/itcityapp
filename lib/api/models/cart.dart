@@ -1,17 +1,17 @@
 class Cart{
-  int cartId;
-  String userId;
-  String cartData;
-  String productId;
-  String productName;
-  String productNameArabic;
-  String productImage;
-  String productDesc;
-  String currency;
+  int? cartId;
+  String? userId;
+  String? cartData;
+  String? productId;
+  String? productName;
+  String? productNameArabic;
+  String? productImage;
+  String? productDesc;
+  String? currency;
 
-  double productPrice;
-  String productDescArabic;
-  int productCount;
+  double? productPrice;
+  String? productDescArabic;
+  int? productCount;
   Cart();
   @override
   String toString() {
@@ -51,9 +51,9 @@ class Cart{
     if(currency != null) json['cur'] = productId;
     return json;
   }
-  static List<Cart> listFromJson(List<dynamic> json){
+  static List<Cart> listFromJson(List<dynamic>? json){
     return json == null
-    ? List<Cart>()
+    ? []
     : json.map((value) => Cart.fromJson(value)).toList();
   }
 }
