@@ -163,7 +163,7 @@ class ProductApi {
     return (jsonDecode(response.body)['data']).cast<String>();
   }
 
-  Future search(String term, String? currency) async {
+  Future<List<Product>> search(String term, String? currency) async {
     var url = "/searchProductOrBrandOrCategory?value=$term&cur=$currency";
     print(url);
     Response response =  await _apiClient.invokeAPI(url, 'GET', null);

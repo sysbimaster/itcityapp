@@ -292,8 +292,11 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
       if (product == null) {
         product =
             product ?? BlocProvider.of<ProductBloc>(context).currentProduct;
-        value = BlocProvider.of<CartBloc>(context)
-            .productCount[product!.productId!];
+        if(product!= null){
+          value = BlocProvider.of<CartBloc>(context)
+              .productCount[product!.productId!];
+
+        }
         print("This is the value" + value.toString());
         print("This is the value" +
             BlocProvider.of<CartBloc>(context).productCount.toString());
