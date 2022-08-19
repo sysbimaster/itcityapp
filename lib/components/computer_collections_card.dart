@@ -58,7 +58,7 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
           alignment: Alignment.topRight,
           children: [
             Container(
-                height: MediaQuery.of(context).size.height * 40,
+                height: MediaQuery.of(context).size.height * .50,
                 width: MediaQuery.of(context).size.width * .45,
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -67,8 +67,8 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                         height: 15,
                       ),
                       Container(
-                        height: 160.0,
-                        width: 140.0,
+                        height: MediaQuery.of(context).size.height *.25,
+                        width: MediaQuery.of(context).size.width * .45,
                         //margin: EdgeInsets.all(20),
                         padding: EdgeInsets.all(15),
                         decoration: BoxDecoration(

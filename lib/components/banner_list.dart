@@ -27,7 +27,12 @@ class _BannerListState extends State<BannerList> {
   int _current = 0;
   Widget build(BuildContext context) {
 
-    return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+    return BlocListener<HomeBloc, HomeState>(
+  listener: (context, state) {
+
+    // TODO: implement listener
+  },
+  child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
 
       if (state is HomeImagesLoadingState) {
 
@@ -46,11 +51,15 @@ class _BannerListState extends State<BannerList> {
             child: Icon(Icons.refresh)),
         );
       }
-      if(state is HomeImagesLoadedState){
+      if(state is HomeImagesLoadedState || state is  HomeAdsLoadedState || state is BrandDetailsLoadedState  ){
+
         image = BlocProvider.of<HomeBloc>(context).image;
 
+
+        print('home image length${image.length}');
+
       }
-      return Container(
+      return image.isNotEmpty?  Container(
 
         height: MediaQuery.of(context).size.width /2 ,
         width: MediaQuery.of(context).size.width,
@@ -122,8 +131,9 @@ class _BannerListState extends State<BannerList> {
             ),
           ],
         ),
-      );
+      ):Container();
       return Container();
-    });
+    }),
+);
   }
 }

@@ -107,7 +107,7 @@ class _PopularProductsState extends State<PopularProducts> {
               ),
             ),
             Container(
-             height: MediaQuery.of(context).size.height * .40,
+             height: MediaQuery.of(context).size.height * .50,
 
 
               child: ListView.builder(

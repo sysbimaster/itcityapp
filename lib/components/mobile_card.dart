@@ -47,7 +47,7 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
             alignment: Alignment.topRight,
             children: [
               Container(
-                  height: MediaQuery.of(context).size.height * .25,
+                  height: MediaQuery.of(context).size.height * .35,
                   width: MediaQuery.of(context).size.width * .33,
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -56,8 +56,8 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
                           height: 15,
                         ),
                         Container(
-                          height: 100.0,
-                          width: 110.0,
+                          height: MediaQuery.of(context).size.height * .20,
+                          width: MediaQuery.of(context).size.width * .33,
                           //margin: EdgeInsets.all(20),
                           padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(

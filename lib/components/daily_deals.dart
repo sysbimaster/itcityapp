@@ -81,7 +81,7 @@ class _DealsListState extends State<DealsList> {
         return Container(
           color: AppColors.WHITE,
           constraints: BoxConstraints(
-            minHeight: MediaQuery.of(context).size.height * .47,
+            minHeight: MediaQuery.of(context).size.height * .52,
           ),
           child: Column(
             children: [

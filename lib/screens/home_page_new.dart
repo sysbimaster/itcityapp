@@ -159,16 +159,35 @@ class _HomePageNewState extends State<HomePageNew> {
   }
 }
 
-class DrawerData extends StatelessWidget {
+class DrawerData extends StatefulWidget {
   const DrawerData();
+
+  @override
+  State<DrawerData> createState() => _DrawerDataState();
+}
+
+class _DrawerDataState extends State<DrawerData> {
+  String? token ='';
+
+  @override
+  void initState() {
+   loadprefs();
+    // TODO: implement initState
+    super.initState();
+  }
+  loadprefs()async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token =  prefs.getString('token');
+  }
   @override
   Widget build(BuildContext context) {
+
     void _handleLogout() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.remove('token');
-      prefs.remove('email');
-      prefs.remove('isRegistered');
-      prefs.remove('customerId');
+      prefs!.remove('token');
+      prefs!.remove('email');
+      prefs!.remove('isRegistered');
+      prefs!.remove('customerId');
 
       BlocProvider.of<UserBloc>(context).add(UserLogoutEvent());
 
@@ -206,8 +225,12 @@ class DrawerData extends StatelessWidget {
           return DeliveryInfoPage();
         }));
       }),
-      DrawerItem('Sign Out', Icons.exit_to_app, _handleLogout),
+       //DrawerItem('Sign Out', Icons.exit_to_app, _handleLogout),
     ];
+
+    if(token!.isNotEmpty){
+      drawer.add(DrawerItem('Sign Out', Icons.exit_to_app, _handleLogout));
+    }
     return BlocListener<UserBloc, UserState>(
         listener: (context, state) {
           // TODO: implement listener
