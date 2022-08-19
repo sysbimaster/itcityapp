@@ -102,8 +102,8 @@ class _DealsCardNewState extends State<DealsCardNew> {
                   //crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Container(
-                      height: 170.0,
-                      width: 140.0,
+                      height: MediaQuery.of(context).size.height*.22,
+                      width: MediaQuery.of(context).size.width * .48,
                       //margin: EdgeInsets.all(20),
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -294,9 +294,7 @@ class _DealsCardNewState extends State<DealsCardNew> {
                                                                       .center,
                                                             )),
                                                       ),
-                                                      SizedBox(
-                                                        height: 35,
-                                                      ),
+                                                     
                                                     ],
                                                   );
                                                 });

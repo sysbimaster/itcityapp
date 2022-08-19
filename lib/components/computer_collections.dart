@@ -84,7 +84,7 @@ class _ComputerCollectionsState extends State<ComputerCollections> {
 
           color: AppColors.WHITE,
           constraints: BoxConstraints(
-            minHeight: MediaQuery.of(context).size.height * .50,
+            minHeight: MediaQuery.of(context).size.height * .70,
           ),
           child: Column(
             children: [
@@ -119,7 +119,7 @@ class _ComputerCollectionsState extends State<ComputerCollections> {
               ),
               Container(
                 padding: EdgeInsets.only(left: 12,right: 5),
-                height: MediaQuery.of(context).size.height * .40,
+                height: MediaQuery.of(context).size.height * .50,
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,

@@ -65,8 +65,8 @@ class _ProductCardState extends State<ProductCard> {
 
                 Container(
 
-                  height: 190.0,
-                  width: 170.0,
+            height: MediaQuery.of(context).size.height*.25,
+        width: MediaQuery.of(context).size.width * .48,
                   //margin: EdgeInsets.all(20),
                   padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(

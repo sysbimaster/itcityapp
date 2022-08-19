@@ -94,7 +94,7 @@ class _FeaturedProductState extends State<FeaturedProduct> {
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * .40,
+              height: MediaQuery.of(context).size.height * .50,
 
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,

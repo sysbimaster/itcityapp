@@ -84,7 +84,7 @@ class _MobileCollectionsState extends State<MobileCollections> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(5, 2, 10, 5),
+            padding:  EdgeInsets.fromLTRB(5, 2, 10, 5),
             child: Row(
 
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,12 +103,12 @@ class _MobileCollectionsState extends State<MobileCollections> {
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height *.40,
+            height: MediaQuery.of(context).size.height *.4,
             width: MediaQuery.of(context).size.width,
             child: Image.asset('assets/images/mobilecollectionsbanner.png',fit: BoxFit.fill,),
           ),
           Container(
-          height: MediaQuery.of(context).size.height * .27,
+          height: MediaQuery.of(context).size.height * .35,
           width: MediaQuery.of(context).size.width,
           child: ListView.builder(
 

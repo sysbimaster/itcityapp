@@ -37,6 +37,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       image = await homeApi.fetchHomeimages();
       emit(HomeImagesLoadedState());
+      print('emit should work');
     } catch (e) {
 
       emit(HomeImagesErrorState());
