@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -26,7 +25,7 @@ class _ProfilePageNewState extends State<ProfilePageNew> {
   String? email;
   Future<String?> getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    email =  await prefs.getString('email');;
+    email =  prefs.getString('email');
     return email;
   }
 

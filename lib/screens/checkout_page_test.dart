@@ -305,7 +305,7 @@ class _CheckOutNewState extends State<CheckOutNew> {
                                         BlocProvider.of<OrderBloc>(context)
                                             .add(CreateOrderEvent(order));
                                       } : () {
-                                        Scaffold.of(context).showSnackBar(
+                                        ScaffoldMessenger.of(context).showSnackBar(
                                             SnackBar(
                                               content: Text(
                                                   "Please Update the address"),
@@ -400,7 +400,7 @@ class CheckoutPageTest extends StatelessWidget {
                               vertical: 20.0, horizontal: 20.0),
                           child: Text(
                             "Delivery Address",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ),
                         BlocBuilder<UserBloc, UserState>(
@@ -475,8 +475,7 @@ class CheckoutPageTest extends StatelessWidget {
                           width: MediaQuery.of(context).size.width,
                           margin: EdgeInsets.symmetric(
                               vertical: 20.0, horizontal: 20.0),
-                          child: FlatButton(
-                            color: Colors.deepOrangeAccent,
+                          child: TextButton(
                             onPressed: () {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
@@ -492,7 +491,7 @@ class CheckoutPageTest extends StatelessWidget {
                               "Change / Update Address",
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline6!
+                                  .titleLarge!
                                   .copyWith(color: Colors.white),
                             ),
                           ),

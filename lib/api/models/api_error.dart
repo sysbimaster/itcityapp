@@ -5,8 +5,9 @@ class ApiError {
     this._error = error;
   }
 
-  String? get error => _error;
-  set error(String? error) => _error = error;
+  String? get errors => _error;
+
+  set error(String? errorval) => _error = errorval;
 
   ApiError.fromJson(Map<String, dynamic> json) {
     _error = json['error'];

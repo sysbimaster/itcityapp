@@ -32,7 +32,7 @@ class _CartCardNewState extends State<CartCardNew> {
 
   getCartDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    CustomerId = await prefs.getString("customerId");
+    CustomerId = prefs.getString("customerId");
     if (CustomerId == null) {
 
     } else {
@@ -88,7 +88,7 @@ class _CartCardNewState extends State<CartCardNew> {
                 isBottomBarOverlay: false,
                 progressIndicator: CircularProgressIndicator(),
                 themeData:
-                Theme.of(context).copyWith(accentColor: Colors.black38),
+                Theme.of(context).copyWith(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black38)),
                 overlayColor: Colors.black26);
           }else {
             Loader.hide();
@@ -225,10 +225,10 @@ class _CartCardNewState extends State<CartCardNew> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      FlatButton(
-                                        height: 30,
-                                        color: Colors.white,
-                                        padding: EdgeInsets.all(4.0),
+                                      ElevatedButton(
+                                        // height: 30,
+                                        // color: Colors.white,
+                                        // padding: EdgeInsets.all(4.0),
                                         onPressed: () {
                                           // Remove From Cart
                                           BlocProvider.of<CartBloc>(context)
@@ -303,7 +303,7 @@ class _CartCardNewState extends State<CartCardNew> {
                         children: [
                           Icon(Icons.shopping_cart_outlined,size: 100,color: Colors.deepOrangeAccent[100],),
                           SizedBox(height:10),
-                          Text("Cart is Empty",style: Theme.of(context).textTheme.headline6,),
+                          Text("Cart is Empty",style: Theme.of(context).textTheme.titleLarge,),
                           SizedBox(
                             height: 15.0,
                           ),

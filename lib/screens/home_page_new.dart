@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 
-import 'package:itcity_online_store/blocs/user/user_bloc.dart';
-import 'package:itcity_online_store/blocs/user/user_event.dart';
-import 'package:itcity_online_store/blocs/user/user_state.dart';
 import 'package:itcity_online_store/components/currency_bar.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
@@ -64,7 +61,7 @@ class _HomePageNewState extends State<HomePageNew> {
   @override
   void initState() {
     check().then((intenet) {
-      if (intenet != null && intenet) {
+      if (intenet) {
 
         getCountry();
       } else {
@@ -184,10 +181,10 @@ class _DrawerDataState extends State<DrawerData> {
 
     void _handleLogout() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs!.remove('token');
-      prefs!.remove('email');
-      prefs!.remove('isRegistered');
-      prefs!.remove('customerId');
+      prefs.remove('token');
+      prefs.remove('email');
+      prefs.remove('isRegistered');
+      prefs.remove('customerId');
 
       BlocProvider.of<UserBloc>(context).add(UserLogoutEvent());
 

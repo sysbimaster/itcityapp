@@ -1,11 +1,9 @@
-import 'dart:async';
 import 'package:itcity_online_store/api/models/MultipleImageModel.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/blocs/product/products.dart';
 import 'package:bloc/bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/api/services/services.dart';
-import '../blocs.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final ProductApi productApi;

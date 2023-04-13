@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:itcity_online_store/components/CartCardNew.dart';
 
 import 'package:itcity_online_store/components/components.dart';
-import 'package:itcity_online_store/constants.dart';
 
 
 import 'package:itcity_online_store/resources/values.dart';
@@ -24,8 +23,8 @@ class _CartPageState extends State<CartPage> {
   void getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() async {
-      userId = await prefs.getString('customerId');
-      currency = await prefs.getString('currency');
+      userId = prefs.getString('customerId');
+      currency = prefs.getString('currency');
     });
   }
 

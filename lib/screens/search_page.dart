@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -44,7 +43,7 @@ class _SearchPageState extends State<SearchPage> {
         isBottomBarOverlay: false,
         progressIndicator: CircularProgressIndicator(),
         themeData:
-        Theme.of(context).copyWith(accentColor: Colors.black38),
+        Theme.of(context).copyWith(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black38)),
         overlayColor: Colors.black26);
     } else if (state is AddProductToCartSuccessState) {
     Loader.hide();

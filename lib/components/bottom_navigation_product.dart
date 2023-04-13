@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
@@ -7,7 +6,6 @@ import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //FlutterSecureStorage _flutterSecureStorage = FlutterSecureStorage();
@@ -26,8 +24,8 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
   String? token = '';
   void getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId = await prefs.getString("customerId");
-    token = await prefs.getString("token");
+    userId = prefs.getString("customerId");
+    token = prefs.getString("token");
 
   }
 
@@ -122,7 +120,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                               if (widget.product!.productQty == 0 ||
                                   widget.quantity ==
                                       widget.product!.productQty) {
-                                Scaffold.of(context).showSnackBar(SnackBar(
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                   backgroundColor: Colors.deepOrangeAccent,
                                   content: Text('Product is Out of Stock'),
                                   duration: Duration(seconds: 3),
@@ -154,7 +152,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                     statusCart == null ? false : statusCart;
                                 if (value) {
 
-                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                     content: Text('Product Added to Cart'),
                                     duration: Duration(seconds: 3),
                                   ));
@@ -176,17 +174,17 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                           ),
                         ),
                         Builder(
-                          builder: (context) => FlatButton(
-                            height: 40,
-                            minWidth: MediaQuery.of(context).size.width / 2,
-                            color: Colors.black,
-                            textColor: Colors.red,
-                            padding: EdgeInsets.all(8.0),
+                          builder: (context) => TextButton(
+                            // height: 40,
+                            // minWidth: MediaQuery.of(context).size.width / 2,
+                            // color: Colors.black,
+                            // textColor: Colors.red,
+                            // padding: EdgeInsets.all(8.0),
                             onPressed: () {
                               if (widget.product!.productQty == 0 ||
                                   widget.quantity ==
                                       widget.product!.productQty) {
-                                Scaffold.of(context).showSnackBar(SnackBar(
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                   backgroundColor: Colors.deepOrangeAccent,
                                   content: Text('Product is Out of Stock'),
                                   duration: Duration(seconds: 3),
@@ -217,7 +215,7 @@ class _BottomNavigationProductState extends State<BottomNavigationProduct> {
                                     statusCart == null ? false : statusCart;
                                 if (value) {
 
-                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                     content: Text('Product Added to Cart'),
                                     duration: Duration(seconds: 3),
                                   ));

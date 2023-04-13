@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/constants.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
-import 'package:itcity_online_store/screens/OrderSuccessPage.dart';
 
 
 class BottomNavigation extends StatelessWidget {
@@ -74,7 +72,7 @@ class BottomNavigation extends StatelessWidget {
                           BlocProvider.of<OrderBloc>(context)
                               .add(CreateOrderEvent(order));
                         }: (){
-                          Scaffold.of(context).showSnackBar(SnackBar(
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text("Please Update the address"),
                           ));
                         },

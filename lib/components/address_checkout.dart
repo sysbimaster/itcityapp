@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -21,7 +20,7 @@ class _AddressCheckoutState extends State<AddressCheckout> {
   String? CustomerId;
   getUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    CustomerId = await prefs.getString("email");
+    CustomerId = prefs.getString("email");
     BlocProvider.of<UserBloc>(context).add(FetchCustomerInformationEvent(CustomerId));
   }
   @override

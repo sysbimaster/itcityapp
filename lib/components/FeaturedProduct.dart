@@ -11,11 +11,9 @@ import 'package:itcity_online_store/components/product_card.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/featured_products_full.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
-import 'package:itcity_online_store/screens/product_details_new.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart';
 
 class FeaturedProduct extends StatefulWidget {
   const FeaturedProduct({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -16,7 +16,6 @@ import 'package:itcity_online_store/screens/login_page_new.dart';
 import 'package:itcity_online_store/screens/search_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart';
 
 class PopularProductsFull extends StatefulWidget {
   String? currency;
@@ -33,7 +32,7 @@ class _PopularProductsFullState extends State<PopularProductsFull> {
   checkCartCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.containsKey('cartcount')){
-      cartcount = await  prefs.getInt('cartcount');
+      cartcount = prefs.getInt('cartcount');
       setState(()  {
         print('cart count in mainpage');
         this.cartcount = cartcount;
@@ -101,7 +100,9 @@ class _PopularProductsFullState extends State<PopularProductsFull> {
                   icon: cartcount == 0 ?Icon(
                     Icons.shopping_cart_outlined,
                     color: AppColors.WHITE,
-                  ):Badge(child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),badgeColor: AppColors.WHITE,),
+                  ):badge.Badge(
+                    badgeStyle: badge.BadgeStyle(badgeColor: AppColors.WHITE),
+                    child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),),
                 ),
               ],
               bottom: PreferredSize(

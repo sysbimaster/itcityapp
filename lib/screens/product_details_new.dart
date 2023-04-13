@@ -1,6 +1,5 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -22,7 +21,6 @@ import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/search_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'cart_page.dart';
 
 class ProductDetailsNew extends StatefulWidget {
   final String? productId;
@@ -58,7 +56,7 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
   checkCartCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.containsKey('cartcount')){
-      cartcount = await  prefs.getInt('cartcount');
+      cartcount = prefs.getInt('cartcount');
       setState(()  {
         print('cart count in mainpage');
         this.cartcount = cartcount;
@@ -67,7 +65,7 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
   }
   void getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId = await prefs.getString('customerId');
+    userId = prefs.getString('customerId');
   }
   bool morevisible = false;
   @override
@@ -122,7 +120,7 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
           isBottomBarOverlay: false,
           progressIndicator: CircularProgressIndicator(),
           themeData:
-          Theme.of(context).copyWith(accentColor: Colors.black38),
+          Theme.of(context).copyWith(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black38)),
           overlayColor: Colors.black26);
     } else if (state is AddProductToCartSuccessState) {
       Loader.hide();
@@ -359,7 +357,7 @@ class _ProductDetailsNewState extends State<ProductDetailsNew> {
               icon: cartcount == 0 ?Icon(
                 Icons.shopping_cart_outlined,
                 color: AppColors.WHITE,
-              ):Badge(child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),badgeColor: AppColors.WHITE,),
+              ):badge.Badge(child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),badgeStyle: badge.BadgeStyle(badgeColor: AppColors.WHITE),),
     ),
           ],
           bottom: PreferredSize(

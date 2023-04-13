@@ -3,8 +3,6 @@ import 'package:itcity_online_store/api/api_client.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
 
-import '../models/customer_registration.dart';
-import '../models/models.dart';
 
 class UserApi {
  // FlutterSecureStorage _flutterSecureStorage = FlutterSecureStorage();

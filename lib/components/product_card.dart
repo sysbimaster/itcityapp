@@ -1,11 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/api/models/models.dart';
-import 'package:itcity_online_store/api/models/product.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';
 import 'package:itcity_online_store/resources/values.dart';
@@ -303,7 +301,7 @@ class _ProductCardState extends State<ProductCard> {
                         }
                       });
                     } else {
-                      Scaffold.of(context).showSnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
                                 "Please Login to add products to Favourites"),

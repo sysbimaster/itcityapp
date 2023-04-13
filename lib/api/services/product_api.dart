@@ -8,7 +8,6 @@ import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/api/models/post_review_model.dart';
 import 'dart:async';
 
-import '../models/models.dart';
 
 class ProductApi {
   final ApiClient _apiClient = ApiClient();
@@ -87,7 +86,7 @@ class ProductApi {
   }
   Future<MultipleImageModel> getmultiImagesByProductId(String? id) async {
     Response response = await _apiClient.invokeAPI(
-        '$_fetchMultiImagesPath${id}', 'GET', null);
+        '$_fetchMultiImagesPath$id', 'GET', null);
     return MultipleImageModel.fromJson(jsonDecode(response.body));
   }
 
@@ -189,7 +188,7 @@ class ProductApi {
 
   Future<PostReviewModel> PostRandomReview(String? author,String? productId,String? text,int? rating) async {
     Response response = await _apiClient.invokeAPI(
-        '$_postReviewPath?author_name=$author&product_id=$productId&text=$text&rating=${rating}', 'POST', null);
+        '$_postReviewPath?author_name=$author&product_id=$productId&text=$text&rating=$rating', 'POST', null);
     print(response);
     return PostReviewModel.fromJson(jsonDecode(response.body));
   }

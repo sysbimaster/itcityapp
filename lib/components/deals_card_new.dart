@@ -7,13 +7,11 @@ import 'package:itcity_online_store/api/models/Currency.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/api/services/currency_api.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
-import 'package:itcity_online_store/blocs/currency/currency_bloc.dart';
 import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';
 
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
 import 'package:itcity_online_store/screens/product_details_new.dart';
-import 'package:itcity_online_store/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
@@ -355,7 +353,7 @@ class _DealsCardNewState extends State<DealsCardNew> {
                             }
                           });
                         } else {
-                          Scaffold.of(context).showSnackBar(
+                          ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
                                     "Please Login to add products to Favourites"),

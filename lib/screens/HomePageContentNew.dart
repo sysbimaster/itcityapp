@@ -4,15 +4,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/api/models/HomeAds.dart';
 import 'package:itcity_online_store/api/models/customer_wishlist.dart';
 import 'package:itcity_online_store/api/models/product.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
-import 'package:itcity_online_store/blocs/home/home_bloc.dart';
-import 'package:itcity_online_store/blocs/home/home_state.dart';
-import 'package:itcity_online_store/blocs/wishlist/wishlist_bloc.dart';
-import 'package:itcity_online_store/blocs/wishlist/wishlist_event.dart';
 import 'package:itcity_online_store/components/FeaturedProduct.dart';
 import 'package:itcity_online_store/components/PopularProducts.dart';
 import 'package:itcity_online_store/components/category_card.dart';
@@ -26,7 +21,6 @@ import 'package:itcity_online_store/components/mobile_collections.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart';
 
 class HomePageContentNew extends StatefulWidget {
   @override
@@ -84,7 +78,7 @@ class _HomePageContentNewState extends State<HomePageContentNew> {
           isBottomBarOverlay: false,
           progressIndicator: CircularProgressIndicator(),
           themeData:
-          Theme.of(context).copyWith(accentColor: Colors.black38),
+          Theme.of(context).copyWith(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black38)),
           overlayColor: Colors.black26);
     } else if (state is AddProductToCartSuccessState) {
       Loader.hide();

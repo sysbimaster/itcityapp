@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -13,7 +13,6 @@ import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/search_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart';
 import 'login_page_new.dart';
 
 class MobileCollectionsFullPage extends StatefulWidget {
@@ -31,7 +30,7 @@ class _MobileCollectionsFullPageState extends State<MobileCollectionsFullPage> {
   checkCartCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.containsKey('cartcount')){
-      cartcount = await  prefs.getInt('cartcount');
+      cartcount = prefs.getInt('cartcount');
       setState(()  {
 
         this.cartcount = cartcount;
@@ -100,7 +99,7 @@ class _MobileCollectionsFullPageState extends State<MobileCollectionsFullPage> {
                   icon: cartcount == 0 ?Icon(
                     Icons.shopping_cart_outlined,
                     color: AppColors.WHITE,
-                  ):Badge(child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),badgeColor: AppColors.WHITE,),
+                  ):badge.Badge(child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),badgeStyle: badge.BadgeStyle(badgeColor: AppColors.WHITE,),),
                 ),
               ],
               bottom: PreferredSize(

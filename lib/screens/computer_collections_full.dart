@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
-import 'package:itcity_online_store/blocs/product/product_bloc.dart';
 import 'package:itcity_online_store/components/product_card.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
@@ -41,7 +40,7 @@ class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
   checkCartCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.containsKey('cartcount')){
-      cartcount = await  prefs.getInt('cartcount');
+      cartcount = prefs.getInt('cartcount');
       setState(()  {
 
         this.cartcount = cartcount;
@@ -103,7 +102,11 @@ class _ComputerCollectionsFullState extends State<ComputerCollectionsFull> {
                   icon: cartcount == 0 ?Icon(
                     Icons.shopping_cart_outlined,
                     color: AppColors.WHITE,
-                  ):Badge(child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),badgeColor: AppColors.WHITE,),
+                  ):badge.Badge(
+                    badgeStyle: badge.BadgeStyle(
+                      badgeColor: AppColors.WHITE
+                    ),
+                    child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),),
                 ),
               ],
               bottom: PreferredSize(

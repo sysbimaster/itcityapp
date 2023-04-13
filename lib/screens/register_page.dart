@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:itcity_online_store/screens/screens.dart';
 import 'package:itcity_online_store/constants.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,7 +67,7 @@ class _RegisterPageState extends State<RegisterPage> {
       decoration: InputDecoration(
           fillColor: Colors.white,
           filled: true,
-          suffixIcon: FlatButton(
+          suffixIcon: TextButton(
               onPressed: _toggle,
               child: new Text(_obscureText ? "Show" : "Hide",
                   style: TextStyle(
@@ -91,7 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
       decoration: InputDecoration(
           fillColor: Colors.white,
           filled: true,
-          suffixIcon: FlatButton(
+          suffixIcon: TextButton(
               onPressed: _toggle,
               child: new Text(
                 _obscureText ? "Show" : "Hide",
@@ -243,7 +242,7 @@ class _RegisterButtonState extends State<RegisterButton> {
             BlocProvider.of<UserBloc>(context)
                 .add(UserRegistrationEvent(customer));
           } else {
-            Scaffold.of(context).showSnackBar(SnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Email is Already Registered"),
             ));
           }

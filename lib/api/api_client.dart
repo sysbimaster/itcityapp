@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter/material.dart';
 import 'package:itcity_online_store/api/exception.dart';
 
 import 'package:http/http.dart';
@@ -26,7 +25,7 @@ class ApiClient {
     print(isLoggedIn.toString());
     if(isLoggedIn) {
 
-      String? token = await prefs.getString('token');
+      String? token = prefs.getString('token');
       headerParams = {'Authorization': 'Bearer $token'};
       print(token);
     }

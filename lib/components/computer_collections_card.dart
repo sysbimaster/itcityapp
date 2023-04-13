@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -304,7 +303,7 @@ class _ComputerCollectionsCardState extends State<ComputerCollectionsCard> {
                           }
                         });
                       } else {
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
                                   "Please Login to add products to Favourites"),

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -10,8 +9,6 @@ import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';
 import 'package:itcity_online_store/components/mobile_card.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/mobile_collections_full_page.dart';
-import 'package:itcity_online_store/screens/product_details_new.dart';
-import 'package:itcity_online_store/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

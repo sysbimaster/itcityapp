@@ -38,8 +38,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   Future<String?> getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-  email = await prefs.getString("email");
-    customerIdtest = await prefs.getString('customerId');
+  email = prefs.getString("email");
+    customerIdtest = prefs.getString('customerId');
 
     this.email = email;
     emailController.text = this.email!;
@@ -169,6 +169,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             if (value!.isEmpty) {
                               return "Name is Requred";
                             }
+                            return null;
                           },
                         ),
                         TextFormField(
@@ -186,6 +187,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             if (value!.isEmpty) {
                               return "Email is Requred";
                             }
+                            return null;
                           },
                         ),
                         TextFormField(
@@ -202,6 +204,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             if (value!.isEmpty) {
                               return "Mobile Number is Requred";
                             }
+                            return null;
                           },
                         ),
                         TextFormField(
@@ -218,6 +221,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             if (value!.isEmpty) {
                               return "Address is Requred";
                             }
+                            return null;
                           },
                         ),
                         TextFormField(
@@ -234,6 +238,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             if (value!.isEmpty) {
                               return "Place / Area is Required";
                             }
+                            return null;
                           },
                         ),
                         TextFormField(
@@ -250,6 +255,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             if (value!.isEmpty) {
                               return "Country is Requred";
                             }
+                            return null;
                           },
                         ),
 
@@ -267,6 +273,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             if (value!.isEmpty) {
                               return "Pincode is Requred";
                             }
+                            return null;
                           },
                         ),
                       ],

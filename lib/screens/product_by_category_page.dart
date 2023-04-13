@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
@@ -28,7 +28,7 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
   checkCartCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.containsKey('cartcount')){
-      cartcount = await  prefs.getInt('cartcount');
+      cartcount = prefs.getInt('cartcount');
       setState(()  {
         print('cart count in mainpage');
         this.cartcount = cartcount;
@@ -72,7 +72,7 @@ checkCartCount();
               icon: cartcount == 0 ?Icon(
                 Icons.shopping_cart_outlined,
                 color: AppColors.WHITE,
-              ):Badge(child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),badgeColor: AppColors.WHITE,),
+              ):badge.Badge(child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),badgeStyle: badge.BadgeStyle(badgeColor: AppColors.WHITE,),),
             ),
           ],
           bottom: PreferredSize(
@@ -175,7 +175,7 @@ class _ProductListByCategoryState extends State<ProductListByCategory> {
           isBottomBarOverlay: false,
           progressIndicator: CircularProgressIndicator(),
           themeData:
-          Theme.of(context).copyWith(accentColor: Colors.black38),
+          Theme.of(context).copyWith(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black38)),
           overlayColor: Colors.black26);
     } else if (state is AddProductToCartSuccessState) {
       Loader.hide();

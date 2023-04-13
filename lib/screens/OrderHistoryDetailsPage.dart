@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/models/orderHistoryModel.dart';
-import 'package:itcity_online_store/api/models/order_details.dart';
 import 'package:itcity_online_store/api/models/product_order_details.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
-import 'package:itcity_online_store/blocs/order/order_state.dart';
 import 'package:itcity_online_store/resources/values.dart';
 
 class OrderHistoryDetailsPage extends StatefulWidget {

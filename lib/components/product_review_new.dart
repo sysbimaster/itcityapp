@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:itcity_online_store/api/models/models.dart';
-import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/blocs/review/get_review_bloc.dart';
 import 'package:itcity_online_store/blocs/review/random_review_bloc.dart';

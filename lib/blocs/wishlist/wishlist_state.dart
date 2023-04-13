@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:itcity_online_store/api/models/models.dart';
-import 'package:meta/meta.dart';
 
 abstract class WishlistState extends Equatable {
   const WishlistState();
@@ -15,7 +14,7 @@ class WishlistLoadingState extends WishlistState {}
 
 class WishlistLoadedState extends WishlistState {
   final List<CustomerWishlist> wishlist;
-  const WishlistLoadedState({required this.wishlist}) : assert(wishlist != null);
+  const WishlistLoadedState({required this.wishlist});
 }
 
 class WishlistErrorState extends WishlistState {}
@@ -24,8 +23,7 @@ class MoveProductFromWishlistToCartLoadingState extends WishlistState {}
 
 class MoveProductFromWishlistToCartSuccessState extends WishlistState {
   final List<Cart> cartlist;
-  const MoveProductFromWishlistToCartSuccessState({required this.cartlist})
-      : assert(cartlist != null);
+  const MoveProductFromWishlistToCartSuccessState({required this.cartlist});
 }
 
 class MoveProductFromWishlistToCartErrorState extends WishlistState {}
@@ -34,8 +32,7 @@ class MoveAllProductFromWishlistToCartLoadingState extends WishlistState {}
 
 class MoveAllProductFromWishlistToCartSuccessState extends WishlistState {
   final List<Cart> cart;
-  const MoveAllProductFromWishlistToCartSuccessState({required this.cart})
-      : assert(cart != null);
+  const MoveAllProductFromWishlistToCartSuccessState({required this.cart});
 }
 
 class MoveAllProductFromWishlistToCartErrorState extends WishlistState {}

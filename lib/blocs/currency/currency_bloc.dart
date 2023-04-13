@@ -1,10 +1,7 @@
-import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:itcity_online_store/api/models/Currency.dart';
 import 'package:itcity_online_store/api/services/currency_api.dart';
-import 'package:meta/meta.dart';
 
 
 part 'currency_event.dart';

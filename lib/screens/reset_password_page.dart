@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:itcity_online_store/screens/screens.dart';
 import 'package:itcity_online_store/constants.dart';
 
 class ResetPasswordPage extends StatefulWidget {
@@ -59,7 +58,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       decoration: InputDecoration(
           fillColor: Colors.white,
           filled: true,
-          suffixIcon: FlatButton(
+          suffixIcon: TextButton(
               onPressed: _toggle,
               child: new Text(_obscureText ? "Show" : "Hide",
                   style: TextStyle(
@@ -82,7 +81,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       decoration: InputDecoration(
           fillColor: Colors.white,
           filled: true,
-          suffixIcon: FlatButton(
+          suffixIcon: TextButton(
               onPressed: _toggle,
               child: new Text(
                 _obscureText ? "Show" : "Hide",

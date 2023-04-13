@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -13,11 +12,8 @@ import 'package:itcity_online_store/components/list_header.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/computer_collections_full.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
-import 'package:itcity_online_store/screens/product_details_new.dart';
-import 'package:itcity_online_store/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart';
 
 class ComputerCollections extends StatefulWidget {
   const ComputerCollections({Key? key}) : super(key: key);

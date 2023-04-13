@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 
 abstract class CartState {}
@@ -9,7 +8,7 @@ class TaxDetailsLoading extends CartState {}
 
 class TaxDetailsLoaded extends CartState {
   final List<Tax> tax;
-  TaxDetailsLoaded({required this.tax}) : assert(tax != null);
+  TaxDetailsLoaded({required this.tax});
 }
 
 class TaxDetailsErrorState extends CartState {}

@@ -57,7 +57,7 @@ class OrderApi {
   }
 
   Future<OrderHistoryModel> getOrderHistory(String? CustId) async {
-    String url = _getOrderHistoryPath+"?customer_id=${CustId}";
+    String url = _getOrderHistoryPath+"?customer_id=$CustId";
     Response response = await _apiclient.invokeAPI(url, 'GET', {});
 
     return OrderHistoryModel.fromJson(jsonDecode(response.body));

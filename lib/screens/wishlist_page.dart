@@ -62,8 +62,8 @@ class _WishlistSectionState extends State<WishlistSection> {
   List<CustomerWishlist> wishlist = [];
   Future<String?> getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    email = await  prefs.getString('email');;
-    currency = await prefs.getString('currency');
+    email = prefs.getString('email');
+    currency = prefs.getString('currency');
     return email;
   }
   @override
@@ -111,7 +111,7 @@ showDialogCart(context);
                   SizedBox(height: 10),
                   Text(
                     "No Products In WishList",
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(
                     height: 15.0,

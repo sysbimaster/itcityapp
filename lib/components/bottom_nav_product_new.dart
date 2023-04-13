@@ -27,9 +27,9 @@ class _BottomNavigationProductNewState
   bool buyNowPressed = false;
   void getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId = await prefs.getString("customerId");
-    token = await prefs.getString("token");
-    currency = await prefs.getString('currency');
+    userId = prefs.getString("customerId");
+    token = prefs.getString("token");
+    currency = prefs.getString('currency');
     //   userId = await _flutterSecureStorage.read(key: "customerId");
     //  token = await _flutterSecureStorage.read(key: "token");
   }
@@ -64,7 +64,7 @@ class _BottomNavigationProductNewState
                                 this.buyNowPressed = true;
 
                               }else {
-                                Scaffold.of(context).showSnackBar(SnackBar(
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                   backgroundColor: AppColors.LOGO_ORANGE,
                                   content: Text('Product is Out of Stock'),
                                   duration: Duration(seconds: 3),
@@ -97,7 +97,7 @@ class _BottomNavigationProductNewState
                                 //   buyNowPressed = true;
                                 // });
                               }else {
-                                Scaffold.of(context).showSnackBar(SnackBar(
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                   backgroundColor: AppColors.LOGO_ORANGE,
                                   content: Text('Product is Out of Stock'),
                                   duration: Duration(seconds: 3),

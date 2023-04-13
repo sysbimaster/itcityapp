@@ -1,4 +1,3 @@
-import 'package:itcity_online_store/api/models/HomeAds.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/api/api_client.dart';
 import 'dart:convert';

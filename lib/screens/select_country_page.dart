@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,10 +18,10 @@ class _SelectCountryPageState extends State<SelectCountryPage> {
   String? country;
   void getEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId = await prefs.getString("customerId");
-    token = await prefs.getString("token");
-    currency = await prefs.getString('currency');
-    country = await prefs.getString('country');
+    userId = prefs.getString("customerId");
+    token = prefs.getString("token");
+    currency = prefs.getString('currency');
+    country = prefs.getString('country');
     //   userId = await _flutterSecureStorage.read(key: "customerId");
     //  token = await _flutterSecureStorage.read(key: "token");
   }
@@ -492,7 +489,7 @@ if(Country == "Saudi Arabia"){
   prefs.setString('currency', "AED");
   Navigator.popAndPushNamed(context, "/home");
 }else {
-  Scaffold.of(context).showSnackBar(SnackBar(
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text("Something went wrong, please try again."),
   ));
 }

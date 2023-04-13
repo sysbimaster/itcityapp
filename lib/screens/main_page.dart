@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +7,6 @@ import 'package:itcity_online_store/components/CartCardNew.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/category_page.dart';
 import 'package:itcity_online_store/screens/home_page_new.dart';
-import 'package:itcity_online_store/screens/screens.dart';
 import 'package:itcity_online_store/screens/search_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,7 +33,7 @@ class _MainPageState extends State<MainPage> {
   checkCartCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.containsKey('cartcount')){
-      cartcount = await  prefs.getInt('cartcount');
+      cartcount = prefs.getInt('cartcount');
       setState(()  {
 
        this.cartcount = cartcount;
@@ -136,7 +135,9 @@ class _MainPageState extends State<MainPage> {
               icon: Icon(Icons.apps_outlined), text: 'Categories'
           ),
           Tab(icon: cartcount ==0 ? Icon(Icons.shopping_cart_outlined):
-          Badge(child: Icon(Icons.shopping_cart_outlined),badgeContent: Text(cartcount.toString(),),badgeColor: AppColors.LOGO_ORANGE,), text: 'Cart'),
+          badge.Badge(
+            badgeContent: Text(cartcount.toString(),),
+            child: Icon(Icons.shopping_cart_outlined),badgeStyle: badge.BadgeStyle(badgeColor: AppColors.LOGO_ORANGE),), text: 'Cart'),
           Tab(icon: Icon(Icons.account_circle_outlined), text: 'Profile'),
         ],
       ),

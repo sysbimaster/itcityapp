@@ -4,7 +4,6 @@ import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:itcity_online_store/screens/screens.dart';
-import 'package:itcity_online_store/constants.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
@@ -99,7 +98,7 @@ class _LoginPageNewState extends State<LoginPageNew> {
           // fillColor: Colors.white,
           // filled: true,
         labelStyle: TextStyle(color: AppColors.WHITE),
-          suffixIcon: FlatButton(
+          suffixIcon: TextButton(
               onPressed: _toggle,
               child: new Text(
                 _obscureText ? "Show" : "Hide",
@@ -187,7 +186,7 @@ class _LoginPageNewState extends State<LoginPageNew> {
           isBottomBarOverlay: false,
           progressIndicator: CircularProgressIndicator(),
           themeData:
-          Theme.of(context).copyWith(accentColor: Colors.black38),
+          Theme.of(context).copyWith(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black38)),
           overlayColor: Colors.black26);
     }else if(state is CustomerLoginErrorState){
       Loader.hide();
@@ -473,11 +472,10 @@ class _LoginButtonState extends State<LoginButton> {
                   ],
                 ),
                 actions: <Widget>[
-                  new FlatButton(
+                  new TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    textColor: Theme.of(context).primaryColor,
                     child: const Text('Close'),
                   ),
                 ],
@@ -487,7 +485,7 @@ class _LoginButtonState extends State<LoginButton> {
 
         }
       } else if (state is CustomerLoginFailedState) {
-        Scaffold.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("Invalid/Username Password"),
         ));
       }

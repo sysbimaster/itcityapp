@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:itcity_online_store/api/models/cart.dart';
-import 'package:itcity_online_store/api/models/purchase.dart';
 import 'package:itcity_online_store/blocs/blocs.dart';
-import 'package:itcity_online_store/constants.dart';
 import 'package:itcity_online_store/resources/values.dart';
 import 'package:itcity_online_store/screens/checkout_page_test.dart';
-import 'package:itcity_online_store/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomNavigationCartNew extends StatefulWidget {

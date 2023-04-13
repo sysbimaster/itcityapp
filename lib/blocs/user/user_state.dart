@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:itcity_online_store/api/models/models.dart';
-import 'package:meta/meta.dart';
 
 abstract class UserState extends Equatable{}
 
@@ -213,8 +212,7 @@ class CustomerInformationLoadingState extends UserState {
 
 class CustomerInformationLoadedState extends UserState {
   final CustomerRegistration customerlist;
-  CustomerInformationLoadedState({required this.customerlist})
-      : assert(customerlist != null);
+  CustomerInformationLoadedState({required this.customerlist});
 
   @override
   // TODO: implement props

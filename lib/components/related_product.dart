@@ -12,7 +12,6 @@ import 'package:itcity_online_store/components/product_card.dart';
 import 'package:itcity_online_store/screens/login_page_new.dart';
 
 
-import '../constants.dart';
 class RelatedProduct extends StatefulWidget {
   final String? productBrand;
   final String? currency;

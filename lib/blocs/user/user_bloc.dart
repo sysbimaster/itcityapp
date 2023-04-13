@@ -4,7 +4,6 @@ import 'package:itcity_online_store/blocs/user/user.dart';
 import 'package:bloc/bloc.dart';
 import 'package:itcity_online_store/api/models/models.dart';
 import 'package:itcity_online_store/api/services/services.dart';
-import 'user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {

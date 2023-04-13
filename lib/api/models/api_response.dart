@@ -6,8 +6,8 @@ class ApiResponse {
   Object? _apiError;
 
   Object? get Data => _data;
-  set Data(Object? data) => _data = data;
+  set Data(Object? dataval) => _data = dataval;
 
-  Object? get ApiError => _apiError as Object?;
+  Object? get ApiError => _apiError;
   set ApiError(Object? error) => _apiError = error;
 }

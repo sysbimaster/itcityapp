@@ -161,7 +161,7 @@ class _MobileCollectionsCardState extends State<MobileCollectionsCard> {
                             }
                           });
                         } else {
-                          Scaffold.of(context).showSnackBar(
+                          ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
                                     "Please Login to add products to Favourites"),
